@@ -15,11 +15,14 @@ class NewProductTableViewController: UITableViewController {
     @IBOutlet weak var productNoLabel: UITextField!
     @IBOutlet weak var pinLabel: UITextField!
     @IBOutlet weak var pinCell: UITableViewCell!
+    @IBOutlet weak var purchaseDateTextField: UITextField!
     
     var productType : String = "robotfűnyíró"
     var customerId : String?
+    var productId : String?
     
     let db = Firestore.firestore()
+    var delegate : CustomerViewController? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,18 +54,14 @@ class NewProductTableViewController: UITableViewController {
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            if customerId == nil {
-                // FIXME: fetch customer's id
-                customerId = "-1"
-            }
-    
             let product = Product(
-                customerId: customerId ?? "-1",
-                pin: Int(pinLabel.text!) ?? -1,
+                customerId: customerId ?? nil,
+                pin: Int(pinLabel.text!) ?? nil,
                 productName: nameLabel.text!,
-                productNumber: productNoLabel.text ?? "",
+                productNumber: productNoLabel.text ?? nil,
                 productType: productType,
-                serialNumber: serialLabel.text ?? ""
+                serialNumber: serialLabel.text ?? nil,
+                purchaseDate: purchaseDateTextField.text ?? "-"
             )
             createProduct(product: product)
         }
@@ -71,8 +70,28 @@ class NewProductTableViewController: UITableViewController {
     }
     
     func createProduct(product: Product) {
-        // TODO: Create product
-        print(product.customerId)
+        do {
+            var ref: DocumentReference? = nil
+            ref = try db.collection("products").addDocument(from: product){ err in
+                if let err = err {
+                    print("Error adding document: \(err)")
+                } else {
+                    print("Document added with ID: \(ref!.documentID)")
+                    if let id = ref?.documentID {
+                        self.productId? = id
+                        self.delegate?.updateProductId(id: self.productId ?? "Default")
+                    }
+                    
+                }
+            }
+          }
+        catch {
+            print(error)
+        }
     }
     
+}
+
+protocol ProductDelegate {
+    func updateProductId(id : String)
 }

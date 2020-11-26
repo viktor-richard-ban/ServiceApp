@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A0E2C9925589C190021F86E /* CustomerSelectorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0E2C9825589C190021F86E /* CustomerSelectorTableViewController.swift */; };
+		3A0E2C9C255B4D770021F86E /* MultipleEditCheckTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0E2C9B255B4D770021F86E /* MultipleEditCheckTableViewController.swift */; };
+		3A0E2C9F255B55B90021F86E /* ProductSelectorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0E2C9E255B55B90021F86E /* ProductSelectorTableViewController.swift */; };
+		3A28D20B256EA520000384E3 /* WorksheetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A28D20A256EA520000384E3 /* WorksheetCell.xib */; };
+		3A28D222256EC5FD000384E3 /* WorksheetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A28D221256EC5FD000384E3 /* WorksheetTableViewCell.swift */; };
 		3A370FFE254215C9003BD01E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A370FFD254215C9003BD01E /* AppDelegate.swift */; };
 		3A371000254215C9003BD01E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A370FFF254215C9003BD01E /* SceneDelegate.swift */; };
 		3A371002254215C9003BD01E /* CustomersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A371001254215C9003BD01E /* CustomersViewController.swift */; };
@@ -18,16 +23,27 @@
 		3A371077254310FB003BD01E /* CustomerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A371076254310FB003BD01E /* CustomerTableViewCell.swift */; };
 		3A37107A254311D3003BD01E /* CustomerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A371079254311D3003BD01E /* CustomerCell.xib */; };
 		3A37107D254355E1003BD01E /* CustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A37107C254355E1003BD01E /* CustomerViewController.swift */; };
+		3AA8E3C325509704001B3886 /* EditCheckTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA8E3C225509704001B3886 /* EditCheckTableViewController.swift */; };
+		3AA8E3D62551C2E8001B3886 /* CheckRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA8E3D52551C2E8001B3886 /* CheckRow.swift */; };
 		3AE366912544B32100D1C218 /* ProductCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE3668F2544B32100D1C218 /* ProductCollectionViewCell.swift */; };
 		3AE366B725461AE400D1C218 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE366B625461AE300D1C218 /* Product.swift */; };
 		3AE366C925470FD300D1C218 /* NewCustomerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE366C825470FD300D1C218 /* NewCustomerTableViewController.swift */; };
 		3AE366CE2548361500D1C218 /* Worksheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE366CD2548361500D1C218 /* Worksheet.swift */; };
 		3AE366D12548611500D1C218 /* NewProductTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE366D02548611500D1C218 /* NewProductTableViewController.swift */; };
 		3AE366D7254AE6E600D1C218 /* ModifyCustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE366D6254AE6E600D1C218 /* ModifyCustomerViewController.swift */; };
+		3AE366DB254B675300D1C218 /* ModifyProductTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE366DA254B675200D1C218 /* ModifyProductTableViewController.swift */; };
+		3AE36707254ED24D00D1C218 /* WorksheetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE36706254ED24B00D1C218 /* WorksheetsViewController.swift */; };
+		3AE3670A254F166E00D1C218 /* EditLongTextTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE36709254F166D00D1C218 /* EditLongTextTableViewController.swift */; };
+		3AE3670D254F1B0B00D1C218 /* NewWorksheetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE3670C254F1B0B00D1C218 /* NewWorksheetTableViewController.swift */; };
 		78EC54A45B06E3700FF046E9 /* Pods_ServiceApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67823097FBC857508A1537DA /* Pods_ServiceApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A0E2C9825589C190021F86E /* CustomerSelectorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerSelectorTableViewController.swift; sourceTree = "<group>"; };
+		3A0E2C9B255B4D770021F86E /* MultipleEditCheckTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleEditCheckTableViewController.swift; sourceTree = "<group>"; };
+		3A0E2C9E255B55B90021F86E /* ProductSelectorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSelectorTableViewController.swift; sourceTree = "<group>"; };
+		3A28D20A256EA520000384E3 /* WorksheetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WorksheetCell.xib; sourceTree = "<group>"; };
+		3A28D221256EC5FD000384E3 /* WorksheetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksheetTableViewCell.swift; sourceTree = "<group>"; };
 		3A370FFA254215C9003BD01E /* ServiceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServiceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A370FFD254215C9003BD01E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A370FFF254215C9003BD01E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,12 +57,18 @@
 		3A371076254310FB003BD01E /* CustomerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerTableViewCell.swift; sourceTree = "<group>"; };
 		3A371079254311D3003BD01E /* CustomerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomerCell.xib; sourceTree = "<group>"; };
 		3A37107C254355E1003BD01E /* CustomerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerViewController.swift; sourceTree = "<group>"; };
+		3AA8E3C225509704001B3886 /* EditCheckTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCheckTableViewController.swift; sourceTree = "<group>"; };
+		3AA8E3D52551C2E8001B3886 /* CheckRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRow.swift; sourceTree = "<group>"; };
 		3AE3668F2544B32100D1C218 /* ProductCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCollectionViewCell.swift; sourceTree = "<group>"; };
 		3AE366B625461AE300D1C218 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		3AE366C825470FD300D1C218 /* NewCustomerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCustomerTableViewController.swift; sourceTree = "<group>"; };
 		3AE366CD2548361500D1C218 /* Worksheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Worksheet.swift; sourceTree = "<group>"; };
 		3AE366D02548611500D1C218 /* NewProductTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProductTableViewController.swift; sourceTree = "<group>"; };
 		3AE366D6254AE6E600D1C218 /* ModifyCustomerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyCustomerViewController.swift; sourceTree = "<group>"; };
+		3AE366DA254B675200D1C218 /* ModifyProductTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProductTableViewController.swift; sourceTree = "<group>"; };
+		3AE36706254ED24B00D1C218 /* WorksheetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksheetsViewController.swift; sourceTree = "<group>"; };
+		3AE36709254F166D00D1C218 /* EditLongTextTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLongTextTableViewController.swift; sourceTree = "<group>"; };
+		3AE3670C254F1B0B00D1C218 /* NewWorksheetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorksheetTableViewController.swift; sourceTree = "<group>"; };
 		67823097FBC857508A1537DA /* Pods_ServiceApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ServiceApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B1F008EE17B08A90E27E52 /* Pods-ServiceApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceApp.release.xcconfig"; path = "Target Support Files/Pods-ServiceApp/Pods-ServiceApp.release.xcconfig"; sourceTree = "<group>"; };
 		F25A90504786501BFD4421E2 /* Pods-ServiceApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceApp.debug.xcconfig"; path = "Target Support Files/Pods-ServiceApp/Pods-ServiceApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -104,6 +126,7 @@
 				3A37105F2542EE60003BD01E /* Customer.swift */,
 				3AE366B625461AE300D1C218 /* Product.swift */,
 				3AE366CD2548361500D1C218 /* Worksheet.swift */,
+				3AA8E3D52551C2E8001B3886 /* CheckRow.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -115,6 +138,8 @@
 				3A371076254310FB003BD01E /* CustomerTableViewCell.swift */,
 				3A371079254311D3003BD01E /* CustomerCell.xib */,
 				3AE3668F2544B32100D1C218 /* ProductCollectionViewCell.swift */,
+				3A28D20A256EA520000384E3 /* WorksheetCell.xib */,
+				3A28D221256EC5FD000384E3 /* WorksheetTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -127,6 +152,14 @@
 				3AE366C825470FD300D1C218 /* NewCustomerTableViewController.swift */,
 				3AE366D02548611500D1C218 /* NewProductTableViewController.swift */,
 				3AE366D6254AE6E600D1C218 /* ModifyCustomerViewController.swift */,
+				3AE366DA254B675200D1C218 /* ModifyProductTableViewController.swift */,
+				3AE36706254ED24B00D1C218 /* WorksheetsViewController.swift */,
+				3AE36709254F166D00D1C218 /* EditLongTextTableViewController.swift */,
+				3AE3670C254F1B0B00D1C218 /* NewWorksheetTableViewController.swift */,
+				3AA8E3C225509704001B3886 /* EditCheckTableViewController.swift */,
+				3A0E2C9825589C190021F86E /* CustomerSelectorTableViewController.swift */,
+				3A0E2C9B255B4D770021F86E /* MultipleEditCheckTableViewController.swift */,
+				3A0E2C9E255B55B90021F86E /* ProductSelectorTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -207,6 +240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A28D20B256EA520000384E3 /* WorksheetCell.xib in Resources */,
 				3A37100A254215CA003BD01E /* LaunchScreen.storyboard in Resources */,
 				3A37101225421613003BD01E /* GoogleService-Info.plist in Resources */,
 				3A371007254215CA003BD01E /* Assets.xcassets in Resources */,
@@ -268,13 +302,23 @@
 				3AE366D7254AE6E600D1C218 /* ModifyCustomerViewController.swift in Sources */,
 				3A37107D254355E1003BD01E /* CustomerViewController.swift in Sources */,
 				3AE366B725461AE400D1C218 /* Product.swift in Sources */,
+				3AE366DB254B675300D1C218 /* ModifyProductTableViewController.swift in Sources */,
+				3A0E2C9925589C190021F86E /* CustomerSelectorTableViewController.swift in Sources */,
 				3A371077254310FB003BD01E /* CustomerTableViewCell.swift in Sources */,
 				3AE366912544B32100D1C218 /* ProductCollectionViewCell.swift in Sources */,
+				3A0E2C9C255B4D770021F86E /* MultipleEditCheckTableViewController.swift in Sources */,
+				3AA8E3C325509704001B3886 /* EditCheckTableViewController.swift in Sources */,
+				3AE36707254ED24D00D1C218 /* WorksheetsViewController.swift in Sources */,
+				3AE3670A254F166E00D1C218 /* EditLongTextTableViewController.swift in Sources */,
 				3AE366CE2548361500D1C218 /* Worksheet.swift in Sources */,
+				3A0E2C9F255B55B90021F86E /* ProductSelectorTableViewController.swift in Sources */,
 				3A371002254215C9003BD01E /* CustomersViewController.swift in Sources */,
 				3AE366C925470FD300D1C218 /* NewCustomerTableViewController.swift in Sources */,
+				3A28D222256EC5FD000384E3 /* WorksheetTableViewCell.swift in Sources */,
 				3A370FFE254215C9003BD01E /* AppDelegate.swift in Sources */,
+				3AE3670D254F1B0B00D1C218 /* NewWorksheetTableViewController.swift in Sources */,
 				3A371000254215C9003BD01E /* SceneDelegate.swift in Sources */,
+				3AA8E3D62551C2E8001B3886 /* CheckRow.swift in Sources */,
 				3A3710602542EE60003BD01E /* Customer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,0 +1,6 @@
+framework module Pods_ServiceApp {
+  umbrella header "Pods-ServiceApp-umbrella.h"
+
+  export *
+  module * { export * }
+}

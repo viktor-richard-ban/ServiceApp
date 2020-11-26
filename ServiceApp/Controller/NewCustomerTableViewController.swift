@@ -111,7 +111,6 @@ class NewCustomerTableViewController: UITableViewController {
                 print("Document added with ID: \(ref!.documentID)")
                 if let id = ref?.documentID {
                     self.customer?.id = id
-                    // FIXME: Add id to destination
                     self.delegate?.updateCustomerId(customerId: self.customer?.id ?? "Default")
                 }
                 

@@ -6,12 +6,15 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 struct Product : Codable {
-    let customerId : String
+    var customerId : String? = "-1"
+    var productId : String? = "-1"
     var pin : Int?
-    let productName : String
-    let productNumber : String?
-    let productType : String?
-    let serialNumber : String?
+    var productName : String
+    var productNumber : String?
+    var productType : String?
+    var serialNumber : String?
+    var purchaseDate : String?
 }

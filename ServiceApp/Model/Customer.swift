@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 struct Customer : Codable {
     var id : String?

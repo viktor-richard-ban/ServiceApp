@@ -6,38 +6,35 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
-struct Worksheet {
-    var customer : Customer?
+struct Worksheet : Codable {
+    var id : String?
+    var customerId : String
+    var customerName : String?
+    var customerCity : String?
+    var productId : String
     var product : Product?
     
-    var reason : worksheetReason?
+    var reason : String?
     var errorDescription : String?
+    var isWarrianty : Bool?
     
-    var acceptanceMode :workSheetAcceptanceMode?
+    var acceptanceMode : String?
     var accessories : [String]?
-    var userId : String?
-    var date : Date?
+    var userId : String
+    var date : Date
     
     
-    var status : workSheetStatus?
-    var closedId : String?
-    var closedDate : Date?
+    var status : String
+    //var price : Int
+    //var closedId : String?
+    //var closedDate : Date?
     
-}
-
-enum worksheetReason {
-    case service
-    case maintenance
-}
-
-enum workSheetStatus {
-    case open
-    case close
-}
-
-enum workSheetAcceptanceMode {
-    case personal
-    case site   // on site
-    case cod // cash on delivery
+    var dateString : String? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd HH:mm"
+        return formatter.string(from: date)
+    }
+    
 }

@@ -14,6 +14,7 @@ class ModifyCustomerViewController: UITableViewController {
     
     var modify = false
     var customer : Customer? = nil
+    var delegate : CustomerViewController? = nil
     
     // Customer type
     @IBOutlet weak var customerTypeSelector: UISegmentedControl!
@@ -78,7 +79,7 @@ class ModifyCustomerViewController: UITableViewController {
         }else {
             let customerTax = (customerTaxTextField.text=="") ? nil : "\(String(describing: customerTaxTextField.text!))"
             
-            let customer = Customer(id: nil, personalDatas: Datas(
+            let customer = Customer(id: self.customer?.id, personalDatas: Datas(
                                     address: Address(city: cityTextField.text ?? "Default",
                                                      street: streetTextField.text ?? "Default",
                                                      postcode: postCodeTextField.text ?? "Default"),
@@ -94,6 +95,7 @@ class ModifyCustomerViewController: UITableViewController {
     }
     
     func saveCustomer(customer:Customer) {
+        
         //Create document to database
         let docData : [String: Any]
         
@@ -128,13 +130,17 @@ class ModifyCustomerViewController: UITableViewController {
         
         //Save to database
         let ref = db.collection("customers").document((self.customer?.id!)!)
-        ref.updateData(docData) { err in
+        ref.updateData(docData) { [self] err in
             if let err = err {
                 print("Error updating document: \(err)")
             } else {
                 print("Document successfully updated")
             }
         
+        //Update data at customer view
+        self.delegate?.customer = customer
+        print("update customer")
+            
         // Back to customer view
         self.navigationController?.popViewController(animated: true)
         }

@@ -14,6 +14,7 @@ class CustomerViewController: UIViewController {
     
     var customer : Customer?
     var products : [Product] = []
+    var selectedProductIndex : Int = 0
     
     @IBOutlet weak var topGradientView: UIView!
     @IBOutlet weak var mainCard: UIView!
@@ -88,7 +89,8 @@ class CustomerViewController: UIViewController {
                 for document in querySnapshot!.documents {
                     do {
                         let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                        let product = try JSONDecoder().decode(Product.self, from: jsonData)
+                        var product = try JSONDecoder().decode(Product.self, from: jsonData)
+                        product.productId = document.documentID
                         self.products.append(product)
                     } catch {
                         print(error)
@@ -102,12 +104,12 @@ class CustomerViewController: UIViewController {
     }
     
     
+    // MARK: - Navigation
+    
     @IBAction func addProductPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "NewProduct", sender: self)
     }
     
-    
-    // MARK: - Navigation
     @objc func editButtonClicked () {
         performSegue(withIdentifier: "ModifyCustomer", sender: self)
     }
@@ -120,15 +122,40 @@ class CustomerViewController: UIViewController {
         if segue.identifier == "ModifyCustomer" {
             if let destination = segue.destination as? ModifyCustomerViewController {
                 destination.customer = customer
+                destination.delegate = self
             }
         } else if segue.identifier == "NewProduct" {
             if let destination = segue.destination as? NewProductTableViewController {
                 destination.customerId = customer?.id
             }
+        } else if segue.identifier == "ModifyProduct" {
+            if let destination = segue.destination as? ModifyProductTableViewController {
+                destination.product = products[selectedProductIndex]
+                destination.selectedProductIndex = selectedProductIndex
+                destination.customerId = customer?.id
+            }
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        print("Appear")
+        self.productCollectionView.reloadData()
+        
+        nameLabel.text = customer?.personalDatas.name
+        addressLabel.text = "\(customer?.personalDatas.address.postcode ?? "Default") \(customer?.personalDatas.address.city ?? "Default") \(customer?.personalDatas.address.street ?? "Default")"
+        emailLabel.text = customer?.personalDatas.email
+        phoneLabel.text = customer?.personalDatas.phone
+    }
+    
 
+}
+
+extension CustomerViewController : ProductDelegate {
+    
+    func updateProductId(id: String) {
+        self.products[products.count-1].productId = id
+        print("id added to: \(products[products.count-1].productName)")
+    }
 }
 
 extension CustomerViewController : CustomerDelegate {
@@ -151,9 +178,14 @@ extension CustomerViewController : UICollectionViewDataSource, UICollectionViewD
         
         // Add datas
         cell.productNameLabel.text = products[indexPath.row].productName
-        cell.pinLabel.text = String(products[indexPath.row].pin!)
+        if let pin = products[indexPath.row].pin {
+            if String(pin) != "-" {
+                cell.pinLabel.text = String(pin)
+            }
+        }
         cell.serialNumberLabel.text = products[indexPath.row].serialNumber
         cell.productNumberLabel.text = products[indexPath.row].productNumber
+        cell.purchaseDate.text = products[indexPath.row].purchaseDate
         
         // Cell style
         cell.layer.cornerRadius = cell.frame.size.height/5
@@ -163,6 +195,8 @@ extension CustomerViewController : UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(products[indexPath.row].productName)
+        self.selectedProductIndex = indexPath.row
+        performSegue(withIdentifier: "ModifyProduct", sender: self)
     }
     
 }
