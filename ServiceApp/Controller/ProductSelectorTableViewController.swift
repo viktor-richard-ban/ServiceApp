@@ -13,6 +13,7 @@ class ProductSelectorTableViewController: UITableViewController {
     let db = Firestore.firestore()
     
     var customer : Customer?
+    var customerData : [String:Any]?
     var products : [Product] = []
     
     var delegate : ProductSelectorDelegate?
@@ -24,28 +25,33 @@ class ProductSelectorTableViewController: UITableViewController {
     }
     
     func fetchProduct() {
-        db.collection("products").whereField("customerId", isEqualTo: customer?.id as Any).addSnapshotListener { (querySnapshot, err) in
-            
-            self.products = []
-            
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    do {
-                        let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                        var product = try JSONDecoder().decode(Product.self, from: jsonData)
-                        product.productId = document.documentID
-                        self.products.append(product)
-                    } catch {
-                        print(error)
+        if let customer = customerData {
+            if let id = customer["id"] as? String {
+                db.collection("products").whereField("customerId", isEqualTo: id).addSnapshotListener { (querySnapshot, err) in
+                    
+                    self.products = []
+                    
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            do {
+                                let jsonData = try JSONSerialization.data(withJSONObject: document.data())
+                                var product = try JSONDecoder().decode(Product.self, from: jsonData)
+                                product.productId = document.documentID
+                                self.products.append(product)
+                            } catch {
+                                print(error)
+                            }
+                        }
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
                     }
-                }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
                 }
             }
         }
+        
     }
 
     // MARK: - Table view data source

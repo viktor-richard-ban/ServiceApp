@@ -11,8 +11,8 @@ import Firebase
 class CustomersViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    let db = Firestore.firestore()
     
+    var customerManager = CustomerManager()
     var customers: [Customer] = []
     var selectedCustomer = 0
 
@@ -25,33 +25,8 @@ class CustomersViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
-        fetchCustomers()
-    }
-
-    func fetchCustomers() {
-        db.collection("customers").addSnapshotListener { (querySnapshot, err) in
-            
-            self.customers = []
-            
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    do {
-                        let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                        var customer = try JSONDecoder().decode(Customer.self, from: jsonData)
-                        customer.id = document.documentID
-                        print(customer.id!)
-                        self.customers.append(customer)
-                    } catch {
-                        print(error)
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-        }
+        customerManager.delegate = self
+        customerManager.fetchCustomers()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -69,6 +44,19 @@ class CustomersViewController: UIViewController {
     @objc func addClicked(){
         self.performSegue(withIdentifier: "NewCustomer", sender: self)
     }
+    
+}
+
+extension CustomersViewController : customerManagerDelegate {
+    func updateCustomers(customers: [Customer]) {
+        self.customers = customers
+        self.tableView.reloadData()
+    }
+    
+    func updateCustomer(customer: Customer) {
+        //TODO: todoooo
+    }
+    
     
 }
 

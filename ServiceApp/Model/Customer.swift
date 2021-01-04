@@ -12,6 +12,9 @@ struct Customer : Codable {
     var id : String?
     let personalDatas : Datas
     //let billingInformation : Datas
+    
+    //var products : [Product]
+    //var worksheets : [Worksheet]
 }
 
 struct Datas : Codable {

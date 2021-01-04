@@ -7,11 +7,17 @@
 
 import UIKit
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 class WorksheetsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    var worksheets : [Worksheet] = []
+    
+    var worksheetData : [[String : Any]] = [[:]]
+    var productData : [[String : Any]] = [[:]]
+    var customerData : [[String : Any]] = [[:]]
+    
+    var selectedIndex : Int?
     
     // Database
     let db = Firestore.firestore()
@@ -31,37 +37,65 @@ class WorksheetsViewController: UIViewController {
             if let error = error {
                 print("Error retreiving collection: \(error)")
             } else {
-                self.worksheets = (querySnapshot?.documents.compactMap { queryDocumentSnapshot -> Worksheet? in
-                    return try? queryDocumentSnapshot.data(as: Worksheet.self)
-                })!
+                if let documents = querySnapshot?.documents {
+                    self.worksheetData.removeAll()
+                    for doc in documents {
+                        var data = doc.data()
+                        data["id"] = doc.documentID
+                        self.worksheetData.append(data)
+                        print("--- Ez a sor lefutott: \(self.worksheetData.last!)")
+                    }
+                }
+                
                 DispatchQueue.main.async {
-                    self.fetchUsers()
+                    self.fetchCustomers()
+                    self.fetchProducts()
                 }
             }
         }
     }
     
-    func fetchUsers() {
-        print("Worksheets \(worksheets.count)")
-        for i in 0 ..< worksheets.count {
-            print(worksheets[i].customerId)
-            let docRef = db.collection("customers").document(worksheets[i].customerId)
-            
-            docRef.getDocument { [self] (document, error) in
-                if let document = document, document.exists {
-                    let data = document.data()!["personalDatas"]! as! Dictionary<String, Any>
-                    let address = data["address"]! as! Dictionary<String, Any>
-                    
-                    let name = data["name"] as? String
-                    worksheets[i].customerName = name!
-                    worksheets[i].customerCity = (address["city"] as? String)!
-                    print("Name: \(worksheets[i].customerName!)")
-                    print(address)
-                } else {
-                    print("Document does not exist")
+    func fetchCustomers() {
+        for data in worksheetData {
+            if let customerId = data["customerId"] as? String {
+                let docRef = db.collection("customers").document(customerId)
+                customerData.removeAll()
+                docRef.getDocument { [self] (document, error) in
+                    if let document = document, document.exists {
+                        var dict = document.data()!
+                        dict["id"] = document.documentID
+                        customerData.append(dict)
+                    } else {
+                        print("Document does not exist")
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                
+            }
+            
+        }
+    }
+    
+    func fetchProducts() {
+        for i in 0 ..< worksheetData.count {
+            if let productId = worksheetData[i]["productId"] as? String {
+                print("ProductId: \(productId)")
+                print(worksheetData.count)
+                let docRef = db.collection("products").document(productId)
+                productData.removeAll()
+                docRef.getDocument { [self] (document, error) in
+                    if let document = document, document.exists {
+                        productData.append(document.data()!)
+                        print("Prod:\(document.data()!)")
+                    } else {
+                        print("Document does not exist")
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                    
                 }
             }
             
@@ -80,6 +114,12 @@ class WorksheetsViewController: UIViewController {
         if segue.identifier == "AddWorksheet" {
             if let destination = segue.destination as? NewWorksheetTableViewController {
                 destination.delegate = self
+                if let index = selectedIndex {
+                    destination.isModify = true
+                    destination.customerData = customerData[index]
+                    destination.productData = productData[index]
+                    destination.worksheetData = worksheetData[index]
+                }
             }
         }
     }
@@ -91,27 +131,51 @@ class WorksheetsViewController: UIViewController {
 extension WorksheetsViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        worksheets.count
+        if worksheetData.count == productData.count && customerData.count == productData.count {
+            return worksheetData.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WorksheetCell", for: indexPath) as! WorksheetTableViewCell
         //Worksheet
-        cell.worksheetDateLabel.text = worksheets[indexPath.row].dateString
-        cell.statusLabel.text = worksheets[indexPath.row].status
+        if let date = worksheetData[indexPath.row]["date"] as? Timestamp {
+            let sec = date.seconds
+            let nanoInSec = Int64(date.nanoseconds / 1000000000)
+            let dateInterval = Date(timeIntervalSince1970: TimeInterval(sec+nanoInSec))
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy.MM.dd HH:mm"
+            cell.worksheetDateLabel.text = formatter.string(from: dateInterval)
+            
+        }
+        if let status = worksheetData[indexPath.row]["status"] as? String {
+            cell.statusLabel.text = status
+        }
         
         //Product
-        //cell.productNameLabel.text =
-        //cell.serialNumberLabel.text =
+        if let productName = productData[indexPath.row]["productName"] as? String {
+            cell.productNameLabel.text = productName
+        }
+        if let serialNumber = productData[indexPath.row]["serialNumber"] as? String {
+            cell.serialNumberLabel.text = "S/N: \(serialNumber)"
+        }
         
         //Customer
-        cell.customerNameLabel.text = worksheets[indexPath.row].customerName
-        cell.customerPlaceLabel.text = worksheets[indexPath.row].customerCity
+        if let personalData = customerData[indexPath.row]["personalDatas"] as? [String:Any]{
+            cell.customerNameLabel.text = personalData["name"] as? String
+            
+            if let address = personalData["address"] as? [String:Any] {
+                cell.customerPlaceLabel.text = address["city"] as? String
+            }
+        }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(worksheets[indexPath.row])
+        selectedIndex = indexPath.row
+        performSegue(withIdentifier: "AddWorksheet", sender: self)
     }
     
 }
@@ -122,6 +186,11 @@ extension WorksheetsViewController : NewWorksheetDelegate {
     
     func didUpdateWorksheets() {
         tableView.reloadData()
+        selectedIndex = nil
+    }
+    
+    func didUpdateProduct() {
+        fetchProducts()
     }
     
 }

@@ -19,7 +19,12 @@ class NewWorksheetTableViewController: UITableViewController {
     var delegate : NewWorksheetDelegate? = nil
     
     var selectedCustomer : Customer?
-    var document : [String : Any] = [:]
+    
+    var isModify = false
+    
+    var worksheetData : [String : Any] = [:]
+    var productData : [String : Any] = [:]
+    var customerData : [String : Any] = [:]
 
     var reasons = [
         CheckItem(title: "Szerviz", done: true),
@@ -51,6 +56,7 @@ class NewWorksheetTableViewController: UITableViewController {
     @IBOutlet weak var productVarriancyLabel: UILabel!
     
     // Worksheet Datas
+    @IBOutlet weak var warriantySwitch: UISwitch!
     @IBOutlet weak var reasonLabel: UILabel!
     @IBOutlet weak var errorDescriptionLabel: UILabel!
     @IBOutlet weak var acceptanceModeLabel: UILabel!
@@ -67,29 +73,77 @@ class NewWorksheetTableViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Mentés", style: .done, target: self, action: #selector(doneClicked))
         
-        let today = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.MM.dd HH:mm"
-        currentDateLabel.text = formatter.string(from: today)
-        
-        productVarriancyLabel.text = "-"
-        cusomterCityLabel.text = "-"
-        
-        // Add required date to document dictionary
-        document["isWarrianty"] = false
-        document["status"] = "Nyitott"
-        document["userId"] = "-"
-        document["date"] = today
+        if isModify {
+            productNameLabel.text = productData["productName"] as? String
+            productVarriancyLabel.text = productData["purchaseDate"] as? String
+            if let personalData = customerData["personalDatas"] as? [String:Any] {
+                customerNameLabel.text = personalData["name"] as? String
+                
+                if let address = personalData["address"] as? [String:Any] {
+                    cusomterCityLabel.text = address["city"] as? String
+                }
+            }
+            if !worksheetData.isEmpty {
+                print("GARANCIAAAA")
+                if let warrianty = worksheetData["isWarrianty"] as? Bool {
+                    warriantySwitch.isOn = warrianty
+                    print("GARANCIAAAA")
+                }
+                if let reason = worksheetData["reason"] as? String {
+                    reasonLabel.text = reason
+                }
+                if let errorDescription = worksheetData["errorDescription"] as? String {
+                    errorDescriptionLabel.text = errorDescription
+                }
+                if let acceptanceMode = worksheetData["acceptanceMode"] as? String {
+                    acceptanceModeLabel.text = acceptanceMode
+                }
+                // TODO: Accessories
+                if let status = worksheetData["status"] as? String {
+                    statusLabel.text = status
+                }
+            }
+            
+        } else {
+            let today = Date()
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy.MM.dd HH:mm"
+            currentDateLabel.text = formatter.string(from: today)
+            
+            productVarriancyLabel.text = "-"
+            cusomterCityLabel.text = "-"
+            
+            // Add required date to document dictionary
+            worksheetData["isWarrianty"] = false
+            worksheetData["status"] = "Nyitott"
+            worksheetData["userId"] = "-"
+            worksheetData["date"] = today
+        }
         
     }
     
     func saveWorksheet() {
         var ref: DocumentReference? = nil
-        ref = db.collection("worksheets").addDocument(data: document) { err in
+        ref = db.collection("worksheets").addDocument(data: worksheetData) { err in
             if let err = err {
                 print("Error adding document: \(err)")
             } else {
                 print("Document added with ID: \(ref!.documentID)")
+            }
+        }
+    }
+    
+    func updateWorksheet() {
+        if let id = worksheetData["id"] as? String {
+            if let index = worksheetData.index(forKey: "id") {
+                worksheetData.remove(at: index)
+            }
+            db.collection("worksheets").document(id).updateData(worksheetData) { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("Document successfully updated")
+                }
             }
         }
     }
@@ -165,6 +219,12 @@ class NewWorksheetTableViewController: UITableViewController {
         }
     }
     
+    @IBAction func warriantySwitchClicked(_ sender: UISwitch) {
+        if let warrianty = worksheetData["isWarrianty"] as? Bool {
+            worksheetData["isWarrianty"] = !warrianty
+        }
+    }
+    
     // MARK - Objc
     @objc func doneClicked() {
         // TODO: Send email to customer
@@ -176,14 +236,15 @@ class NewWorksheetTableViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         } else {
             // Create Worksheet model
-            document["customerId"] = selectedCustomer?.id
+            worksheetData["customerId"] = selectedCustomer?.id
             
             // Save to database
-            saveWorksheet()
-            
-            DispatchQueue.main.async {
-                self.delegate?.didUpdateWorksheets()
+            if isModify {
+                updateWorksheet()
+            } else {
+                saveWorksheet()
             }
+        
         }
         
         navigationController?.popViewController(animated: true)
@@ -221,6 +282,7 @@ class NewWorksheetTableViewController: UITableViewController {
             if let destination = segue.destination as? ProductSelectorTableViewController {
                 destination.delegate = self
                 destination.customer = selectedCustomer
+                destination.customerData = customerData
             }
         }
     }
@@ -248,14 +310,14 @@ extension NewWorksheetTableViewController : LongTextDelegate, CheckBoxDelegate, 
             accessoriesLabel.text = labelText
             accessories = rows
             if labelText == "" {
-                if let index = document.index(forKey: "accessories") {
-                    document.remove(at: index)
+                if let index = worksheetData.index(forKey: "accessories") {
+                    worksheetData.remove(at: index)
                 }
             } else {
-                document["accessories"] = items
+                worksheetData["accessories"] = items
             }
             
-            print(document)
+            print(worksheetData)
         }
     }
     
@@ -266,20 +328,20 @@ extension NewWorksheetTableViewController : LongTextDelegate, CheckBoxDelegate, 
             reasonLabel.text = reasons[selected].title
             reasons = rows
             
-            document["reason"] = reasons[selected].title
-            print(document)
+            worksheetData["reason"] = reasons[selected].title
+            print(worksheetData)
         } else if labelName == "acceptance" {
             acceptanceModeLabel.text = acceptanceModes[selected].title
             acceptanceModes = rows
             
-            document["acceptanceMode"] = acceptanceModes[selected].title
-            print(document)
+            worksheetData["acceptanceMode"] = acceptanceModes[selected].title
+            print(worksheetData)
         } else if labelName == "status" {
             statusLabel.text = statuses[selected].title
             statuses = rows
             
-            document["status"] = statuses[selected].title
-            print(document)
+            worksheetData["status"] = statuses[selected].title
+            print(worksheetData)
         }
     }
     
@@ -289,11 +351,11 @@ extension NewWorksheetTableViewController : LongTextDelegate, CheckBoxDelegate, 
         if labelName == "errorDescriptionLabel" {
             if text != "" {
                 errorDescriptionLabel.text = text
-                document["errorDescription"] = text
+                worksheetData["errorDescription"] = text
             } else {
                 errorDescriptionLabel.text = "Nincs"
-                if let index = document.index(forKey: "errorDescription") {
-                    document.remove(at: index)
+                if let index = worksheetData.index(forKey: "errorDescription") {
+                    worksheetData.remove(at: index)
                 }
             }
         } else {
@@ -309,7 +371,7 @@ extension NewWorksheetTableViewController : ProductSelectorDelegate {
         productNameLabel.text = selectedProduct.productName
         productVarriancyLabel.text = selectedProduct.purchaseDate
         
-        document["productId"] = selectedProduct.productId
+        worksheetData["productId"] = selectedProduct.productId
     }
     
 }

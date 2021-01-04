@@ -14,7 +14,8 @@ struct Worksheet : Codable {
     var customerName : String?
     var customerCity : String?
     var productId : String
-    var product : Product?
+    var productName : String?
+    var serialNumber : String?
     
     var reason : String?
     var errorDescription : String?
