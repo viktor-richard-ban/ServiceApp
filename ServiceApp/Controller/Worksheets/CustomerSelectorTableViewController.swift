@@ -60,15 +60,15 @@ class CustomerSelectorTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCustomerCell", for: indexPath) as! CustomerTableViewCell
-        cell.nameLabel.text = customers[indexPath.row].personalDatas.name
-        cell.cityLabel.text = customers[indexPath.row].personalDatas.address.city
+        cell.nameLabel.text = customers[indexPath.row].personalData.name
+        cell.cityLabel.text = customers[indexPath.row].personalData.address.city
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.selectedCustomer = customers[indexPath.row]
-        delegate?.customerNameLabel.text = customers[indexPath.row].personalDatas.name
-        delegate?.cusomterCityLabel.text = customers[indexPath.row].personalDatas.address.city
+        delegate?.customerNameLabel.text = customers[indexPath.row].personalData.name
+        delegate?.cusomterCityLabel.text = customers[indexPath.row].personalData.address.city
         delegate?.productVarriancyLabel.text = "-"
         delegate?.productNameLabel.text = "Nincs kiválasztva"
         navigationController?.popViewController(animated: true)

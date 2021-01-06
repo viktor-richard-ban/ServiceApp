@@ -29,78 +29,8 @@ class WorksheetsViewController: UIViewController {
         
         tableView.register(UINib(nibName: "WorksheetCell", bundle: nil), forCellReuseIdentifier: "WorksheetCell")
         
-        fetchWorksheets()
     }
     
-    func fetchWorksheets() {
-        db.collection("worksheets").addSnapshotListener { querySnapshot, error in
-            if let error = error {
-                print("Error retreiving collection: \(error)")
-            } else {
-                if let documents = querySnapshot?.documents {
-                    self.worksheetData.removeAll()
-                    for doc in documents {
-                        var data = doc.data()
-                        data["id"] = doc.documentID
-                        self.worksheetData.append(data)
-                        print("--- Ez a sor lefutott: \(self.worksheetData.last!)")
-                    }
-                }
-                
-                DispatchQueue.main.async {
-                    self.fetchCustomers()
-                    self.fetchProducts()
-                }
-            }
-        }
-    }
-    
-    func fetchCustomers() {
-        for data in worksheetData {
-            if let customerId = data["customerId"] as? String {
-                let docRef = db.collection("customers").document(customerId)
-                customerData.removeAll()
-                docRef.getDocument { [self] (document, error) in
-                    if let document = document, document.exists {
-                        var dict = document.data()!
-                        dict["id"] = document.documentID
-                        customerData.append(dict)
-                    } else {
-                        print("Document does not exist")
-                    }
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }
-                
-            }
-            
-        }
-    }
-    
-    func fetchProducts() {
-        for i in 0 ..< worksheetData.count {
-            if let productId = worksheetData[i]["productId"] as? String {
-                print("ProductId: \(productId)")
-                print(worksheetData.count)
-                let docRef = db.collection("products").document(productId)
-                productData.removeAll()
-                docRef.getDocument { [self] (document, error) in
-                    if let document = document, document.exists {
-                        productData.append(document.data()!)
-                        print("Prod:\(document.data()!)")
-                    } else {
-                        print("Document does not exist")
-                    }
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                    
-                }
-            }
-            
-        }
-    }
     
     // MARK: Navigation
     
@@ -190,7 +120,6 @@ extension WorksheetsViewController : NewWorksheetDelegate {
     }
     
     func didUpdateProduct() {
-        fetchProducts()
     }
     
 }

@@ -18,7 +18,7 @@ class CustomersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addClicked))
         
         tableView.register(UINib(nibName: "CustomerCell", bundle: nil), forCellReuseIdentifier: "ReusableCustomerCell")
@@ -49,15 +49,10 @@ class CustomersViewController: UIViewController {
 
 extension CustomersViewController : customerManagerDelegate {
     func updateCustomers(customers: [Customer]) {
+        print("Update customer called")
         self.customers = customers
         self.tableView.reloadData()
     }
-    
-    func updateCustomer(customer: Customer) {
-        //TODO: todoooo
-    }
-    
-    
 }
 
 extension CustomersViewController: UITableViewDataSource, UITableViewDelegate {
@@ -68,8 +63,8 @@ extension CustomersViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCustomerCell", for: indexPath) as! CustomerTableViewCell
-        cell.nameLabel.text = customers[indexPath.row].personalDatas.name
-        cell.cityLabel.text = customers[indexPath.row].personalDatas.address.city
+        cell.nameLabel.text = customers[indexPath.row].personalData.name
+        cell.cityLabel.text = customers[indexPath.row].personalData.address.city
         return cell
     }
     

@@ -47,13 +47,13 @@ class CustomerViewController: UIViewController {
         topGradientView.layer.shadowOffset = .zero
         topGradientView.layer.shadowRadius = 15
         
-        nameLabel.text = customer?.personalDatas.name
+        nameLabel.text = customer?.personalData.name
         taxLabel.text = "Magánszemély"
-        addressLabel.text = "\(customer?.personalDatas.address.postcode ?? "Default") \(customer?.personalDatas.address.city ?? "Default") \(customer?.personalDatas.address.street ?? "Default")"
-        emailLabel.text = customer?.personalDatas.email
-        phoneLabel.text = customer?.personalDatas.phone
+        addressLabel.text = "\(customer?.personalData.address.postcode ?? "Default") \(customer?.personalData.address.city ?? "Default") \(customer?.personalData.address.street ?? "Default")"
+        emailLabel.text = customer?.personalData.email
+        phoneLabel.text = customer?.personalData.phone
         
-        if let tax = customer?.personalDatas.tax {
+        if let tax = customer?.personalData.tax {
             taxLabel.text = tax
         }
     
@@ -141,10 +141,10 @@ class CustomerViewController: UIViewController {
         print("Appear")
         self.productCollectionView.reloadData()
         
-        nameLabel.text = customer?.personalDatas.name
-        addressLabel.text = "\(customer?.personalDatas.address.postcode ?? "Default") \(customer?.personalDatas.address.city ?? "Default") \(customer?.personalDatas.address.street ?? "Default")"
-        emailLabel.text = customer?.personalDatas.email
-        phoneLabel.text = customer?.personalDatas.phone
+        nameLabel.text = customer?.personalData.name
+        addressLabel.text = "\(customer?.personalData.address.postcode ?? "Default") \(customer?.personalData.address.city ?? "Default") \(customer?.personalData.address.street ?? "Default")"
+        emailLabel.text = customer?.personalData.email
+        phoneLabel.text = customer?.personalData.phone
     }
     
 

@@ -10,7 +10,6 @@ import Firebase
 
 protocol customerManagerDelegate {
     func updateCustomers(customers : [Customer])
-    func updateCustomer(customer : Customer)
 }
 
 struct CustomerManager {
@@ -20,7 +19,6 @@ struct CustomerManager {
     
     func fetchCustomers() {
         var customers : [Customer] = []
-        
         db.collection("customers").addSnapshotListener { (querySnapshot, err) in
             
             if let err = err {
@@ -31,7 +29,6 @@ struct CustomerManager {
                         let jsonData = try JSONSerialization.data(withJSONObject: document.data())
                         var customer = try JSONDecoder().decode(Customer.self, from: jsonData)
                         customer.id = document.documentID
-                        print(customer.id!)
                         customers.append(customer)
                     } catch {
                         print(error)
@@ -39,26 +36,29 @@ struct CustomerManager {
                 }
                 DispatchQueue.main.async {
                     delegate?.updateCustomers(customers: customers)
+                    customers = []
                 }
             }
         }
     }
     
-    func fetchCustomers(id: String) {
-        
-        db.collection("customers").document(id).addSnapshotListener { (querySnapshot, err) in
-            
+    func createCustomer(customer : [String : Any]) {
+        var ref: DocumentReference? = nil
+        ref = db.collection("customers").addDocument(data: customer) { err in
             if let err = err {
-                print("Error getting documents: \(err)")
+                print("Error adding document: \(err)")
             } else {
-                    do {
-                        let jsonData = try JSONSerialization.data(withJSONObject: querySnapshot!.data()!)
-                        var customer = try JSONDecoder().decode(Customer.self, from: jsonData)
-                        customer.id = querySnapshot?.documentID
-                        delegate?.updateCustomer(customer: customer)
-                    } catch {
-                        print(error)
-                    }
+                print("Document added with ID: \(ref!.documentID)")
+            }
+        }
+    }
+    
+    func updateCustomer(id: String, customerData : [String : Any]) {
+        db.collection("customers").document(id).updateData(customerData) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
             }
         }
     }

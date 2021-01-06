@@ -23,6 +23,7 @@
 		3A371077254310FB003BD01E /* CustomerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A371076254310FB003BD01E /* CustomerTableViewCell.swift */; };
 		3A37107A254311D3003BD01E /* CustomerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A371079254311D3003BD01E /* CustomerCell.xib */; };
 		3A37107D254355E1003BD01E /* CustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A37107C254355E1003BD01E /* CustomerViewController.swift */; };
+		3A7A2C2025A662DA0049AE36 /* WorksheetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7A2C1F25A662DA0049AE36 /* WorksheetManager.swift */; };
 		3A83D98B2571A13200F51F8A /* DocumentScanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A83D9882571A13100F51F8A /* DocumentScanningViewController.swift */; };
 		3A83D98C2571A13200F51F8A /* RecognizedTextDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A83D9892571A13200F51F8A /* RecognizedTextDataSource.swift */; };
 		3A83D98D2571A13200F51F8A /* BusinessCardContentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A83D98A2571A13200F51F8A /* BusinessCardContentsViewController.swift */; };
@@ -61,6 +62,7 @@
 		3A371076254310FB003BD01E /* CustomerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerTableViewCell.swift; sourceTree = "<group>"; };
 		3A371079254311D3003BD01E /* CustomerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomerCell.xib; sourceTree = "<group>"; };
 		3A37107C254355E1003BD01E /* CustomerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerViewController.swift; sourceTree = "<group>"; };
+		3A7A2C1F25A662DA0049AE36 /* WorksheetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksheetManager.swift; sourceTree = "<group>"; };
 		3A83D9882571A13100F51F8A /* DocumentScanningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentScanningViewController.swift; sourceTree = "<group>"; };
 		3A83D9892571A13200F51F8A /* RecognizedTextDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecognizedTextDataSource.swift; sourceTree = "<group>"; };
 		3A83D98A2571A13200F51F8A /* BusinessCardContentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessCardContentsViewController.swift; sourceTree = "<group>"; };
@@ -135,7 +137,7 @@
 				3AE366B625461AE300D1C218 /* Product.swift */,
 				3AE366CD2548361500D1C218 /* Worksheet.swift */,
 				3AA8E3D52551C2E8001B3886 /* CheckRow.swift */,
-				3AA3EA3E25A0998300128371 /* CustomerManager.swift */,
+				3A7A2C2225A662E30049AE36 /* Managers */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -143,12 +145,9 @@
 		3A371021254225EF003BD01E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3A7A2C1A25A64EF30049AE36 /* CollectionViewCell */,
+				3A7A2C1925A64EE30049AE36 /* TableViewCells */,
 				3A371003254215C9003BD01E /* Main.storyboard */,
-				3A371076254310FB003BD01E /* CustomerTableViewCell.swift */,
-				3A371079254311D3003BD01E /* CustomerCell.xib */,
-				3AE3668F2544B32100D1C218 /* ProductCollectionViewCell.swift */,
-				3A28D20A256EA520000384E3 /* WorksheetCell.xib */,
-				3A28D221256EC5FD000384E3 /* WorksheetTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -156,24 +155,100 @@
 		3A3710222542260D003BD01E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				3A83D98A2571A13200F51F8A /* BusinessCardContentsViewController.swift */,
-				3A83D9882571A13100F51F8A /* DocumentScanningViewController.swift */,
-				3A83D9892571A13200F51F8A /* RecognizedTextDataSource.swift */,
+				3A7A2C1425A64E120049AE36 /* Recogniser */,
+				3A7A2C1225A64DE80049AE36 /* Customers */,
+				3A7A2C1325A64DF50049AE36 /* Worksheets */,
+				3A7A2C1525A64E4D0049AE36 /* Product */,
+				3AE36709254F166D00D1C218 /* EditLongTextTableViewController.swift */,
+				3AA8E3C225509704001B3886 /* EditCheckTableViewController.swift */,
+				3A0E2C9B255B4D770021F86E /* MultipleEditCheckTableViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		3A7A2C1225A64DE80049AE36 /* Customers */ = {
+			isa = PBXGroup;
+			children = (
 				3A371001254215C9003BD01E /* CustomersViewController.swift */,
 				3A37107C254355E1003BD01E /* CustomerViewController.swift */,
 				3AE366C825470FD300D1C218 /* NewCustomerTableViewController.swift */,
-				3AE366D02548611500D1C218 /* NewProductTableViewController.swift */,
 				3AE366D6254AE6E600D1C218 /* ModifyCustomerViewController.swift */,
-				3AE366DA254B675200D1C218 /* ModifyProductTableViewController.swift */,
-				3AE36706254ED24B00D1C218 /* WorksheetsViewController.swift */,
-				3AE36709254F166D00D1C218 /* EditLongTextTableViewController.swift */,
+			);
+			path = Customers;
+			sourceTree = "<group>";
+		};
+		3A7A2C1325A64DF50049AE36 /* Worksheets */ = {
+			isa = PBXGroup;
+			children = (
 				3AE3670C254F1B0B00D1C218 /* NewWorksheetTableViewController.swift */,
-				3AA8E3C225509704001B3886 /* EditCheckTableViewController.swift */,
+				3AE36706254ED24B00D1C218 /* WorksheetsViewController.swift */,
 				3A0E2C9825589C190021F86E /* CustomerSelectorTableViewController.swift */,
-				3A0E2C9B255B4D770021F86E /* MultipleEditCheckTableViewController.swift */,
 				3A0E2C9E255B55B90021F86E /* ProductSelectorTableViewController.swift */,
 			);
-			path = Controller;
+			path = Worksheets;
+			sourceTree = "<group>";
+		};
+		3A7A2C1425A64E120049AE36 /* Recogniser */ = {
+			isa = PBXGroup;
+			children = (
+				3A83D98A2571A13200F51F8A /* BusinessCardContentsViewController.swift */,
+				3A83D9882571A13100F51F8A /* DocumentScanningViewController.swift */,
+				3A83D9892571A13200F51F8A /* RecognizedTextDataSource.swift */,
+			);
+			path = Recogniser;
+			sourceTree = "<group>";
+		};
+		3A7A2C1525A64E4D0049AE36 /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				3AE366D02548611500D1C218 /* NewProductTableViewController.swift */,
+				3AE366DA254B675200D1C218 /* ModifyProductTableViewController.swift */,
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
+		3A7A2C1925A64EE30049AE36 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				3A7A2C1D25A64F250049AE36 /* Worksheet */,
+				3A7A2C1B25A64F040049AE36 /* Customer */,
+			);
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		3A7A2C1A25A64EF30049AE36 /* CollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				3AE3668F2544B32100D1C218 /* ProductCollectionViewCell.swift */,
+			);
+			path = CollectionViewCell;
+			sourceTree = "<group>";
+		};
+		3A7A2C1B25A64F040049AE36 /* Customer */ = {
+			isa = PBXGroup;
+			children = (
+				3A371076254310FB003BD01E /* CustomerTableViewCell.swift */,
+				3A371079254311D3003BD01E /* CustomerCell.xib */,
+			);
+			path = Customer;
+			sourceTree = "<group>";
+		};
+		3A7A2C1D25A64F250049AE36 /* Worksheet */ = {
+			isa = PBXGroup;
+			children = (
+				3A28D20A256EA520000384E3 /* WorksheetCell.xib */,
+				3A28D221256EC5FD000384E3 /* WorksheetTableViewCell.swift */,
+			);
+			path = Worksheet;
+			sourceTree = "<group>";
+		};
+		3A7A2C2225A662E30049AE36 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				3AA3EA3E25A0998300128371 /* CustomerManager.swift */,
+				3A7A2C1F25A662DA0049AE36 /* WorksheetManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		56279B03B13974508643DA4F /* Frameworks */ = {
@@ -330,6 +405,7 @@
 				3AE366C925470FD300D1C218 /* NewCustomerTableViewController.swift in Sources */,
 				3A28D222256EC5FD000384E3 /* WorksheetTableViewCell.swift in Sources */,
 				3A370FFE254215C9003BD01E /* AppDelegate.swift in Sources */,
+				3A7A2C2025A662DA0049AE36 /* WorksheetManager.swift in Sources */,
 				3AE3670D254F1B0B00D1C218 /* NewWorksheetTableViewController.swift in Sources */,
 				3A83D98C2571A13200F51F8A /* RecognizedTextDataSource.swift in Sources */,
 				3A371000254215C9003BD01E /* SceneDelegate.swift in Sources */,

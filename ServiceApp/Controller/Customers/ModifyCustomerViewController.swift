@@ -36,19 +36,19 @@ class ModifyCustomerViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Mentés", style: .plain, target: self, action: #selector(doneClicked))
 
-        if customer?.personalDatas.tax == nil {
+        if customer?.personalData.tax == nil {
             customerTaxCell.isHidden = true
         }else {
             customerTypeSelector.selectedSegmentIndex = 1
-            customerTaxTextField.text = customer?.personalDatas.tax
+            customerTaxTextField.text = customer?.personalData.tax
         }
         
-        customerNameTextField.text = customer?.personalDatas.name
-        postCodeTextField.text = customer?.personalDatas.address.postcode
-        cityTextField.text = customer?.personalDatas.address.city
-        streetTextField.text = customer?.personalDatas.address.street
-        emailTextField.text = customer?.personalDatas.email
-        PhoneTextField.text = customer?.personalDatas.phone
+        customerNameTextField.text = customer?.personalData.name
+        postCodeTextField.text = customer?.personalData.address.postcode
+        cityTextField.text = customer?.personalData.address.city
+        streetTextField.text = customer?.personalData.address.street
+        emailTextField.text = customer?.personalData.email
+        PhoneTextField.text = customer?.personalData.phone
     }
     
     
@@ -79,7 +79,7 @@ class ModifyCustomerViewController: UITableViewController {
         }else {
             let customerTax = (customerTaxTextField.text=="") ? nil : "\(String(describing: customerTaxTextField.text!))"
             
-            let customer = Customer(id: self.customer?.id, personalDatas: Datas(
+            let customer = Customer(id: self.customer?.id, personalData: Datas(
                                     address: Address(city: cityTextField.text ?? "Default",
                                                      street: streetTextField.text ?? "Default",
                                                      postcode: postCodeTextField.text ?? "Default"),
@@ -87,7 +87,7 @@ class ModifyCustomerViewController: UITableViewController {
                                     name: customerNameTextField.text ?? "Default",
                                         phone: PhoneTextField.text ?? "Default",
                                         tax: customerTax
-                )
+                ), products: [], worksheets: []
             )
             saveCustomer(customer: customer)
         }
@@ -99,31 +99,31 @@ class ModifyCustomerViewController: UITableViewController {
         //Create document to database
         let docData : [String: Any]
         
-        if customer.personalDatas.tax != nil {
+        if customer.personalData.tax != nil {
             docData = [
                 "personalDatas": [
                     "address":[
-                        "city": customer.personalDatas.address.city,
-                        "postcode": customer.personalDatas.address.postcode,
-                        "street": customer.personalDatas.address.street
+                        "city": customer.personalData.address.city,
+                        "postcode": customer.personalData.address.postcode,
+                        "street": customer.personalData.address.street
                     ],
-                    "email": customer.personalDatas.email,
-                    "name": customer.personalDatas.name,
-                    "phone": customer.personalDatas.phone,
-                    "tax": customer.personalDatas.tax!
+                    "email": customer.personalData.email,
+                    "name": customer.personalData.name,
+                    "phone": customer.personalData.phone,
+                    "tax": customer.personalData.tax!
                 ]
             ]
         } else {
             docData = [
                 "personalDatas": [
                     "address":[
-                        "city": customer.personalDatas.address.city,
-                        "postcode": customer.personalDatas.address.postcode,
-                        "street": customer.personalDatas.address.street
+                        "city": customer.personalData.address.city,
+                        "postcode": customer.personalData.address.postcode,
+                        "street": customer.personalData.address.street
                     ],
-                    "email": customer.personalDatas.email,
-                    "name": customer.personalDatas.name,
-                    "phone": customer.personalDatas.phone
+                    "email": customer.personalData.email,
+                    "name": customer.personalData.name,
+                    "phone": customer.personalData.phone
                 ]
             ]
         }
