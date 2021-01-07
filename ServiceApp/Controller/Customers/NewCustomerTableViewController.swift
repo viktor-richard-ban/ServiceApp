@@ -18,7 +18,7 @@ class NewCustomerTableViewController: UITableViewController {
     let db = Firestore.firestore()
 
     var customer : Customer? = nil
-    var delegate : CustomerViewController? = nil
+    var delegate : CustomerDelegate? = nil
     var manager = CustomerManager()
     
     var modify : Bool = false
@@ -41,6 +41,7 @@ class NewCustomerTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        manager.delegate = self
         customerTaxCell.isHidden = true
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Mentés", style: .plain, target: self, action: #selector(doneClicked))
@@ -60,7 +61,6 @@ class NewCustomerTableViewController: UITableViewController {
         if segue.identifier == "GoToCustomer" {
             if let destination = segue.destination as? CustomerViewController {
                 destination.customer = self.customer
-                self.delegate = destination
             }
         }
     }
@@ -104,16 +104,27 @@ class NewCustomerTableViewController: UITableViewController {
                     }
                 } else {
                     manager.createCustomer(customer: customerDict)
-                    self.performSegue(withIdentifier: "GoToCustomer", sender: self)
-                    // Remove last item from navigation stack
-                    guard let navigationController = self.navigationController else { return }
-                    var navigationArray = navigationController.viewControllers
-                    navigationArray.remove(at: navigationArray.count - 2)
-                    self.navigationController?.viewControllers = navigationArray
                 }
             }
             
         }
     }
     
+}
+
+extension NewCustomerTableViewController : CustomerManagerDelegate {
+    func updateCustomers(customers: [Customer]) {
+        return
+    }
+    
+    func customerCreated(with: String) {
+        customer?.id = with
+        
+        self.performSegue(withIdentifier: "GoToCustomer", sender: self)
+        // Remove last item from navigation stack
+        guard let navigationController = self.navigationController else { return }
+        var navigationArray = navigationController.viewControllers
+        navigationArray.remove(at: navigationArray.count - 2)
+        self.navigationController?.viewControllers = navigationArray
+    }
 }

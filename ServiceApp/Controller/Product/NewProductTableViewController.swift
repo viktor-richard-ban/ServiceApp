@@ -78,8 +78,8 @@ class NewProductTableViewController: UITableViewController {
                 } else {
                     print("Document added with ID: \(ref!.documentID)")
                     if let id = ref?.documentID {
-                        self.productId? = id
-                        self.delegate?.updateProductId(id: self.productId ?? "Default")
+                        //self.productId? = id
+                        //self.delegate?.updateProductId(id: self.productId ?? "Default")
                     }
                     
                 }

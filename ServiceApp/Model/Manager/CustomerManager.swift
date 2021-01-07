@@ -8,14 +8,15 @@
 import Foundation
 import Firebase
 
-protocol customerManagerDelegate {
+protocol CustomerManagerDelegate {
     func updateCustomers(customers : [Customer])
+    func customerCreated(with: String)
 }
 
 struct CustomerManager {
     
     let db = Firestore.firestore()
-    var delegate : customerManagerDelegate?
+    var delegate : CustomerManagerDelegate?
     
     func fetchCustomers() {
         var customers : [Customer] = []
@@ -49,6 +50,9 @@ struct CustomerManager {
                 print("Error adding document: \(err)")
             } else {
                 print("Document added with ID: \(ref!.documentID)")
+            }
+            DispatchQueue.main.async {
+                delegate?.customerCreated(with: String(ref!.documentID))
             }
         }
     }

@@ -47,7 +47,11 @@ class CustomersViewController: UIViewController {
     
 }
 
-extension CustomersViewController : customerManagerDelegate {
+extension CustomersViewController : CustomerManagerDelegate {
+    func customerCreated(with: String) {
+        return
+    }
+    
     func updateCustomers(customers: [Customer]) {
         print("Update customer called")
         self.customers = customers

@@ -16,6 +16,8 @@ struct Customer : Codable {
     var products : [Product]?
     var worksheets : [Worksheet]?
     
+    var joinDate : Date?
+    
     func toDictionary() -> [String : Any] {
         var dict : [String : Any] = [:]
         dict["personalData"] = [

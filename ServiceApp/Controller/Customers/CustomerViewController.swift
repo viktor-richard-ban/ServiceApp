@@ -16,6 +16,8 @@ class CustomerViewController: UIViewController {
     var products : [Product] = []
     var selectedProductIndex : Int = 0
     
+    var productManager = ProductManager()
+    
     @IBOutlet weak var topGradientView: UIView!
     @IBOutlet weak var mainCard: UIView!
     
@@ -28,12 +30,15 @@ class CustomerViewController: UIViewController {
     @IBOutlet weak var productCollectionView: UICollectionView!
     
     override func viewDidLoad() {
-        print("customer id:\(customer?.id ?? "default")")
-        
         super.viewDidLoad()
+        
+        print("customer id:\(customer?.id ?? "default")")
+        productManager.delegate = self
+        productManager.fetchProducts(customerId: customer!.id!)
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Szerkesztés", style: .plain, target: self, action: #selector(editButtonClicked))
         
+        // Style
         addGradientToView(view: topGradientView)
         
         mainCard.layer.cornerRadius = mainCard.frame.size.height/15
@@ -56,13 +61,19 @@ class CustomerViewController: UIViewController {
         if let tax = customer?.personalData.tax {
             taxLabel.text = tax
         }
-    
-        fetchProducts()
         
     }
     
-    func addGradientToView(view: UIView)
-    {
+    override func viewWillAppear(_ animated: Bool) {
+        self.productCollectionView.reloadData()
+        
+        nameLabel.text = customer?.personalData.name
+        addressLabel.text = "\(customer?.personalData.address.postcode ?? "Default") \(customer?.personalData.address.city ?? "Default") \(customer?.personalData.address.street ?? "Default")"
+        emailLabel.text = customer?.personalData.email
+        phoneLabel.text = customer?.personalData.phone
+    }
+    
+    func addGradientToView(view: UIView) {
         let gradientLayer = CAGradientLayer()
             
         gradientLayer.colors = [
@@ -76,31 +87,6 @@ class CustomerViewController: UIViewController {
         gradientLayer.frame = view.bounds
             
         view.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
-    func fetchProducts() {
-        db.collection("products").whereField("customerId", isEqualTo: customer?.id as Any).addSnapshotListener { (querySnapshot, err) in
-            
-            self.products = []
-            
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    do {
-                        let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                        var product = try JSONDecoder().decode(Product.self, from: jsonData)
-                        product.productId = document.documentID
-                        self.products.append(product)
-                    } catch {
-                        print(error)
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.productCollectionView.reloadData()
-                }
-            }
-        }
     }
     
     
@@ -136,32 +122,18 @@ class CustomerViewController: UIViewController {
             }
         }
     }
+
+}
+
+extension CustomerViewController : ProductManagerDelegate {
     
-    override func viewWillAppear(_ animated: Bool) {
-        print("Appear")
+    func updateProducts(products : [Product]) {
+        self.products = products
         self.productCollectionView.reloadData()
-        
-        nameLabel.text = customer?.personalData.name
-        addressLabel.text = "\(customer?.personalData.address.postcode ?? "Default") \(customer?.personalData.address.city ?? "Default") \(customer?.personalData.address.street ?? "Default")"
-        emailLabel.text = customer?.personalData.email
-        phoneLabel.text = customer?.personalData.phone
     }
     
-
-}
-
-extension CustomerViewController : ProductDelegate {
-    
-    func updateProductId(id: String) {
-        self.products[products.count-1].productId = id
-        print("id added to: \(products[products.count-1].productName)")
-    }
-}
-
-extension CustomerViewController : CustomerDelegate {
-    
-    func updateCustomerId(customerId: String) {
-        self.customer?.id = customerId
+    func productCreated(with: String) {
+        return
     }
     
 }
@@ -169,7 +141,7 @@ extension CustomerViewController : CustomerDelegate {
 extension CustomerViewController : UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(products.count)
+        print("Product count: \(products.count)")
         return products.count
     }
     
@@ -194,7 +166,6 @@ extension CustomerViewController : UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(products[indexPath.row].productName)
         self.selectedProductIndex = indexPath.row
         performSegue(withIdentifier: "ModifyProduct", sender: self)
     }

@@ -9,8 +9,8 @@ import Foundation
 import FirebaseFirestoreSwift
 
 struct Product : Codable {
-    var customerId : String? = "-1"
-    var productId : String? = "-1"
+    var customerId : String?
+    var productId : String?
     var pin : Int?
     var productName : String
     var productNumber : String?
