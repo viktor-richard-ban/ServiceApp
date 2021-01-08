@@ -15,6 +15,7 @@ class CustomerViewController: UIViewController {
     var customer : Customer?
     var products : [Product] = []
     var selectedProductIndex : Int = 0
+    var modify = false
     
     var productManager = ProductManager()
     
@@ -106,18 +107,20 @@ class CustomerViewController: UIViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         if segue.identifier == "ModifyCustomer" {
-            if let destination = segue.destination as? ModifyCustomerViewController {
+            if let destination = segue.destination as? NewCustomerTableViewController {
+                print("Modify customer")
                 destination.customer = customer
                 destination.delegate = self
+                destination.modify = true
             }
         } else if segue.identifier == "NewProduct" {
             if let destination = segue.destination as? NewProductTableViewController {
-                destination.customerId = customer?.id
-            }
-        } else if segue.identifier == "ModifyProduct" {
-            if let destination = segue.destination as? ModifyProductTableViewController {
-                destination.product = products[selectedProductIndex]
-                destination.selectedProductIndex = selectedProductIndex
+                if modify {
+                    destination.product = products[selectedProductIndex]
+                    destination.modify = true
+                    modify = false
+                }
+                destination.delegate = self
                 destination.customerId = customer?.id
             }
         }
@@ -125,9 +128,26 @@ class CustomerViewController: UIViewController {
 
 }
 
+extension CustomerViewController : CustomerDelegate {
+    func customerUpdated(customer: Customer) {
+        self.customer = customer
+        self.nameLabel.text = self.customer?.personalData.name
+        self.taxLabel.text = "Magánszemély"
+        self.addressLabel.text = "\(self.customer?.personalData.address.postcode ?? "Default") \(self.customer?.personalData.address.city ?? "Default") \(self.customer?.personalData.address.street ?? "Default")"
+        self.emailLabel.text = self.customer?.personalData.email
+        self.phoneLabel.text = self.customer?.personalData.phone
+    }
+}
+
+extension CustomerViewController : ProductDelegate {
+    func updateProductId(id: String) {
+        return
+    }
+}
+
 extension CustomerViewController : ProductManagerDelegate {
     
-    func updateProducts(products : [Product]) {
+    func productsUpdated(products : [Product]) {
         self.products = products
         self.productCollectionView.reloadData()
     }
@@ -151,9 +171,9 @@ extension CustomerViewController : UICollectionViewDataSource, UICollectionViewD
         // Add datas
         cell.productNameLabel.text = products[indexPath.row].productName
         if let pin = products[indexPath.row].pin {
-            if String(pin) != "-" {
-                cell.pinLabel.text = String(pin)
-            }
+            cell.pinLabel.text = String(pin)
+        } else {
+            cell.pinLabel.text = "-"
         }
         cell.serialNumberLabel.text = products[indexPath.row].serialNumber
         cell.productNumberLabel.text = products[indexPath.row].productNumber
@@ -167,7 +187,8 @@ extension CustomerViewController : UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectedProductIndex = indexPath.row
-        performSegue(withIdentifier: "ModifyProduct", sender: self)
+        modify = true
+        performSegue(withIdentifier: "NewProduct", sender: self)
     }
     
 }

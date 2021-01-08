@@ -67,7 +67,7 @@ class ModifyProductTableViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         } else {
             let product = Product(
-                customerId: customerId ?? nil,
+                customerId: customerId ?? "nil",
                 pin: Int(pinLabel.text!) ?? nil,
                 productName: nameLabel.text!,
                 productNumber: productNoLabel.text ?? nil,

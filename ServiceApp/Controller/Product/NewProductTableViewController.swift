@@ -8,8 +8,13 @@
 import UIKit
 import Firebase
 
+protocol ProductDelegate {
+    func updateProductId(id : String)
+}
+
 class NewProductTableViewController: UITableViewController {
     
+    @IBOutlet weak var productTypeSelector: UISegmentedControl!
     @IBOutlet weak var nameLabel: UITextField!
     @IBOutlet weak var serialLabel: UITextField!
     @IBOutlet weak var productNoLabel: UITextField!
@@ -18,17 +23,27 @@ class NewProductTableViewController: UITableViewController {
     @IBOutlet weak var purchaseDateTextField: UITextField!
     
     var productType : String = "robotfűnyíró"
-    var customerId : String?
-    var productId : String?
     
     let db = Firestore.firestore()
-    var delegate : CustomerViewController? = nil
+    var delegate : ProductDelegate? = nil
+    var productManager = ProductManager()
+    
+    var modify = false
+    var customerId : String?
+    var product : Product? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let done = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.done))
                 self.navigationItem.rightBarButtonItem = done
+        
+        if modify {
+            title = "Termék szerkesztése"
+            loadProduct()
+        } else {
+            title = "Termék hozzáadása"
+        }
     }
 
     @IBAction func productTypeSelector(_ sender: UISegmentedControl) {
@@ -54,44 +69,61 @@ class NewProductTableViewController: UITableViewController {
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            let product = Product(
-                customerId: customerId ?? nil,
-                pin: Int(pinLabel.text!) ?? nil,
-                productName: nameLabel.text!,
-                productNumber: productNoLabel.text ?? nil,
-                productType: productType,
-                serialNumber: serialLabel.text ?? nil,
-                purchaseDate: purchaseDateTextField.text ?? "-"
-            )
-            createProduct(product: product)
+            if modify {
+                product?.productName = nameLabel.text!
+                product?.productNumber = productNoLabel.text!
+                product?.serialNumber = serialLabel.text!
+                product?.pin = Int(pinLabel.text!)
+                product?.purchaseDate = purchaseDateTextField.text!
+                product?.productType = productType
+                productManager.updateProduct(customerId: customerId!, productId: product!.productId!, productData: product!.toDictionary())
+            }else {
+                self.product = Product(
+                    customerId: customerId ?? "nil",
+                    pin: Int(pinLabel.text!) ?? nil,
+                    productName: nameLabel.text!,
+                    productNumber: productNoLabel.text ?? nil,
+                    productType: productType,
+                    serialNumber: serialLabel.text ?? nil,
+                    purchaseDate: purchaseDateTextField.text ?? "-"
+                )
+                //createProduct(product: product)
+                let productDictionary : [String:Any] = product!.toDictionary()
+                productManager.createProduct(customerId: customerId!, product: productDictionary)
+            }
         }
         
         self.navigationController?.popViewController(animated: true)
     }
     
-    func createProduct(product: Product) {
-        do {
-            var ref: DocumentReference? = nil
-            ref = try db.collection("products").addDocument(from: product){ err in
-                if let err = err {
-                    print("Error adding document: \(err)")
-                } else {
-                    print("Document added with ID: \(ref!.documentID)")
-                    if let id = ref?.documentID {
-                        //self.productId? = id
-                        //self.delegate?.updateProductId(id: self.productId ?? "Default")
-                    }
-                    
-                }
-            }
-          }
-        catch {
-            print(error)
+    func loadProduct() {
+        nameLabel.text = product?.productName
+        serialLabel.text = product?.serialNumber
+        productNoLabel.text = product?.productNumber
+        if let pin = product?.pin {
+            pinLabel.text = String(pin)
+        }
+        if product?.productType == "robotfűnyíró" {
+            productType = "robotfűnyíró"
+            pinCell.isHidden = false
+        } else {
+            productType = "egyéb"
+            pinCell.isHidden = true
+            productTypeSelector.selectedSegmentIndex = 1
+        }
+        if let pd = product?.purchaseDate {
+            purchaseDateTextField.text = pd
         }
     }
     
 }
 
-protocol ProductDelegate {
-    func updateProductId(id : String)
+extension NewProductTableViewController : ProductManagerDelegate {
+    func productsUpdated(products: [Product]) {
+        return
+    }
+    
+    func productCreated(with: String) {
+        navigationController?.popViewController(animated: true)
+    }
 }

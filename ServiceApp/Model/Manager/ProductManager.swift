@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 protocol ProductManagerDelegate {
-    func updateProducts(products : [Product])
+    func productsUpdated(products : [Product])
     func productCreated(with: String)
 }
 
@@ -37,9 +37,34 @@ struct ProductManager {
                     }
                 }
                 DispatchQueue.main.async {
-                    delegate?.updateProducts(products: products)
+                    delegate?.productsUpdated(products: products)
                     print(products)
                 }
+            }
+        }
+    }
+    
+    func createProduct(customerId: String, product : [String : Any]) {
+        var ref: DocumentReference? = nil
+        ref = db.collection("customers/\(customerId)/products").addDocument(data: product) { err in
+            if let err = err {
+                print("Error adding document: \(err)")
+            } else {
+                print("Document added with ID: \(ref!.documentID)")
+            }
+            DispatchQueue.main.async {
+                delegate?.productCreated(with: ref!.documentID)
+            }
+        }
+    }
+    
+    func updateProduct(customerId: String, productId: String, productData : [String : Any]) {
+        db.collection("customers/\(customerId)/products").document(productId).setData(productData) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("id: \(productId)\ndata: \(productData)")
+                print("Document successfully updated")
             }
         }
     }

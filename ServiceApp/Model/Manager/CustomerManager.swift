@@ -62,6 +62,7 @@ struct CustomerManager {
             if let err = err {
                 print("Error updating document: \(err)")
             } else {
+                print("id: \(id)\ndata: \(customerData)")
                 print("Document successfully updated")
             }
         }

@@ -23,7 +23,7 @@ struct Customer : Codable {
         dict["personalData"] = [
             "address" : [
                 "city" : personalData.address.city,
-                "street" : personalData.address.city,
+                "street" : personalData.address.street,
                 "postcode" : personalData.address.postcode
             ],
             "email" : personalData.email,
@@ -42,15 +42,15 @@ struct Customer : Codable {
 }
 
 struct Datas : Codable {
-    let address : Address
-    let email : String
-    let name : String
-    let phone : String
+    var address : Address
+    var email : String
+    var name : String
+    var phone : String
     var tax : String?
 }
 
 struct Address : Codable {
-    let city : String
-    let street : String
-    let postcode : String
+    var city : String
+    var street : String
+    var postcode : String
 }

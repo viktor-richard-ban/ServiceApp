@@ -10,7 +10,7 @@ import Firebase
 import FirebaseFirestoreSwift
 
 protocol CustomerDelegate {
-    func updateCustomerId(customerId: String)
+    func customerUpdated(customer: Customer)
 }
 
 class NewCustomerTableViewController: UITableViewController {
@@ -33,7 +33,7 @@ class NewCustomerTableViewController: UITableViewController {
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var streetTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var PhoneTextField: UITextField!
+    @IBOutlet weak var phoneTextField: UITextField!
     
     // Cells
     @IBOutlet weak var customerTaxCell: UIStackView!
@@ -43,6 +43,15 @@ class NewCustomerTableViewController: UITableViewController {
         
         manager.delegate = self
         customerTaxCell.isHidden = true
+        
+        if modify {
+            customerNameTextField.text = customer?.personalData.name
+            postCodeTextField.text = customer?.personalData.address.postcode
+            cityTextField.text = customer?.personalData.address.city
+            streetTextField.text = customer?.personalData.address.street
+            emailTextField.text = customer?.personalData.email
+            phoneTextField.text = customer?.personalData.phone
+        }
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Mentés", style: .plain, target: self, action: #selector(doneClicked))
         
@@ -72,7 +81,7 @@ class NewCustomerTableViewController: UITableViewController {
             cityTextField.text == "" ||
             streetTextField.text == "" ||
             emailTextField.text == "" ||
-            PhoneTextField.text == "" ||
+            phoneTextField.text == "" ||
             (customerTypeSelector.selectedSegmentIndex == 1 && customerTaxTextField.text==""){
                 let alert = UIAlertController(title: "Hiba", message: "Egy mező sem maradhat üresen", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -80,14 +89,18 @@ class NewCustomerTableViewController: UITableViewController {
         }else {
             let customerName = customerNameTextField.text!
             let email = emailTextField.text!
-            let phone = PhoneTextField.text!
+            let phone = phoneTextField.text!
             
             let city = cityTextField.text!
             let street = streetTextField.text!
             let postCode = postCodeTextField.text!
             
-            customer = Customer(id: nil, personalData: Datas(address: Address(city: city, street: street, postcode: postCode), email: email, name: customerName, phone: phone, tax: nil), products: [], worksheets: [])
-            
+            if modify {
+                customer?.personalData.name = customerNameTextField.text!
+            } else {
+                customer = Customer(id: nil, personalData: Datas(address: Address(city: city, street: street, postcode: postCode), email: email, name: customerName, phone: phone, tax: nil), products: [], worksheets: [])
+            }
+                
             if customerTaxTextField.text != "" {
                 customer!.personalData.tax = customerTaxTextField.text!
             }
@@ -100,11 +113,16 @@ class NewCustomerTableViewController: UITableViewController {
                 if modify {
                     if let id = customer?.id {
                         manager.updateCustomer(id: id, customerData: customerDict)
-                        navigationController?.popViewController(animated: true)
+                        print("Update customer with id")
+                    }
+                    DispatchQueue.main.async {
+                        self.delegate?.customerUpdated(customer: self.customer!)
+                        self.navigationController?.popViewController(animated: true)
                     }
                 } else {
                     manager.createCustomer(customer: customerDict)
                 }
+                
             }
             
         }

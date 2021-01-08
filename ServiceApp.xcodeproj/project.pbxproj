@@ -36,7 +36,6 @@
 		3AE366C925470FD300D1C218 /* NewCustomerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE366C825470FD300D1C218 /* NewCustomerTableViewController.swift */; };
 		3AE366CE2548361500D1C218 /* Worksheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE366CD2548361500D1C218 /* Worksheet.swift */; };
 		3AE366D12548611500D1C218 /* NewProductTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE366D02548611500D1C218 /* NewProductTableViewController.swift */; };
-		3AE366D7254AE6E600D1C218 /* ModifyCustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE366D6254AE6E600D1C218 /* ModifyCustomerViewController.swift */; };
 		3AE366DB254B675300D1C218 /* ModifyProductTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE366DA254B675200D1C218 /* ModifyProductTableViewController.swift */; };
 		3AE36707254ED24D00D1C218 /* WorksheetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE36706254ED24B00D1C218 /* WorksheetsViewController.swift */; };
 		3AE3670A254F166E00D1C218 /* EditLongTextTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE36709254F166D00D1C218 /* EditLongTextTableViewController.swift */; };
@@ -76,7 +75,6 @@
 		3AE366C825470FD300D1C218 /* NewCustomerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCustomerTableViewController.swift; sourceTree = "<group>"; };
 		3AE366CD2548361500D1C218 /* Worksheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Worksheet.swift; sourceTree = "<group>"; };
 		3AE366D02548611500D1C218 /* NewProductTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProductTableViewController.swift; sourceTree = "<group>"; };
-		3AE366D6254AE6E600D1C218 /* ModifyCustomerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyCustomerViewController.swift; sourceTree = "<group>"; };
 		3AE366DA254B675200D1C218 /* ModifyProductTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProductTableViewController.swift; sourceTree = "<group>"; };
 		3AE36706254ED24B00D1C218 /* WorksheetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksheetsViewController.swift; sourceTree = "<group>"; };
 		3AE36709254F166D00D1C218 /* EditLongTextTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLongTextTableViewController.swift; sourceTree = "<group>"; };
@@ -174,7 +172,6 @@
 				3A371001254215C9003BD01E /* CustomersViewController.swift */,
 				3A37107C254355E1003BD01E /* CustomerViewController.swift */,
 				3AE366C825470FD300D1C218 /* NewCustomerTableViewController.swift */,
-				3AE366D6254AE6E600D1C218 /* ModifyCustomerViewController.swift */,
 			);
 			path = Customers;
 			sourceTree = "<group>";
@@ -389,7 +386,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AE366D12548611500D1C218 /* NewProductTableViewController.swift in Sources */,
-				3AE366D7254AE6E600D1C218 /* ModifyCustomerViewController.swift in Sources */,
 				3A37107D254355E1003BD01E /* CustomerViewController.swift in Sources */,
 				3AE366B725461AE400D1C218 /* Product.swift in Sources */,
 				3A83D98D2571A13200F51F8A /* BusinessCardContentsViewController.swift in Sources */,
