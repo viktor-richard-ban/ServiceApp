@@ -106,7 +106,7 @@ class NewCustomerTableViewController: UITableViewController {
             }
             
             if let dict = customer?.toDictionary() {
-                let customerDict = dict
+                var customerDict = dict
                 
                 //customerDict["joinDate"] = Date()
                 // TODO: Pass actual date
@@ -120,6 +120,7 @@ class NewCustomerTableViewController: UITableViewController {
                         self.navigationController?.popViewController(animated: true)
                     }
                 } else {
+                    customerDict["joinDate"] = Int((Date().timeIntervalSince1970 * 1000).rounded())
                     manager.createCustomer(customer: customerDict)
                 }
                 

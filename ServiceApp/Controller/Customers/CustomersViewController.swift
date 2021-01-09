@@ -69,6 +69,7 @@ extension CustomersViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCustomerCell", for: indexPath) as! CustomerTableViewCell
         cell.nameLabel.text = customers[indexPath.row].personalData.name
         cell.cityLabel.text = customers[indexPath.row].personalData.address.city
+        cell.lastActvityLabel.text = customers[indexPath.row].joinDateString
         return cell
     }
     

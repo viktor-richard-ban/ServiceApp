@@ -16,7 +16,16 @@ struct Customer : Codable {
     var products : [Product]?
     var worksheets : [Worksheet]?
     
-    var joinDate : Date?
+    var joinDate : Int?
+    var joinDateString : String {
+        if let join = joinDate {
+            let date = Date(timeIntervalSince1970: TimeInterval(join/1000))
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy.MM.dd"
+            return formatter.string(from: date)
+        }
+        return "null"
+    }
     
     func toDictionary() -> [String : Any] {
         var dict : [String : Any] = [:]
@@ -37,8 +46,13 @@ struct Customer : Codable {
             dict["personalData"] = existingItems
         }
         
+        if let joinDate = joinDate {
+            dict["joinDate"] = joinDate
+        }
+        
         return dict
     }
+    
 }
 
 struct Datas : Codable {

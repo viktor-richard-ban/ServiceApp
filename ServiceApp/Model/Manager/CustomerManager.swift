@@ -20,7 +20,7 @@ struct CustomerManager {
     
     func fetchCustomers() {
         var customers : [Customer] = []
-        db.collection("customers").addSnapshotListener { (querySnapshot, err) in
+        db.collection("customers").order(by: "joinDate", descending: true).addSnapshotListener { (querySnapshot, err) in
             
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -58,7 +58,7 @@ struct CustomerManager {
     }
     
     func updateCustomer(id: String, customerData : [String : Any]) {
-        db.collection("customers").document(id).updateData(customerData) { err in
+        db.collection("customers").document(id).setData(customerData) { err in
             if let err = err {
                 print("Error updating document: \(err)")
             } else {

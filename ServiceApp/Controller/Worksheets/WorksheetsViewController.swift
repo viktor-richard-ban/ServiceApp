@@ -13,14 +13,10 @@ class WorksheetsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var worksheetData : [[String : Any]] = [[:]]
-    var productData : [[String : Any]] = [[:]]
-    var customerData : [[String : Any]] = [[:]]
+    var worksheetManager = WorksheetManager()
+    var worksheets : [Worksheet] = []
     
     var selectedIndex : Int?
-    
-    // Database
-    let db = Firestore.firestore()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +25,8 @@ class WorksheetsViewController: UIViewController {
         
         tableView.register(UINib(nibName: "WorksheetCell", bundle: nil), forCellReuseIdentifier: "WorksheetCell")
         
+        worksheetManager.delegate = self
+        worksheetManager.fetchWorksheets()
     }
     
     
@@ -46,9 +44,9 @@ class WorksheetsViewController: UIViewController {
                 destination.delegate = self
                 if let index = selectedIndex {
                     destination.isModify = true
-                    destination.customerData = customerData[index]
-                    destination.productData = productData[index]
-                    destination.worksheetData = worksheetData[index]
+                    //destination.customerData = customerData[index]
+                    //destination.productData = productData[index]
+                    //destination.worksheetData = worksheetData[index]
                 }
             }
         }
@@ -61,44 +59,28 @@ class WorksheetsViewController: UIViewController {
 extension WorksheetsViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if worksheetData.count == productData.count && customerData.count == productData.count {
-            return worksheetData.count
-        }
-        return 0
+        return self.worksheets.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WorksheetCell", for: indexPath) as! WorksheetTableViewCell
-        //Worksheet
-        if let date = worksheetData[indexPath.row]["date"] as? Timestamp {
-            let sec = date.seconds
-            let nanoInSec = Int64(date.nanoseconds / 1000000000)
-            let dateInterval = Date(timeIntervalSince1970: TimeInterval(sec+nanoInSec))
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy.MM.dd HH:mm"
-            cell.worksheetDateLabel.text = formatter.string(from: dateInterval)
-            
-        }
-        if let status = worksheetData[indexPath.row]["status"] as? String {
-            cell.statusLabel.text = status
-        }
-        
-        //Product
-        if let productName = productData[indexPath.row]["productName"] as? String {
-            cell.productNameLabel.text = productName
-        }
-        if let serialNumber = productData[indexPath.row]["serialNumber"] as? String {
-            cell.serialNumberLabel.text = "S/N: \(serialNumber)"
-        }
+        //Date
+        let dateData = worksheets[indexPath.row].date
+        let date = Date(timeIntervalSince1970: TimeInterval(dateData/1000))
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd"
+        cell.worksheetDateLabel.text = formatter.string(from: date)
         
         //Customer
-        if let personalData = customerData[indexPath.row]["personalDatas"] as? [String:Any]{
-            cell.customerNameLabel.text = personalData["name"] as? String
-            
-            if let address = personalData["address"] as? [String:Any] {
-                cell.customerPlaceLabel.text = address["city"] as? String
-            }
-        }
+        cell.customerNameLabel.text = worksheets[indexPath.row].customerName
+        cell.customerPlaceLabel.text = worksheets[indexPath.row].customerCity
+
+        //Product
+        cell.productNameLabel.text = worksheets[indexPath.row].productName
+        cell.serialNumberLabel.text = worksheets[indexPath.row].serialNumber
+        
+        //Worksheet status
+        cell.statusLabel.text = worksheets[indexPath.row].status
         
         return cell
     }
@@ -120,6 +102,20 @@ extension WorksheetsViewController : NewWorksheetDelegate {
     }
     
     func didUpdateProduct() {
+        return
     }
     
+}
+
+extension WorksheetsViewController : WorksheetManagerDelegate {
+    func worksheetCreated() {
+        print("Workseet created")
+    }
+    
+    func worksheetsUpdated(worksheets: [Worksheet]) {
+        print("Worksheets updated \(worksheets.count)")
+        self.worksheets = worksheets
+        tableView.reloadData()
+        return
+    }
 }

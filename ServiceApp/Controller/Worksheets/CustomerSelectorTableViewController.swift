@@ -10,48 +10,21 @@ import Firebase
 
 class CustomerSelectorTableViewController: UITableViewController {
     
-    let db = Firestore.firestore()
-    
     var customers: [Customer] = []
     var selectedCustomer = 0
     
     var delegate : NewWorksheetTableViewController?
+    var manager = CustomerManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("asdasdasdasdasdasdasd")
-        
         self.tableView.register(UINib(nibName: "CustomerCell", bundle: nil), forCellReuseIdentifier: "ReusableCustomerCell")
-        
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        fetchCustomers()
-    }
-    
-    func fetchCustomers() {
-        db.collection("customers").addSnapshotListener { (querySnapshot, err) in
-            
-            self.customers = []
-            
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    do {
-                        let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                        var customer = try JSONDecoder().decode(Customer.self, from: jsonData)
-                        customer.id = document.documentID
-                        self.customers.append(customer)
-                    } catch {
-                        print(error)
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-        }
+        
+        manager.delegate = self
+        manager.fetchCustomers()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -75,4 +48,15 @@ class CustomerSelectorTableViewController: UITableViewController {
     }
     
     
+}
+
+extension CustomerSelectorTableViewController : CustomerManagerDelegate {
+    func updateCustomers(customers: [Customer]) {
+        self.customers = customers
+        tableView.reloadData()
+    }
+    
+    func customerCreated(with: String) {
+        return
+    }
 }

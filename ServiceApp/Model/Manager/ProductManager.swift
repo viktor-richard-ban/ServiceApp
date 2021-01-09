@@ -38,7 +38,6 @@ struct ProductManager {
                 }
                 DispatchQueue.main.async {
                     delegate?.productsUpdated(products: products)
-                    print(products)
                 }
             }
         }
