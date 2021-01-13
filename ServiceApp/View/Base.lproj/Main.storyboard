@@ -591,12 +591,24 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="sWX-QC-73G" userLabel="ProductStack">
                                                 <rect key="frame" x="20" y="479" width="350" height="170"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Munkalapok" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ADW-3C-S3u">
-                                                        <rect key="frame" x="0.0" y="0.0" width="112" height="24"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Tyf-jf-d1r">
+                                                        <rect key="frame" x="0.0" y="0.0" width="141.66666666666666" height="24"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Munkalapok" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ADW-3C-S3u">
+                                                                <rect key="frame" x="0.0" y="0.0" width="112" height="24"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lN-Cy-OIU" userLabel="AddProduct">
+                                                                <rect key="frame" x="122.00000000000001" y="0.0" width="19.666666666666671" height="24"/>
+                                                                <state key="normal" image="plus.circle" catalog="system"/>
+                                                                <connections>
+                                                                    <action selector="addWorksheetPressed:" destination="kwi-Bt-uZA" eventType="touchUpInside" id="s0V-Kj-DGG"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7cx-9v-Cvu">
                                                         <rect key="frame" x="0.0" y="44" width="350" height="126"/>
                                                         <color key="backgroundColor" red="0.95191062179999997" green="0.95191062179999997" blue="0.95191062179999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -623,9 +635,9 @@
                                                     </collectionView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="7cx-9v-Cvu" firstAttribute="top" secondItem="ADW-3C-S3u" secondAttribute="bottom" constant="20" id="5qq-qB-dRG"/>
                                                     <constraint firstAttribute="trailing" secondItem="7cx-9v-Cvu" secondAttribute="trailing" id="ce9-b3-xwo"/>
                                                     <constraint firstItem="7cx-9v-Cvu" firstAttribute="leading" secondItem="sWX-QC-73G" secondAttribute="leading" id="dzz-Pe-axu"/>
+                                                    <constraint firstItem="7cx-9v-Cvu" firstAttribute="top" secondItem="Tyf-jf-d1r" secondAttribute="bottom" constant="20" id="qG0-IU-ZW3"/>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="170" id="wca-bb-gq1"/>
                                                 </constraints>
                                             </stackView>

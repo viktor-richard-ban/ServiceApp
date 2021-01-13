@@ -12,7 +12,7 @@ class ProductSelectorTableViewController: UITableViewController {
     
     let db = Firestore.firestore()
     
-    var customer : Customer?
+    var customerId : String? = nil
     var customerData : [String:Any]?
     var products : [Product] = []
     
@@ -25,39 +25,37 @@ class ProductSelectorTableViewController: UITableViewController {
     }
     
     func fetchProduct() {
-        if let customer = customerData {
-            if let id = customer["id"] as? String {
-                db.collection("products").whereField("customerId", isEqualTo: id).addSnapshotListener { (querySnapshot, err) in
-                    
-                    self.products = []
-                    
-                    if let err = err {
-                        print("Error getting documents: \(err)")
-                    } else {
-                        for document in querySnapshot!.documents {
-                            do {
-                                let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                                var product = try JSONDecoder().decode(Product.self, from: jsonData)
-                                product.productId = document.documentID
-                                self.products.append(product)
-                            } catch {
-                                print(error)
-                            }
+        if let id = customerId {
+            db.collection("customers/\(id)/products").whereField("customerId", isEqualTo: id).addSnapshotListener { (querySnapshot, err) in
+                
+                self.products = []
+                
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        do {
+                            let jsonData = try JSONSerialization.data(withJSONObject: document.data())
+                            var product = try JSONDecoder().decode(Product.self, from: jsonData)
+                            product.productId = document.documentID
+                            self.products.append(product)
+                        } catch {
+                            print(error)
                         }
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
                     }
                 }
             }
         }
-        
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        print("Products count: \(products.count)")
         return products.count
     }
 
@@ -70,6 +68,8 @@ class ProductSelectorTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.didProductSelected(selectedProduct: products[indexPath.row])
+        print(products.count)
+        print(indexPath.row)
         navigationController?.popViewController(animated: true)
     }
 

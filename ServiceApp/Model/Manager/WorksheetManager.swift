@@ -57,4 +57,14 @@ struct WorksheetManager {
         }
     }
     
+    func updateProduct(customerId: String, worksheetId: String, worksheetData : [String : Any]) {
+        db.collection("customers/\(customerId)/worksheets").document(worksheetId).setData(worksheetData) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+    }
+    
 }

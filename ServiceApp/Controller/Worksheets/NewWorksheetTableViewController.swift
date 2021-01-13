@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseFirestore
 
 protocol NewWorksheetDelegate {
     func didUpdateWorksheets()
@@ -14,17 +13,12 @@ protocol NewWorksheetDelegate {
 
 class NewWorksheetTableViewController: UITableViewController {
     
-    let db = Firestore.firestore()
-    
     var delegate : NewWorksheetDelegate? = nil
-    
-    var selectedCustomer : Customer?
+    var worksheetManager = WorksheetManager()
     
     var isModify = false
-    
-    var worksheetData : [String : Any] = [:]
-    var productData : [String : Any] = [:]
-    var customerData : [String : Any] = [:]
+    var worksheet : Worksheet = Worksheet(customerId: "", productId: "", date: 0, status: "Nyitott")
+    var selectedCustomer : Customer? = nil
 
     var reasons = [
         CheckItem(title: "Szerviz", done: true),
@@ -73,80 +67,42 @@ class NewWorksheetTableViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Mentés", style: .done, target: self, action: #selector(doneClicked))
         
+        worksheetManager.delegate = self
+        
         if isModify {
-            productNameLabel.text = productData["productName"] as? String
-            productVarriancyLabel.text = productData["purchaseDate"] as? String
-            if let personalData = customerData["personalDatas"] as? [String:Any] {
-                customerNameLabel.text = personalData["name"] as? String
-                
-                if let address = personalData["address"] as? [String:Any] {
-                    cusomterCityLabel.text = address["city"] as? String
-                }
-            }
-            if !worksheetData.isEmpty {
-                print("GARANCIAAAA")
-                if let warrianty = worksheetData["isWarrianty"] as? Bool {
-                    warriantySwitch.isOn = warrianty
-                    print("GARANCIAAAA")
-                }
-                if let reason = worksheetData["reason"] as? String {
+            print(worksheet)
+            
+            customerNameLabel.text = worksheet.customerName
+            cusomterCityLabel.text = worksheet.customerCity
+            productNameLabel.text = worksheet.productName
+            productVarriancyLabel.text = worksheet.purchaseDateString
+            
+            if worksheet.customerId != "" {
+                warriantySwitch.isSelected = worksheet.isWarrianty
+                if let reason = worksheet.reason {
                     reasonLabel.text = reason
                 }
-                if let errorDescription = worksheetData["errorDescription"] as? String {
-                    errorDescriptionLabel.text = errorDescription
+                errorDescriptionLabel.text = worksheet.errorDescription
+                acceptanceModeLabel.text = worksheet.acceptanceMode
+                accessoriesLabel.text = ""
+                if let accessories = worksheet.accessories {
+                    for i in 0 ..< accessories.count {
+                        accessoriesLabel.text?.append("\(accessories[i])  |  ")
+                    }
+                    accessoriesLabel.text?.removeLast(5)
                 }
-                if let acceptanceMode = worksheetData["acceptanceMode"] as? String {
-                    acceptanceModeLabel.text = acceptanceMode
-                }
-                // TODO: Accessories
-                if let status = worksheetData["status"] as? String {
-                    statusLabel.text = status
-                }
+                statusLabel.text = worksheet.status
+                currentDateLabel.text = worksheet.dateString
             }
-            
         } else {
-            let today = Date()
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy.MM.dd HH:mm"
-            currentDateLabel.text = formatter.string(from: today)
+            worksheet.date = Int(Date().timeIntervalSince1970*1000)
             
-            productVarriancyLabel.text = "-"
-            cusomterCityLabel.text = "-"
-            
-            // Add required date to document dictionary
-            worksheetData["isWarrianty"] = false
-            worksheetData["status"] = "Nyitott"
-            worksheetData["userId"] = "-"
-            worksheetData["date"] = today
+            productVarriancyLabel?.text = "-"
+            cusomterCityLabel?.text = "-"
         }
         
     }
     
-    func saveWorksheet() {
-        var ref: DocumentReference? = nil
-        ref = db.collection("worksheets").addDocument(data: worksheetData) { err in
-            if let err = err {
-                print("Error adding document: \(err)")
-            } else {
-                print("Document added with ID: \(ref!.documentID)")
-            }
-        }
-    }
-    
-    func updateWorksheet() {
-        if let id = worksheetData["id"] as? String {
-            if let index = worksheetData.index(forKey: "id") {
-                worksheetData.remove(at: index)
-            }
-            db.collection("worksheets").document(id).updateData(worksheetData) { err in
-                if let err = err {
-                    print("Error updating document: \(err)")
-                } else {
-                    print("Document successfully updated")
-                }
-            }
-        }
-    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
@@ -220,29 +176,23 @@ class NewWorksheetTableViewController: UITableViewController {
     }
     
     @IBAction func warriantySwitchClicked(_ sender: UISwitch) {
-        if let warrianty = worksheetData["isWarrianty"] as? Bool {
-            worksheetData["isWarrianty"] = !warrianty
-        }
+        worksheet.isWarrianty = !worksheet.isWarrianty
     }
     
     // MARK - Objc
     @objc func doneClicked() {
-        // TODO: Send email to customer
-        
         // Save data to database
         if productNameLabel.text == "Nincs kiválasztva" {
             let alert = UIAlertController(title: "Hiba", message: "Termék mező nem maradhat üresen", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            // Create Worksheet model
-            worksheetData["customerId"] = selectedCustomer?.id
-            
             // Save to database
             if isModify {
-                updateWorksheet()
+                //updateWorksheet()
             } else {
-                saveWorksheet()
+                //saveWorksheet()
+                worksheetManager.createWorksheet(customerId: worksheet.customerId, worksheet: worksheet.toDictionary())
             }
         
         }
@@ -281,8 +231,7 @@ class NewWorksheetTableViewController: UITableViewController {
         } else if segue.identifier == "ProductSelector" {
             if let destination = segue.destination as? ProductSelectorTableViewController {
                 destination.delegate = self
-                destination.customer = selectedCustomer
-                destination.customerData = customerData
+                destination.customerId = worksheet.customerId
             }
         }
     }
@@ -310,14 +259,11 @@ extension NewWorksheetTableViewController : LongTextDelegate, CheckBoxDelegate, 
             accessoriesLabel.text = labelText
             accessories = rows
             if labelText == "" {
-                if let index = worksheetData.index(forKey: "accessories") {
-                    worksheetData.remove(at: index)
-                }
+                worksheet.accessories = []
             } else {
-                worksheetData["accessories"] = items
+                worksheet.accessories = items
             }
             
-            print(worksheetData)
         }
     }
     
@@ -328,20 +274,17 @@ extension NewWorksheetTableViewController : LongTextDelegate, CheckBoxDelegate, 
             reasonLabel.text = reasons[selected].title
             reasons = rows
             
-            worksheetData["reason"] = reasons[selected].title
-            print(worksheetData)
+            worksheet.reason = reasons[selected].title
         } else if labelName == "acceptance" {
             acceptanceModeLabel.text = acceptanceModes[selected].title
             acceptanceModes = rows
             
-            worksheetData["acceptanceMode"] = acceptanceModes[selected].title
-            print(worksheetData)
+            worksheet.acceptanceMode = acceptanceModes[selected].title
         } else if labelName == "status" {
             statusLabel.text = statuses[selected].title
             statuses = rows
             
-            worksheetData["status"] = statuses[selected].title
-            print(worksheetData)
+            worksheet.status = statuses[selected].title
         }
     }
     
@@ -351,12 +294,10 @@ extension NewWorksheetTableViewController : LongTextDelegate, CheckBoxDelegate, 
         if labelName == "errorDescriptionLabel" {
             if text != "" {
                 errorDescriptionLabel.text = text
-                worksheetData["errorDescription"] = text
+                worksheet.errorDescription = text
             } else {
                 errorDescriptionLabel.text = "Nincs"
-                if let index = worksheetData.index(forKey: "errorDescription") {
-                    worksheetData.remove(at: index)
-                }
+                worksheet.errorDescription = "Nincs megadva"
             }
         } else {
             errorDescriptionLabel.text = "Hiba"
@@ -365,13 +306,37 @@ extension NewWorksheetTableViewController : LongTextDelegate, CheckBoxDelegate, 
     
 }
 
+extension NewWorksheetTableViewController : CustomerSelectorDelegate {
+    func customerSelected(customer: Customer) {
+        self.customerNameLabel.text = customer.personalData.name
+        self.cusomterCityLabel.text = customer.personalData.address.city
+        self.worksheet.customerId = customer.id!
+        self.worksheet.customerName = customer.personalData.name
+        self.worksheet.customerCity = customer.personalData.address.city
+    }
+}
+
 extension NewWorksheetTableViewController : ProductSelectorDelegate {
     
     func didProductSelected(selectedProduct: Product) {
-        productNameLabel.text = selectedProduct.productName
-        productVarriancyLabel.text = selectedProduct.purchaseDate
-        
-        worksheetData["productId"] = selectedProduct.productId
+        self.worksheet.productId = selectedProduct.productId!
+        self.worksheet.serialNumber = selectedProduct.serialNumber
+        self.worksheet.productName = selectedProduct.productName
+        self.productNameLabel.text = selectedProduct.productName
+        self.productVarriancyLabel.text = selectedProduct.purchaseDate
     }
     
+}
+
+extension NewWorksheetTableViewController : WorksheetManagerDelegate {
+    func worksheetsUpdated(worksheets: [Worksheet]) {
+        return
+    }
+    
+    func worksheetCreated() {
+        // TODO: Send email to customer
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
 }

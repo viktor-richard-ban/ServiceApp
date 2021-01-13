@@ -8,12 +8,16 @@
 import UIKit
 import Firebase
 
+protocol CustomerSelectorDelegate {
+    func customerSelected(customer: Customer)
+}
+
 class CustomerSelectorTableViewController: UITableViewController {
     
     var customers: [Customer] = []
     var selectedCustomer = 0
     
-    var delegate : NewWorksheetTableViewController?
+    var delegate : CustomerSelectorDelegate?
     var manager = CustomerManager()
 
     override func viewDidLoad() {
@@ -39,11 +43,7 @@ class CustomerSelectorTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.selectedCustomer = customers[indexPath.row]
-        delegate?.customerNameLabel.text = customers[indexPath.row].personalData.name
-        delegate?.cusomterCityLabel.text = customers[indexPath.row].personalData.address.city
-        delegate?.productVarriancyLabel.text = "-"
-        delegate?.productNameLabel.text = "Nincs kiválasztva"
+        delegate?.customerSelected(customer: customers[indexPath.row])
         navigationController?.popViewController(animated: true)
     }
     

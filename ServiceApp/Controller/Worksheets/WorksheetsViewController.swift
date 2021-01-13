@@ -44,9 +44,8 @@ class WorksheetsViewController: UIViewController {
                 destination.delegate = self
                 if let index = selectedIndex {
                     destination.isModify = true
-                    //destination.customerData = customerData[index]
-                    //destination.productData = productData[index]
-                    //destination.worksheetData = worksheetData[index]
+                    destination.worksheet = worksheets[index]
+                    selectedIndex = nil
                 }
             }
         }

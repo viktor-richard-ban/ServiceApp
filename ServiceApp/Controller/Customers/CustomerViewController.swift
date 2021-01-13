@@ -97,6 +97,10 @@ class CustomerViewController: UIViewController {
         performSegue(withIdentifier: "NewProduct", sender: self)
     }
     
+    @IBAction func addWorksheetPressed(_ sender: UIButton) {
+        //TODO: show newWorksheVC
+    }
+    
     @objc func editButtonClicked () {
         performSegue(withIdentifier: "ModifyCustomer", sender: self)
     }
