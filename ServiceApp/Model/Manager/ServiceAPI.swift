@@ -45,11 +45,15 @@ struct ServiceAPI {
         }
     }
     
-    func getCustomerWith(id: String, callback: (Customer)->()) {
+    func getCustomerWith(id: String, callback: @escaping (Customer)->()) {
         db.collection("customers").document(id).getDocument { (document, error) in
             if let document = document, document.exists {
-                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                print("Document data: \(dataDescription)")
+                if var model = Customer(initDictionary: document.data()!) {
+                    model.id = document.documentID
+                    callback(model)
+                } else {
+                      preconditionFailure("Unable to initialize type \(Product.self) with dictionary \(document.data())")
+                }
             } else {
                 print("Document does not exist")
             }
@@ -79,7 +83,7 @@ struct ServiceAPI {
     }
     
     //MARK: Worksheets
-    func getCustomersWorksheetsWith(id: String) {
+    func getCustomersWorksheetsWith(id: String, callback: @escaping ([Worksheet]) -> ()) {
         db.collection("customers/\(id)/worksheets").getDocuments { (snapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -89,18 +93,31 @@ struct ServiceAPI {
                     if var model = Worksheet(initDictionary: document.data()) {
                         model.id = document.documentID
                         
-                        //Customer
-                        
-                        
+                        /*Customer
+                        getCustomerWith(id: model.customerId, callback: { (customer) in
+                            model.customer = customer
+                        })
+                        */
                         //Product
-                        
-                        
                         return model
                     } else {
                           preconditionFailure("Unable to initialize type \(Product.self) with dictionary \(document.data())")
                     }
                 }
-                print(models)
+                
+                let group = DispatchGroup()
+                for var model in models {
+                    group.enter()
+                    getCustomerWith(id: model.customerId, callback: { (customer) in
+                        model.customer = customer
+                        group.leave()
+                    })
+                    //getProducts()
+                }
+                group.notify(queue: .main, execute: {
+                    callback(models)
+                })
+                print("asd_1")
             }
         }
     }

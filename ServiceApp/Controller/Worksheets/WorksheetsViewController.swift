@@ -24,7 +24,6 @@ class WorksheetsViewController: UIViewController {
         super.viewDidLoad()
         
         serviceAPI.delegate = self
-        serviceAPI.getFirstTenCustomers()
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addWorksheet))
         

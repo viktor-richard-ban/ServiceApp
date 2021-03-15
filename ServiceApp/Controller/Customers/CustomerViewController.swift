@@ -34,7 +34,11 @@ class CustomerViewController: UIViewController {
         
         serviceAPI.delegate = self
         serviceAPI.getCustomersProductsWith(id: customer.id!)
-        serviceAPI.getCustomersWorksheetsWith(id: customer.id!)
+        serviceAPI.getCustomersWorksheetsWith(id: customer.id!, callback: { worksheets in
+            self.customer.worksheets = worksheets
+            // TODO: Update collection
+            print(self.customer)
+        })
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Szerkesztés", style: .plain, target: self, action: #selector(editButtonClicked))
         
