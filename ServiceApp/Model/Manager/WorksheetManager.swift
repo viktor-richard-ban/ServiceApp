@@ -30,7 +30,7 @@ struct WorksheetManager {
                     do {
                         let jsonData = try JSONSerialization.data(withJSONObject: document.data())
                         var worksheet = try JSONDecoder().decode(Worksheet.self, from: jsonData)
-                        worksheet.worksheetId = document.documentID
+                        //worksheet.worksheetId = document.documentID
                         worksheets.append(worksheet)
                     } catch {
                         print("Error: \(error)")

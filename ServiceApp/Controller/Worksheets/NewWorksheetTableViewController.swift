@@ -17,8 +17,8 @@ class NewWorksheetTableViewController: UITableViewController {
     var worksheetManager = WorksheetManager()
     
     var isModify = false
-    var worksheet : Worksheet = Worksheet(customerId: "", productId: "", date: 0, status: "Nyitott")
-    var selectedCustomer : Customer? = nil
+    var worksheet : Worksheet = Worksheet(initDictionary: [:])!
+    var selectedCustomer : CustomerTmp? = nil
 
     var reasons = [
         CheckItem(title: "Szerviz", done: true),
@@ -68,7 +68,7 @@ class NewWorksheetTableViewController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Mentés", style: .done, target: self, action: #selector(doneClicked))
         
         worksheetManager.delegate = self
-        
+        /*
         if isModify {
             print(worksheet)
             
@@ -100,6 +100,7 @@ class NewWorksheetTableViewController: UITableViewController {
             productVarriancyLabel?.text = "-"
             cusomterCityLabel?.text = "-"
         }
+        */
         
     }
     
@@ -192,7 +193,7 @@ class NewWorksheetTableViewController: UITableViewController {
                 //updateWorksheet()
             } else {
                 //saveWorksheet()
-                worksheetManager.createWorksheet(customerId: worksheet.customerId, worksheet: worksheet.toDictionary())
+                //worksheetManager.createWorksheet(customerId: worksheet.customerId, worksheet: worksheet.toDictionary())
             }
         
         }
@@ -307,21 +308,21 @@ extension NewWorksheetTableViewController : LongTextDelegate, CheckBoxDelegate, 
 }
 
 extension NewWorksheetTableViewController : CustomerSelectorDelegate {
-    func customerSelected(customer: Customer) {
+    func customerSelected(customer: CustomerTmp) {
         self.customerNameLabel.text = customer.personalData.name
-        self.cusomterCityLabel.text = customer.personalData.address.city
+        //self.cusomterCityLabel.text = customer.personalData.address.city
         self.worksheet.customerId = customer.id!
-        self.worksheet.customerName = customer.personalData.name
-        self.worksheet.customerCity = customer.personalData.address.city
+        //self.worksheet.customerName = customer.personalData.name
+        //self.worksheet.customerCity = customer.personalData.address.city
     }
 }
 
 extension NewWorksheetTableViewController : ProductSelectorDelegate {
     
-    func didProductSelected(selectedProduct: Product) {
+    func didProductSelected(selectedProduct: ProductTmp) {
         self.worksheet.productId = selectedProduct.productId!
-        self.worksheet.serialNumber = selectedProduct.serialNumber
-        self.worksheet.productName = selectedProduct.productName
+        //self.worksheet.serialNumber = selectedProduct.serialNumber
+        //self.worksheet.productName = selectedProduct.productName
         self.productNameLabel.text = selectedProduct.productName
         self.productVarriancyLabel.text = selectedProduct.purchaseDate
     }

@@ -20,7 +20,7 @@ class ModifyProductTableViewController: UITableViewController {
     
     var productType : String = "robotfűnyíró"
     var customerId : String?
-    var product : Product? = nil
+    var product : ProductTmp? = nil
     var selectedProductIndex : Int? = nil
     
     let db = Firestore.firestore()
@@ -66,8 +66,7 @@ class ModifyProductTableViewController: UITableViewController {
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            let product = Product(
-                customerId: customerId ?? "nil",
+            let product = ProductTmp(
                 pin: Int(pinLabel.text!) ?? nil,
                 productName: nameLabel.text!,
                 productNumber: productNoLabel.text ?? nil,
@@ -81,8 +80,8 @@ class ModifyProductTableViewController: UITableViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    func updateProduct(product: Product) {
-        self.delegate?.products[selectedProductIndex!] = product
+    func updateProduct(product: ProductTmp) {
+        //self.delegate?.products[selectedProductIndex!] = product
         
         let data = try! FirebaseEncoder().encode(product)
         let _ = db.collection("products").document((self.product?.productId)!).updateData(data as! [AnyHashable : Any])

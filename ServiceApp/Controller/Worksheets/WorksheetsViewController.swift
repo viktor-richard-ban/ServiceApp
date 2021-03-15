@@ -17,16 +17,21 @@ class WorksheetsViewController: UIViewController {
     var worksheets : [Worksheet] = []
     
     var selectedIndex : Int?
+    
+    var serviceAPI = ServiceAPI()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        serviceAPI.delegate = self
+        serviceAPI.getFirstTenCustomers()
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addWorksheet))
         
         tableView.register(UINib(nibName: "WorksheetCell", bundle: nil), forCellReuseIdentifier: "WorksheetCell")
         
         worksheetManager.delegate = self
-        worksheetManager.fetchWorksheets()
+        //worksheetManager.fetchWorksheets()
     }
     
     
@@ -44,7 +49,7 @@ class WorksheetsViewController: UIViewController {
                 destination.delegate = self
                 if let index = selectedIndex {
                     destination.isModify = true
-                    destination.worksheet = worksheets[index]
+                    //destination.worksheet = worksheets[index]
                     selectedIndex = nil
                 }
             }
@@ -71,12 +76,12 @@ extension WorksheetsViewController : UITableViewDelegate, UITableViewDataSource 
         cell.worksheetDateLabel.text = formatter.string(from: date)
         
         //Customer
-        cell.customerNameLabel.text = worksheets[indexPath.row].customerName
-        cell.customerPlaceLabel.text = worksheets[indexPath.row].customerCity
+        //cell.customerNameLabel.text = worksheets[indexPath.row].customerName
+        //cell.customerPlaceLabel.text = worksheets[indexPath.row].customerCity
 
         //Product
-        cell.productNameLabel.text = worksheets[indexPath.row].productName
-        cell.serialNumberLabel.text = worksheets[indexPath.row].serialNumber
+        //cell.productNameLabel.text = worksheets[indexPath.row].productName
+        //cell.serialNumberLabel.text = worksheets[indexPath.row].serialNumber
         
         //Worksheet status
         cell.statusLabel.text = worksheets[indexPath.row].status
@@ -115,6 +120,20 @@ extension WorksheetsViewController : WorksheetManagerDelegate {
         print("Worksheets updated \(worksheets.count)")
         self.worksheets = worksheets
         tableView.reloadData()
+        return
+    }
+}
+
+extension WorksheetsViewController: ServiceAPIDelegate {
+    func didCustomersRetrieved(customers: [Customer]) {
+        return
+    }
+    
+    func didCustomersProductsRetrieved(products: [Product]) {
+        return
+    }
+    
+    func didCustomersWorksheetsRetrieved(worksheet: [Worksheet]) {
         return
     }
 }

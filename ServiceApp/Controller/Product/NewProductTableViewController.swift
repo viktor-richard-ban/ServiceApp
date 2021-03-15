@@ -30,7 +30,7 @@ class NewProductTableViewController: UITableViewController {
     
     var modify = false
     var customerId : String?
-    var product : Product? = nil
+    var product : ProductTmp? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,8 +78,7 @@ class NewProductTableViewController: UITableViewController {
                 product?.productType = productType
                 productManager.updateProduct(customerId: customerId!, productId: product!.productId!, productData: product!.toDictionary())
             }else {
-                self.product = Product(
-                    customerId: customerId ?? "nil",
+                self.product = ProductTmp(
                     pin: Int(pinLabel.text!) ?? nil,
                     productName: nameLabel.text!,
                     productNumber: productNoLabel.text ?? nil,
@@ -119,7 +118,7 @@ class NewProductTableViewController: UITableViewController {
 }
 
 extension NewProductTableViewController : ProductManagerDelegate {
-    func productsUpdated(products: [Product]) {
+    func productsUpdated(products: [ProductTmp]) {
         return
     }
     

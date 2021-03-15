@@ -9,12 +9,12 @@ import UIKit
 import Firebase
 
 protocol CustomerSelectorDelegate {
-    func customerSelected(customer: Customer)
+    func customerSelected(customer: CustomerTmp)
 }
 
 class CustomerSelectorTableViewController: UITableViewController {
     
-    var customers: [Customer] = []
+    var customers: [CustomerTmp] = []
     var selectedCustomer = 0
     
     var delegate : CustomerSelectorDelegate?
@@ -38,7 +38,7 @@ class CustomerSelectorTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCustomerCell", for: indexPath) as! CustomerTableViewCell
         cell.nameLabel.text = customers[indexPath.row].personalData.name
-        cell.cityLabel.text = customers[indexPath.row].personalData.address.city
+        //cell.cityLabel.text = customers[indexPath.row].personalData.address.city
         return cell
     }
     
@@ -51,7 +51,7 @@ class CustomerSelectorTableViewController: UITableViewController {
 }
 
 extension CustomerSelectorTableViewController : CustomerManagerDelegate {
-    func updateCustomers(customers: [Customer]) {
+    func updateCustomers(customers: [CustomerTmp]) {
         self.customers = customers
         tableView.reloadData()
     }

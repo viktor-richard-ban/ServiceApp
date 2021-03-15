@@ -12,12 +12,14 @@ class CustomersViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var customerManager = CustomerManager()
+    var serviceAPI = ServiceAPI()
     var customers: [Customer] = []
     var selectedCustomer = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        serviceAPI.delegate = self
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addClicked))
         
@@ -25,8 +27,7 @@ class CustomersViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
-        customerManager.delegate = self
-        customerManager.fetchCustomers()
+        serviceAPI.getFirstTenCustomers()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -47,18 +48,6 @@ class CustomersViewController: UIViewController {
     
 }
 
-extension CustomersViewController : CustomerManagerDelegate {
-    func customerCreated(with: String) {
-        return
-    }
-    
-    func updateCustomers(customers: [Customer]) {
-        print("Update customer called")
-        self.customers = customers
-        self.tableView.reloadData()
-    }
-}
-
 extension CustomersViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,8 +57,11 @@ extension CustomersViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCustomerCell", for: indexPath) as! CustomerTableViewCell
         cell.nameLabel.text = customers[indexPath.row].personalData.name
-        cell.cityLabel.text = customers[indexPath.row].personalData.address.city
-        cell.lastActvityLabel.text = customers[indexPath.row].joinDateString
+        cell.cityLabel.text = customers[indexPath.row].personalData.address?.city
+        if let city = customers[indexPath.row].personalData.address?.city {
+            cell.cityLabel.text = city
+        }
+        cell.lastActvityLabel.text = customers[indexPath.row].lastActivityString
         return cell
     }
     
@@ -78,4 +70,17 @@ extension CustomersViewController: UITableViewDataSource, UITableViewDelegate {
         self.performSegue(withIdentifier: "CustomerSegue", sender: self)
     }
 
+}
+
+extension CustomersViewController: ServiceAPIDelegate {
+    func didCustomersRetrieved(customers: [Customer]) {
+        self.customers = customers
+        tableView.reloadData()
+    }
+    func didCustomersProductsRetrieved(products: [Product]) {
+        return
+    }
+    func didCustomersWorksheetsRetrieved(worksheet: [Worksheet]) {
+        return
+    }
 }

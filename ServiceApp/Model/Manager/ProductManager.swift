@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 protocol ProductManagerDelegate {
-    func productsUpdated(products : [Product])
+    func productsUpdated(products : [ProductTmp])
     func productCreated(with: String)
 }
 
@@ -21,7 +21,7 @@ struct ProductManager {
     func fetchProducts(customerId: String) {
         db.collection("customers/\(customerId)/products").addSnapshotListener { (querySnapshot, err) in
             
-            var products : [Product] = []
+            var products : [ProductTmp] = []
             
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -29,7 +29,7 @@ struct ProductManager {
                 for document in querySnapshot!.documents {
                     do {
                         let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                        var product = try JSONDecoder().decode(Product.self, from: jsonData)
+                        var product = try JSONDecoder().decode(ProductTmp.self, from: jsonData)
                         product.productId = document.documentID
                         products.append(product)
                     } catch {

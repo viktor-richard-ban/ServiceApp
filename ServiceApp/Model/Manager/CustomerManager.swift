@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 protocol CustomerManagerDelegate {
-    func updateCustomers(customers : [Customer])
+    func updateCustomers(customers : [CustomerTmp])
     func customerCreated(with: String)
 }
 
@@ -19,7 +19,7 @@ struct CustomerManager {
     var delegate : CustomerManagerDelegate?
     
     func fetchCustomers() {
-        var customers : [Customer] = []
+        var customers : [CustomerTmp] = []
         db.collection("customers").order(by: "joinDate", descending: true).addSnapshotListener { (querySnapshot, err) in
             
             if let err = err {
@@ -28,7 +28,7 @@ struct CustomerManager {
                 for document in querySnapshot!.documents {
                     do {
                         let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                        var customer = try JSONDecoder().decode(Customer.self, from: jsonData)
+                        var customer = try JSONDecoder().decode(CustomerTmp.self, from: jsonData)
                         customer.id = document.documentID
                         customers.append(customer)
                     } catch {

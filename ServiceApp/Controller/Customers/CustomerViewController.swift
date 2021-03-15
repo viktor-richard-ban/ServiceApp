@@ -12,12 +12,11 @@ class CustomerViewController: UIViewController {
     
     let db = Firestore.firestore()
     
-    var customer : Customer?
-    var products : [Product] = []
+    var customer : Customer!
     var selectedProductIndex : Int = 0
     var modify = false
     
-    var productManager = ProductManager()
+    var serviceAPI = ServiceAPI()
     
     @IBOutlet weak var topGradientView: UIView!
     @IBOutlet weak var mainCard: UIView!
@@ -33,9 +32,9 @@ class CustomerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("customer id:\(customer?.id ?? "default")")
-        productManager.delegate = self
-        productManager.fetchProducts(customerId: customer!.id!)
+        serviceAPI.delegate = self
+        serviceAPI.getCustomersProductsWith(id: customer.id!)
+        serviceAPI.getCustomersWorksheetsWith(id: customer.id!)
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Szerkesztés", style: .plain, target: self, action: #selector(editButtonClicked))
         
@@ -55,7 +54,7 @@ class CustomerViewController: UIViewController {
         
         nameLabel.text = customer?.personalData.name
         taxLabel.text = "Magánszemély"
-        addressLabel.text = "\(customer?.personalData.address.postcode ?? "Default") \(customer?.personalData.address.city ?? "Default") \(customer?.personalData.address.street ?? "Default")"
+        //addressLabel.text = "\(customer?.personalData.address.postcode ?? "Default") \(customer?.personalData.address.city ?? "Default") \(customer?.personalData.address.street ?? "Default")"
         emailLabel.text = customer?.personalData.email
         phoneLabel.text = customer?.personalData.phone
         
@@ -69,7 +68,7 @@ class CustomerViewController: UIViewController {
         self.productCollectionView.reloadData()
         
         nameLabel.text = customer?.personalData.name
-        addressLabel.text = "\(customer?.personalData.address.postcode ?? "Default") \(customer?.personalData.address.city ?? "Default") \(customer?.personalData.address.street ?? "Default")"
+        //addressLabel.text = "\(customer?.personalData.address.postcode ?? "Default") \(customer?.personalData.address.city ?? "Default") \(customer?.personalData.address.street ?? "Default")"
         emailLabel.text = customer?.personalData.email
         phoneLabel.text = customer?.personalData.phone
     }
@@ -113,14 +112,14 @@ class CustomerViewController: UIViewController {
         if segue.identifier == "ModifyCustomer" {
             if let destination = segue.destination as? NewCustomerTableViewController {
                 print("Modify customer")
-                destination.customer = customer
+                //destination.customer = customer
                 destination.delegate = self
                 destination.modify = true
             }
         } else if segue.identifier == "NewProduct" {
             if let destination = segue.destination as? NewProductTableViewController {
                 if modify {
-                    destination.product = products[selectedProductIndex]
+                    //destination.product = products[selectedProductIndex]
                     destination.modify = true
                     modify = false
                 }
@@ -133,11 +132,11 @@ class CustomerViewController: UIViewController {
 }
 
 extension CustomerViewController : CustomerDelegate {
-    func customerUpdated(customer: Customer) {
-        self.customer = customer
+    func customerUpdated(customer: CustomerTmp) {
+        //self.customer = customer
         self.nameLabel.text = self.customer?.personalData.name
         self.taxLabel.text = "Magánszemély"
-        self.addressLabel.text = "\(self.customer?.personalData.address.postcode ?? "Default") \(self.customer?.personalData.address.city ?? "Default") \(self.customer?.personalData.address.street ?? "Default")"
+        //self.addressLabel.text = "\(self.customer?.personalData.address.postcode ?? "Default") \(self.customer?.personalData.address.city ?? "Default") \(self.customer?.personalData.address.street ?? "Default")"
         self.emailLabel.text = self.customer?.personalData.email
         self.phoneLabel.text = self.customer?.personalData.phone
     }
@@ -149,39 +148,25 @@ extension CustomerViewController : ProductDelegate {
     }
 }
 
-extension CustomerViewController : ProductManagerDelegate {
-    
-    func productsUpdated(products : [Product]) {
-        self.products = products
-        self.productCollectionView.reloadData()
-    }
-    
-    func productCreated(with: String) {
-        return
-    }
-    
-}
-
 extension CustomerViewController : UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("Product count: \(products.count)")
-        return products.count
+        return customer.products.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = productCollectionView.dequeueReusableCell(withReuseIdentifier: "productCell", for: indexPath) as! ProductCollectionViewCell
         
         // Add datas
-        cell.productNameLabel.text = products[indexPath.row].productName
-        if let pin = products[indexPath.row].pin {
+        cell.productNameLabel.text = customer.products[indexPath.row].name
+        if let pin = customer.products[indexPath.row].pin {
             cell.pinLabel.text = String(pin)
         } else {
             cell.pinLabel.text = "-"
         }
-        cell.serialNumberLabel.text = products[indexPath.row].serialNumber
-        cell.productNumberLabel.text = products[indexPath.row].productNumber
-        cell.purchaseDate.text = products[indexPath.row].purchaseDate
+        cell.serialNumberLabel.text = customer.products[indexPath.row].serialNumber
+        cell.productNumberLabel.text = customer.products[indexPath.row].productNumber
+        cell.purchaseDate.text = customer.products[indexPath.row].purchaseDate
         
         // Cell style
         cell.layer.cornerRadius = cell.frame.size.height/5
@@ -195,4 +180,20 @@ extension CustomerViewController : UICollectionViewDataSource, UICollectionViewD
         performSegue(withIdentifier: "NewProduct", sender: self)
     }
     
+}
+
+extension CustomerViewController: ServiceAPIDelegate {
+    func didCustomersRetrieved(customers: [Customer]) {
+        return
+    }
+    
+    func didCustomersProductsRetrieved(products: [Product]) {
+        self.customer.products = products
+        productCollectionView.reloadData()
+    }
+    
+    func didCustomersWorksheetsRetrieved(worksheet: [Worksheet]) {
+        self.customer.worksheets = worksheet
+        print(worksheet)
+    }
 }

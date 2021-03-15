@@ -14,7 +14,7 @@ class ProductSelectorTableViewController: UITableViewController {
     
     var customerId : String? = nil
     var customerData : [String:Any]?
-    var products : [Product] = []
+    var products : [ProductTmp] = []
     
     var delegate : ProductSelectorDelegate?
 
@@ -36,7 +36,7 @@ class ProductSelectorTableViewController: UITableViewController {
                     for document in querySnapshot!.documents {
                         do {
                             let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                            var product = try JSONDecoder().decode(Product.self, from: jsonData)
+                            var product = try JSONDecoder().decode(ProductTmp.self, from: jsonData)
                             product.productId = document.documentID
                             self.products.append(product)
                         } catch {
@@ -76,5 +76,5 @@ class ProductSelectorTableViewController: UITableViewController {
 }
 
 protocol ProductSelectorDelegate {
-    func didProductSelected(selectedProduct:Product)
+    func didProductSelected(selectedProduct:ProductTmp)
 }

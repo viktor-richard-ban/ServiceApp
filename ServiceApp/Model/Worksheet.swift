@@ -9,14 +9,17 @@ import Foundation
 import FirebaseFirestoreSwift
 
 struct Worksheet : Codable {
-    var worksheetId : String?
-    var customerId : String
-    var customerName : String?
-    var customerCity : String?
-    var productId : String
-    var productName : String?
-    var serialNumber : String?
-    var purchaseDate : Int?
+    
+    var id : String?
+    var customerId : String {
+        didSet {
+            
+        }
+    }
+    var productId: String
+    
+    var customer: Customer? = nil
+    var product: Product? = nil
     
     var reason : String?
     var errorDescription : String?
@@ -33,21 +36,14 @@ struct Worksheet : Codable {
         return formatter.string(from: tmp)
     }
     
-    var purchaseDateString : String {
-        let tmp = Date(timeIntervalSince1970: TimeInterval((purchaseDate ?? 0)/1000))
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.MM.dd"
-        return formatter.string(from: tmp)
-    }
-    
     var status : String
     var userId : String = "123abc"
-    var price : Int = 0
+    //var price : Int = 0
     //var closedId : String?
     //var closedDate : Int?
     
     
-    func toDictionary() -> [String:Any] {
+    var dictionary: [String:Any] {
         var dict : [String : Any] = [:]
         
         //Required fields
@@ -56,27 +52,9 @@ struct Worksheet : Codable {
         dict["isWarrianty"] = isWarrianty
         dict["date"] = date
         dict["status"] = status
-        dict["userId"] = userId
-        dict["price"] = 0
         
-        //Customer
-        if let customerName = customerName {
-            dict["customerName"] = customerName
-        }
-        if let customerCity = customerCity {
-            dict["customerCity"] = customerCity
-        }
-        
-        //Product
-        if let productName = productName {
-            dict["productName"] = productName
-        }
-        if let serialNumber = serialNumber {
-            dict["serialNumber"] = serialNumber
-        }
-        if let purchaseDate = purchaseDate {
-            dict["purchaseDate"] = purchaseDate
-        }
+        //dict["userId"] = userId
+        //dict["price"] = 0
         
         //Worksheet
         if let reason = reason {
@@ -95,4 +73,10 @@ struct Worksheet : Codable {
         return dict
     }
     
+}
+
+extension Worksheet {
+    init?(initDictionary: [String:Any]) {
+        self.init(customerId: "", productId: "", date: 2, status: "")
+    }
 }

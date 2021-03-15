@@ -2,51 +2,44 @@
 //  Product.swift
 //  ServiceApp
 //
-//  Created by Viktor Bán on 2020. 10. 25..
+//  Created by Bán Viktor on 2021. 03. 15..
 //
 
 import Foundation
+import Firebase
 import FirebaseFirestoreSwift
 
-struct Product : Codable {
-    var customerId : String
-    var productId : String?
+struct Product: Codable {
+    
+    var id : String?
     var pin : Int?
-    var productName : String
+    var name : String
     var productNumber : String?
     var productType : String
     var serialNumber : String?
     var purchaseDate : String?
     
-    func toDictionary() -> [String:Any] {
-        
-        print(self)
-        
-        var dict : [String : Any] = [
-            "productName" : productName,
-            "customerId" : customerId,
-            "productType" : productType
+    var dictionary: [String:Any] {
+        return [
+            "name": name,
+            "productNumber": productNumber as Any,
+            "productType": productType,
+            "serialNumber": serialNumber as Any,
+            "purchaseDate": purchaseDate as Any
         ]
-        
-        if productType == "robotfűnyíró" {
-            if let pin = pin {
-                dict["pin"] = pin
-            }
-        }
-        
-        if let pn = productNumber {
-            dict["productNumber"] = pn
-        }
-        
-        if let sn = serialNumber {
-            dict["serialNumber"] = sn
-        }
-        
-        if let pd = purchaseDate {
-            dict["purchaseDate"] = pd
-        }
-        
-        print("Dictionary \(dict)")
-        return dict
+    }
+    
+    
+}
+
+extension Product {
+    init?(initDictionary: [String : Any]) {
+        let name = initDictionary["productName"] as! String
+        let productNumber = initDictionary["productNumber"] as? String
+        let productType = initDictionary["productType"] as! String
+        let serialNumber = initDictionary["serialNumber"] as? String
+        let purchaseDate = initDictionary["purchaseDate"] as? String
+        let pin = initDictionary["pin"] as? Int
+        self.init(id: nil, pin: pin, name: name, productNumber:  productNumber, productType: productType, serialNumber: serialNumber, purchaseDate: purchaseDate)
     }
 }

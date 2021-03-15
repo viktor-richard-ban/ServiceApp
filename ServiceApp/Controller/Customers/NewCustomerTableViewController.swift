@@ -10,14 +10,14 @@ import Firebase
 import FirebaseFirestoreSwift
 
 protocol CustomerDelegate {
-    func customerUpdated(customer: Customer)
+    func customerUpdated(customer: CustomerTmp)
 }
 
 class NewCustomerTableViewController: UITableViewController {
     
     let db = Firestore.firestore()
 
-    var customer : Customer? = nil
+    var customer : CustomerTmp? = nil
     var delegate : CustomerDelegate? = nil
     var manager = CustomerManager()
     
@@ -46,9 +46,9 @@ class NewCustomerTableViewController: UITableViewController {
         
         if modify {
             customerNameTextField.text = customer?.personalData.name
-            postCodeTextField.text = customer?.personalData.address.postcode
-            cityTextField.text = customer?.personalData.address.city
-            streetTextField.text = customer?.personalData.address.street
+            //postCodeTextField.text = customer?.personalData.address.postcode
+            //ityTextField.text = customer?.personalData.address.city
+            //streetTextField.text = customer?.personalData.address.street
             emailTextField.text = customer?.personalData.email
             phoneTextField.text = customer?.personalData.phone
         }
@@ -69,7 +69,7 @@ class NewCustomerTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToCustomer" {
             if let destination = segue.destination as? CustomerViewController {
-                destination.customer = self.customer
+                //destination.customer = self.customer
             }
         }
     }
@@ -98,7 +98,7 @@ class NewCustomerTableViewController: UITableViewController {
             if modify {
                 customer?.personalData.name = customerNameTextField.text!
             } else {
-                customer = Customer(id: nil, personalData: Datas(address: Address(city: city, street: street, postcode: postCode), email: email, name: customerName, phone: phone, tax: nil), products: [], worksheets: [])
+                customer = CustomerTmp(id: nil, personalData: PersonalData(address: Address(city: city, street: street, postcode: postCode), email: email, name: customerName, phone: phone, tax: nil), products: [], worksheets: [])
             }
                 
             if customerTaxTextField.text != "" {
@@ -132,7 +132,7 @@ class NewCustomerTableViewController: UITableViewController {
 }
 
 extension NewCustomerTableViewController : CustomerManagerDelegate {
-    func updateCustomers(customers: [Customer]) {
+    func updateCustomers(customers: [CustomerTmp]) {
         return
     }
     
