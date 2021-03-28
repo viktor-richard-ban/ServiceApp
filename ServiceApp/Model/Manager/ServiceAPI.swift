@@ -88,7 +88,7 @@ struct ServiceAPI {
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
-                let models = snapshot!.documents.map { (document) -> Worksheet in
+                var models = snapshot!.documents.map { (document) -> Worksheet in
                     if var model = Worksheet(initDictionary: document.data()) {
                         model.id = document.documentID
                         return model
@@ -98,11 +98,10 @@ struct ServiceAPI {
                 }
                 
                 let group = DispatchGroup()
-                for var model in models {
+                for index in 0..<models.count {
                     group.enter()
-                    getCustomerWith(id: model.customerId, callback: { (customer) in
-                        model.customer = customer
-                        print("Alma")
+                    getCustomerWith(id: models[index].customerId, callback: { (customer) in
+                        models[index].customer = customer
                         group.leave()
                     })
                     //getProducts()

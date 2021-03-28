@@ -6,16 +6,13 @@
 //
 
 import Foundation
+import Firebase
 import FirebaseFirestoreSwift
 
 struct Worksheet : Codable {
     
     var id : String?
-    var customerId : String {
-        didSet {
-            
-        }
-    }
+    var customerId : String
     var productId: String
     
     var customer: Customer? = nil
@@ -28,13 +25,7 @@ struct Worksheet : Codable {
     var acceptanceMode : String?
     var accessories : [String]?
     
-    var date : Int
-    var dateString : String {
-        let tmp = Date(timeIntervalSince1970: TimeInterval(date/1000))
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.MM.dd"
-        return formatter.string(from: tmp)
-    }
+    var date : Date
     
     var status : String
     var userId : String = "123abc"
@@ -77,6 +68,33 @@ struct Worksheet : Codable {
 
 extension Worksheet {
     init?(initDictionary: [String:Any]) {
-        self.init(customerId: "4APY2b1Buo3amsHMSudI", productId: "", date: 2, status: "")
+        let customerId = initDictionary["customerId"] as! String
+        let productId = initDictionary["productId"] as! String
+        let reason = initDictionary["reason"] as? String
+        let errorDescription = initDictionary["errorDescription"] as? String
+        let isWarrianty = initDictionary["isWarrianty"] as! Bool
+        let acceptanceMode = initDictionary["acceptanceMode"] as? String
+        let accessories = initDictionary["accessories"] as? [String]
+        
+        let timestamp: Timestamp = (initDictionary["date"] as AnyObject) as! Timestamp
+        let date = timestamp.dateValue()
+        
+        let status = initDictionary["status"] as! String
+        
+        self.init(id: nil, customerId: customerId, productId: productId, customer: nil, product: nil, reason: reason, errorDescription: errorDescription, isWarrianty: isWarrianty, acceptanceMode: acceptanceMode, accessories: accessories, date: date, status: status, userId: "")
     }
 }
+
+/*
+ extension PersonalData {
+     init?(initDictionary: [String : Any]) {
+         let addressLevel = initDictionary["address"] as! [String:Any]
+         let address = Address(initDictionary: addressLevel)!
+         let email = initDictionary["email"] as? String
+         let name = initDictionary["name"] as! String
+         let phone = initDictionary["phone"] as? String
+         let tax = initDictionary["tax"] as? String
+         self.init(address: address, email: email, name: name, phone: phone, tax: tax)
+     }
+ }
+ */

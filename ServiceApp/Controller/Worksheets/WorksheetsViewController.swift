@@ -27,7 +27,7 @@ class WorksheetsViewController: UIViewController {
         serviceAPI.getWorksheets(callback: { worksheets in
             self.worksheets = worksheets
             // TODO: Update collection
-            print(worksheets[0])
+            self.tableView.reloadData()
         })
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addWorksheet))
@@ -73,15 +73,14 @@ extension WorksheetsViewController : UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WorksheetCell", for: indexPath) as! WorksheetTableViewCell
         //Date
-        let dateData = worksheets[indexPath.row].date
-        let date = Date(timeIntervalSince1970: TimeInterval(dateData/1000))
+        let date = worksheets[indexPath.row].date
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy.MM.dd"
         cell.worksheetDateLabel.text = formatter.string(from: date)
         
         //Customer
-        //cell.customerNameLabel.text = worksheets[indexPath.row].customerName
-        //cell.customerPlaceLabel.text = worksheets[indexPath.row].customerCity
+        cell.customerNameLabel.text = worksheets[indexPath.row].customer?.personalData.name ?? ""
+        cell.customerPlaceLabel.text = worksheets[indexPath.row].customer?.personalData.address?.city ?? ""
 
         //Product
         //cell.productNameLabel.text = worksheets[indexPath.row].productName
