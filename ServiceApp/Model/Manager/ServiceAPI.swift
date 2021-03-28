@@ -82,6 +82,21 @@ struct ServiceAPI {
         }
     }
     
+    func getCustomersProductWith(customerId: String, productId: String, callback: @escaping (Product)->()) {
+        db.collection("customers/\(customerId)/products").document(productId).getDocument { (document, error) in
+            if let document = document, document.exists {
+                if var model = Product(initDictionary: document.data()!) {
+                    model.id = document.documentID
+                    callback(model)
+                } else {
+                    preconditionFailure("Unable to initialize type \(Product.self) with dictionary \(String(describing: document.data()))")
+                }
+            } else {
+                print("Document does not exist")
+            }
+        }
+    }
+    
     //MARK: Worksheets
     func getWorksheets(callback: @escaping ([Worksheet]) -> ()) {
         db.collectionGroup("worksheets").getDocuments { (snapshot, err) in
@@ -104,7 +119,11 @@ struct ServiceAPI {
                         models[index].customer = customer
                         group.leave()
                     })
-                    //getProducts()
+                    group.enter()
+                    getCustomersProductWith(customerId: models[index].customerId, productId: models[index].productId, callback: { (product) in
+                        models[index].product = product
+                        group.leave()
+                    })
                 }
                 group.notify(queue: .main, execute: {
                     callback(models)

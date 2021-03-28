@@ -589,8 +589,8 @@
                                                     <constraint firstItem="bOP-qa-XkJ" firstAttribute="leading" secondItem="Hr5-ne-0o7" secondAttribute="leading" id="B9Q-8b-gXL"/>
                                                 </constraints>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="sWX-QC-73G" userLabel="WorksheetStack">
-                                                <rect key="frame" x="20" y="479" width="350" height="174"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="sWX-QC-73G" userLabel="WorksheetStack">
+                                                <rect key="frame" x="20" y="479" width="350" height="164"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Tyf-jf-d1r">
                                                         <rect key="frame" x="0.0" y="0.0" width="141.66666666666666" height="24"/>
@@ -611,7 +611,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7cx-9v-Cvu">
-                                                        <rect key="frame" x="0.0" y="44" width="350" height="130"/>
+                                                        <rect key="frame" x="0.0" y="34" width="350" height="130"/>
                                                         <color key="backgroundColor" red="0.95191062179999997" green="0.95191062179999997" blue="0.95191062179999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="130" id="296-Gf-CF2"/>
@@ -643,7 +643,6 @@
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="7cx-9v-Cvu" secondAttribute="trailing" id="ce9-b3-xwo"/>
                                                     <constraint firstItem="7cx-9v-Cvu" firstAttribute="leading" secondItem="sWX-QC-73G" secondAttribute="leading" id="dzz-Pe-axu"/>
-                                                    <constraint firstItem="7cx-9v-Cvu" firstAttribute="top" secondItem="Tyf-jf-d1r" secondAttribute="bottom" constant="20" id="qG0-IU-ZW3"/>
                                                 </constraints>
                                             </stackView>
                                         </subviews>
@@ -1361,7 +1360,7 @@
                                         <rect key="frame" x="0.0" y="772.0000114440918" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uQQ-9w-iwP" id="Yfo-nx-T6n">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Név" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cpr-9g-6l6">
@@ -1385,7 +1384,7 @@
                                         <rect key="frame" x="0.0" y="815.66667938232422" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9ct-pj-4QH" id="ia2-4k-ibO">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Átvétel napja" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZZr-Ah-IsR">

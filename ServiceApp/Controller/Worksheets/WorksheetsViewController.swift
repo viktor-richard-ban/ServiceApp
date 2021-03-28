@@ -83,8 +83,8 @@ extension WorksheetsViewController : UITableViewDelegate, UITableViewDataSource 
         cell.customerPlaceLabel.text = worksheets[indexPath.row].customer?.personalData.address?.city ?? ""
 
         //Product
-        //cell.productNameLabel.text = worksheets[indexPath.row].productName
-        //cell.serialNumberLabel.text = worksheets[indexPath.row].serialNumber
+        cell.productNameLabel.text = worksheets[indexPath.row].product?.name ?? ""
+        cell.serialNumberLabel.text = worksheets[indexPath.row].product?.serialNumber ?? ""
         
         //Worksheet status
         cell.statusLabel.text = worksheets[indexPath.row].status

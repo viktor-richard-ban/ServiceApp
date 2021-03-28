@@ -84,17 +84,3 @@ extension Worksheet {
         self.init(id: nil, customerId: customerId, productId: productId, customer: nil, product: nil, reason: reason, errorDescription: errorDescription, isWarrianty: isWarrianty, acceptanceMode: acceptanceMode, accessories: accessories, date: date, status: status, userId: "")
     }
 }
-
-/*
- extension PersonalData {
-     init?(initDictionary: [String : Any]) {
-         let addressLevel = initDictionary["address"] as! [String:Any]
-         let address = Address(initDictionary: addressLevel)!
-         let email = initDictionary["email"] as? String
-         let name = initDictionary["name"] as! String
-         let phone = initDictionary["phone"] as? String
-         let tax = initDictionary["tax"] as? String
-         self.init(address: address, email: email, name: name, phone: phone, tax: tax)
-     }
- }
- */
