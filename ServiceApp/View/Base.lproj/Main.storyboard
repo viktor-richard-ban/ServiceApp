@@ -374,7 +374,7 @@
                                 <rect key="frame" x="0.0" y="88" width="390" height="673"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LSv-wF-eZW">
-                                        <rect key="frame" x="0.0" y="0.0" width="390" height="669"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="390" height="673"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="daf-wW-2v5">
                                                 <rect key="frame" x="0.0" y="-50" width="390" height="170"/>
@@ -589,8 +589,8 @@
                                                     <constraint firstItem="bOP-qa-XkJ" firstAttribute="leading" secondItem="Hr5-ne-0o7" secondAttribute="leading" id="B9Q-8b-gXL"/>
                                                 </constraints>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="sWX-QC-73G" userLabel="ProductStack">
-                                                <rect key="frame" x="20" y="479" width="350" height="170"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="sWX-QC-73G" userLabel="WorksheetStack">
+                                                <rect key="frame" x="20" y="479" width="350" height="174"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Tyf-jf-d1r">
                                                         <rect key="frame" x="0.0" y="0.0" width="141.66666666666666" height="24"/>
@@ -611,35 +611,39 @@
                                                         </subviews>
                                                     </stackView>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7cx-9v-Cvu">
-                                                        <rect key="frame" x="0.0" y="44" width="350" height="126"/>
+                                                        <rect key="frame" x="0.0" y="44" width="350" height="130"/>
                                                         <color key="backgroundColor" red="0.95191062179999997" green="0.95191062179999997" blue="0.95191062179999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="126" id="296-Gf-CF2"/>
+                                                            <constraint firstAttribute="height" constant="130" id="296-Gf-CF2"/>
                                                         </constraints>
                                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0YT-n8-yOs">
-                                                            <size key="itemSize" width="220" height="127"/>
+                                                            <size key="itemSize" width="220" height="115"/>
                                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         </collectionViewFlowLayout>
                                                         <cells>
                                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="44j-Nl-M6j" customClass="ProductCollectionViewCell" customModule="ServiceApp" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="-0.66666666666666663" width="220" height="127"/>
+                                                                <rect key="frame" x="0.0" y="7.666666666666667" width="220" height="115"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="45k-4K-Od5">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="127"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="115"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </collectionViewCellContentView>
                                                                 <color key="backgroundColor" systemColor="linkColor"/>
+                                                                <size key="customSize" width="220" height="115"/>
                                                             </collectionViewCell>
                                                         </cells>
+                                                        <connections>
+                                                            <outlet property="dataSource" destination="kwi-Bt-uZA" id="Nn4-7s-8iv"/>
+                                                            <outlet property="delegate" destination="kwi-Bt-uZA" id="Kxl-4C-kGe"/>
+                                                        </connections>
                                                     </collectionView>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="7cx-9v-Cvu" secondAttribute="trailing" id="ce9-b3-xwo"/>
                                                     <constraint firstItem="7cx-9v-Cvu" firstAttribute="leading" secondItem="sWX-QC-73G" secondAttribute="leading" id="dzz-Pe-axu"/>
                                                     <constraint firstItem="7cx-9v-Cvu" firstAttribute="top" secondItem="Tyf-jf-d1r" secondAttribute="bottom" constant="20" id="qG0-IU-ZW3"/>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="170" id="wca-bb-gq1"/>
                                                 </constraints>
                                             </stackView>
                                         </subviews>
@@ -650,7 +654,7 @@
                                             <constraint firstItem="sWX-QC-73G" firstAttribute="leading" secondItem="LSv-wF-eZW" secondAttribute="leading" constant="20" id="72s-3F-NtD"/>
                                             <constraint firstItem="sWX-QC-73G" firstAttribute="top" secondItem="Hr5-ne-0o7" secondAttribute="bottom" constant="20" id="RGk-Lg-0Jp"/>
                                             <constraint firstItem="daf-wW-2v5" firstAttribute="top" secondItem="LSv-wF-eZW" secondAttribute="top" constant="-50" id="Xzc-XS-6xT"/>
-                                            <constraint firstAttribute="bottom" secondItem="sWX-QC-73G" secondAttribute="bottom" constant="20" id="jkk-uE-GEf"/>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="sWX-QC-73G" secondAttribute="bottom" constant="20" id="jkk-uE-GEf"/>
                                             <constraint firstItem="daf-wW-2v5" firstAttribute="leading" secondItem="LSv-wF-eZW" secondAttribute="leading" id="o0Z-Ci-vts"/>
                                             <constraint firstAttribute="trailing" secondItem="y5r-HY-YV9" secondAttribute="trailing" constant="55" id="q3C-lk-WK0"/>
                                             <constraint firstItem="Hr5-ne-0o7" firstAttribute="leading" secondItem="LSv-wF-eZW" secondAttribute="leading" constant="20" id="r2b-Ht-YIK"/>
@@ -690,6 +694,7 @@
                         <outlet property="productCollectionView" destination="bOP-qa-XkJ" id="bV6-EO-Vdq"/>
                         <outlet property="taxLabel" destination="Ubi-TG-j0c" id="Pzg-vu-bio"/>
                         <outlet property="topGradientView" destination="daf-wW-2v5" id="ZhF-Hz-AkB"/>
+                        <outlet property="worksheetCollectionView" destination="7cx-9v-Cvu" id="tLT-dZ-mqz"/>
                         <segue destination="jar-f5-hm0" kind="show" identifier="NewProduct" id="Dph-xn-YgA"/>
                         <segue destination="rUj-Pq-Lwb" kind="show" identifier="ModifyCustomer" id="o7D-0B-bSl"/>
                     </connections>
@@ -1767,7 +1772,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="yGH-Fe-bhU"/>
-        <segue reference="L6u-3R-56D"/>
+        <segue reference="o7D-0B-bSl"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="doc.text" catalog="system" width="115" height="128"/>

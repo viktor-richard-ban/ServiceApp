@@ -45,7 +45,26 @@
 		8EC24AE225FE922300DEF151 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC24AE125FE922300DEF151 /* Customer.swift */; };
 		8EC24AE625FE9BC800DEF151 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EC24AE525FE9BC800DEF151 /* Colors.xcassets */; };
 		8EC24AEA25FF50EF00DEF151 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC24AE925FF50EF00DEF151 /* Product.swift */; };
+		8ECE661F260898FB007CECF7 /* ServiceAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECE661E260898FB007CECF7 /* ServiceAppUITests.swift */; };
+		8ECE664526089EE3007CECF7 /* ServiceAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECE664426089EE3007CECF7 /* ServiceAppTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8ECE6621260898FB007CECF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3A370FF2254215C9003BD01E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3A370FF9254215C9003BD01E;
+			remoteInfo = ServiceApp;
+		};
+		8ECE664726089EE3007CECF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3A370FF2254215C9003BD01E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3A370FF9254215C9003BD01E;
+			remoteInfo = ServiceApp;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3A0E2C9825589C190021F86E /* CustomerSelectorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerSelectorTableViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +107,12 @@
 		8EC24AE125FE922300DEF151 /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		8EC24AE525FE9BC800DEF151 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		8EC24AE925FF50EF00DEF151 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		8ECE661C260898FB007CECF7 /* ServiceAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ServiceAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8ECE661E260898FB007CECF7 /* ServiceAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAppUITests.swift; sourceTree = "<group>"; };
+		8ECE6620260898FB007CECF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8ECE664226089EE3007CECF7 /* ServiceAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ServiceAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8ECE664426089EE3007CECF7 /* ServiceAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAppTests.swift; sourceTree = "<group>"; };
+		8ECE664626089EE3007CECF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0B1F008EE17B08A90E27E52 /* Pods-ServiceApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceApp.release.xcconfig"; path = "Target Support Files/Pods-ServiceApp/Pods-ServiceApp.release.xcconfig"; sourceTree = "<group>"; };
 		F25A90504786501BFD4421E2 /* Pods-ServiceApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceApp.debug.xcconfig"; path = "Target Support Files/Pods-ServiceApp/Pods-ServiceApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,6 +126,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8ECE6619260898FB007CECF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8ECE663F26089EE3007CECF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -108,6 +147,8 @@
 			isa = PBXGroup;
 			children = (
 				3A370FFC254215C9003BD01E /* ServiceApp */,
+				8ECE661D260898FB007CECF7 /* ServiceAppUITests */,
+				8ECE664326089EE3007CECF7 /* ServiceAppTests */,
 				3A370FFB254215C9003BD01E /* Products */,
 				56DE218D4CF9E93EEC5AD9A7 /* Pods */,
 				56279B03B13974508643DA4F /* Frameworks */,
@@ -118,6 +159,8 @@
 			isa = PBXGroup;
 			children = (
 				3A370FFA254215C9003BD01E /* ServiceApp.app */,
+				8ECE661C260898FB007CECF7 /* ServiceAppUITests.xctest */,
+				8ECE664226089EE3007CECF7 /* ServiceAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -280,6 +323,24 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		8ECE661D260898FB007CECF7 /* ServiceAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				8ECE661E260898FB007CECF7 /* ServiceAppUITests.swift */,
+				8ECE6620260898FB007CECF7 /* Info.plist */,
+			);
+			path = ServiceAppUITests;
+			sourceTree = "<group>";
+		};
+		8ECE664326089EE3007CECF7 /* ServiceAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				8ECE664426089EE3007CECF7 /* ServiceAppTests.swift */,
+				8ECE664626089EE3007CECF7 /* Info.plist */,
+			);
+			path = ServiceAppTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -302,17 +363,61 @@
 			productReference = 3A370FFA254215C9003BD01E /* ServiceApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8ECE661B260898FB007CECF7 /* ServiceAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8ECE6625260898FB007CECF7 /* Build configuration list for PBXNativeTarget "ServiceAppUITests" */;
+			buildPhases = (
+				8ECE6618260898FB007CECF7 /* Sources */,
+				8ECE6619260898FB007CECF7 /* Frameworks */,
+				8ECE661A260898FB007CECF7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8ECE6622260898FB007CECF7 /* PBXTargetDependency */,
+			);
+			name = ServiceAppUITests;
+			productName = ServiceAppUITests;
+			productReference = 8ECE661C260898FB007CECF7 /* ServiceAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		8ECE664126089EE3007CECF7 /* ServiceAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8ECE664926089EE3007CECF7 /* Build configuration list for PBXNativeTarget "ServiceAppTests" */;
+			buildPhases = (
+				8ECE663E26089EE3007CECF7 /* Sources */,
+				8ECE663F26089EE3007CECF7 /* Frameworks */,
+				8ECE664026089EE3007CECF7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8ECE664826089EE3007CECF7 /* PBXTargetDependency */,
+			);
+			name = ServiceAppTests;
+			productName = ServiceAppTests;
+			productReference = 8ECE664226089EE3007CECF7 /* ServiceAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		3A370FF2254215C9003BD01E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1210;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					3A370FF9254215C9003BD01E = {
 						CreatedOnToolsVersion = 12.1;
+					};
+					8ECE661B260898FB007CECF7 = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = 3A370FF9254215C9003BD01E;
+					};
+					8ECE664126089EE3007CECF7 = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = 3A370FF9254215C9003BD01E;
 					};
 				};
 			};
@@ -330,6 +435,8 @@
 			projectRoot = "";
 			targets = (
 				3A370FF9254215C9003BD01E /* ServiceApp */,
+				8ECE661B260898FB007CECF7 /* ServiceAppUITests */,
+				8ECE664126089EE3007CECF7 /* ServiceAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -346,6 +453,20 @@
 				3A37107A254311D3003BD01E /* CustomerCell.xib in Resources */,
 				3A371005254215C9003BD01E /* Main.storyboard in Resources */,
 				8EC24AE625FE9BC800DEF151 /* Colors.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8ECE661A260898FB007CECF7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8ECE664026089EE3007CECF7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,7 +552,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8ECE6618260898FB007CECF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8ECE661F260898FB007CECF7 /* ServiceAppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8ECE663E26089EE3007CECF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8ECE664526089EE3007CECF7 /* ServiceAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8ECE6622260898FB007CECF7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3A370FF9254215C9003BD01E /* ServiceApp */;
+			targetProxy = 8ECE6621260898FB007CECF7 /* PBXContainerItemProxy */;
+		};
+		8ECE664826089EE3007CECF7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3A370FF9254215C9003BD01E /* ServiceApp */;
+			targetProxy = 8ECE664726089EE3007CECF7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3A371003254215C9003BD01E /* Main.storyboard */ = {
@@ -609,6 +759,88 @@
 			};
 			name = Release;
 		};
+		8ECE6623260898FB007CECF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6SP8DWFZH2;
+				INFOPLIST_FILE = ServiceAppUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = viktorban.ServiceAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ServiceApp;
+			};
+			name = Debug;
+		};
+		8ECE6624260898FB007CECF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6SP8DWFZH2;
+				INFOPLIST_FILE = ServiceAppUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = viktorban.ServiceAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ServiceApp;
+			};
+			name = Release;
+		};
+		8ECE664A26089EE3007CECF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6SP8DWFZH2;
+				INFOPLIST_FILE = ServiceAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = viktorban.ServiceAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ServiceApp.app/ServiceApp";
+			};
+			name = Debug;
+		};
+		8ECE664B26089EE3007CECF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6SP8DWFZH2;
+				INFOPLIST_FILE = ServiceAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = viktorban.ServiceAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ServiceApp.app/ServiceApp";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -626,6 +858,24 @@
 			buildConfigurations = (
 				3A37100F254215CA003BD01E /* Debug */,
 				3A371010254215CA003BD01E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8ECE6625260898FB007CECF7 /* Build configuration list for PBXNativeTarget "ServiceAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8ECE6623260898FB007CECF7 /* Debug */,
+				8ECE6624260898FB007CECF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8ECE664926089EE3007CECF7 /* Build configuration list for PBXNativeTarget "ServiceAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8ECE664A26089EE3007CECF7 /* Debug */,
+				8ECE664B26089EE3007CECF7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

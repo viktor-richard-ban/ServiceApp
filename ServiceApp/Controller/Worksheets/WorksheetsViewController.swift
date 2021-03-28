@@ -24,12 +24,17 @@ class WorksheetsViewController: UIViewController {
         super.viewDidLoad()
         
         serviceAPI.delegate = self
+        serviceAPI.getWorksheets(callback: { worksheets in
+            self.worksheets = worksheets
+            // TODO: Update collection
+            print(worksheets[0])
+        })
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addWorksheet))
         
         tableView.register(UINib(nibName: "WorksheetCell", bundle: nil), forCellReuseIdentifier: "WorksheetCell")
         
-        worksheetManager.delegate = self
+        //worksheetManager.delegate = self
         //worksheetManager.fetchWorksheets()
     }
     

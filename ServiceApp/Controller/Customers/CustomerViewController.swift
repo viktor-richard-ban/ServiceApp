@@ -10,8 +10,6 @@ import Firebase
 
 class CustomerViewController: UIViewController {
     
-    let db = Firestore.firestore()
-    
     var customer : Customer!
     var selectedProductIndex : Int = 0
     var modify = false
@@ -28,6 +26,7 @@ class CustomerViewController: UIViewController {
     @IBOutlet weak var phoneLabel: UILabel!
     
     @IBOutlet weak var productCollectionView: UICollectionView!
+    @IBOutlet weak var worksheetCollectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +36,8 @@ class CustomerViewController: UIViewController {
         serviceAPI.getCustomersWorksheetsWith(id: customer.id!, callback: { worksheets in
             self.customer.worksheets = worksheets
             // TODO: Update collection
-            print(self.customer)
+            print(worksheets)
+            self.worksheetCollectionView.reloadData()
         })
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Szerkesztés", style: .plain, target: self, action: #selector(editButtonClicked))
@@ -155,6 +155,9 @@ extension CustomerViewController : ProductDelegate {
 extension CustomerViewController : UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == self.worksheetCollectionView {
+            return customer.worksheets.count
+        }
         return customer.products.count
     }
     
@@ -198,6 +201,6 @@ extension CustomerViewController: ServiceAPIDelegate {
     
     func didCustomersWorksheetsRetrieved(worksheet: [Worksheet]) {
         self.customer.worksheets = worksheet
-        print(worksheet)
+        
     }
 }

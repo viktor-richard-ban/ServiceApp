@@ -83,6 +83,37 @@ struct ServiceAPI {
     }
     
     //MARK: Worksheets
+    func getWorksheets(callback: @escaping ([Worksheet]) -> ()) {
+        db.collectionGroup("worksheets").getDocuments { (snapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                let models = snapshot!.documents.map { (document) -> Worksheet in
+                    if var model = Worksheet(initDictionary: document.data()) {
+                        model.id = document.documentID
+                        return model
+                    } else {
+                          preconditionFailure("Unable to initialize type \(Worksheet.self) with dictionary \(document.data())")
+                    }
+                }
+                
+                let group = DispatchGroup()
+                for var model in models {
+                    group.enter()
+                    getCustomerWith(id: model.customerId, callback: { (customer) in
+                        model.customer = customer
+                        print("Alma")
+                        group.leave()
+                    })
+                    //getProducts()
+                }
+                group.notify(queue: .main, execute: {
+                    callback(models)
+                })
+            }
+        }
+    }
+    
     func getCustomersWorksheetsWith(id: String, callback: @escaping ([Worksheet]) -> ()) {
         db.collection("customers/\(id)/worksheets").getDocuments { (snapshot, err) in
             if let err = err {
@@ -117,7 +148,6 @@ struct ServiceAPI {
                 group.notify(queue: .main, execute: {
                     callback(models)
                 })
-                print("asd_1")
             }
         }
     }
