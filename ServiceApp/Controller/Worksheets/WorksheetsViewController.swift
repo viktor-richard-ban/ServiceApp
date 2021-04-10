@@ -13,7 +13,6 @@ class WorksheetsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var worksheetManager = WorksheetManager()
     var worksheets : [Worksheet] = []
     
     var selectedIndex : Int?
@@ -23,7 +22,6 @@ class WorksheetsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        serviceAPI.delegate = self
         serviceAPI.getWorksheets(callback: { worksheets in
             self.worksheets = worksheets
             // TODO: Update collection
@@ -34,8 +32,6 @@ class WorksheetsViewController: UIViewController {
         
         tableView.register(UINib(nibName: "WorksheetCell", bundle: nil), forCellReuseIdentifier: "WorksheetCell")
         
-        //worksheetManager.delegate = self
-        //worksheetManager.fetchWorksheets()
     }
     
     
@@ -53,7 +49,7 @@ class WorksheetsViewController: UIViewController {
                 destination.delegate = self
                 if let index = selectedIndex {
                     destination.isModify = true
-                    //destination.worksheet = worksheets[index]
+                    destination.worksheet = worksheets[index]
                     selectedIndex = nil
                 }
             }
@@ -112,31 +108,4 @@ extension WorksheetsViewController : NewWorksheetDelegate {
         return
     }
     
-}
-
-extension WorksheetsViewController : WorksheetManagerDelegate {
-    func worksheetCreated() {
-        print("Workseet created")
-    }
-    
-    func worksheetsUpdated(worksheets: [Worksheet]) {
-        print("Worksheets updated \(worksheets.count)")
-        self.worksheets = worksheets
-        tableView.reloadData()
-        return
-    }
-}
-
-extension WorksheetsViewController: ServiceAPIDelegate {
-    func didCustomersRetrieved(customers: [Customer]) {
-        return
-    }
-    
-    func didCustomersProductsRetrieved(products: [Product]) {
-        return
-    }
-    
-    func didCustomersWorksheetsRetrieved(worksheet: [Worksheet]) {
-        return
-    }
 }

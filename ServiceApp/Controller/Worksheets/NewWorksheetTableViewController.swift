@@ -17,7 +17,7 @@ class NewWorksheetTableViewController: UITableViewController {
     var worksheetManager = WorksheetManager()
     
     var isModify = false
-    var worksheet : Worksheet = Worksheet(initDictionary: [:])!
+    var worksheet : Worksheet!
     var selectedCustomer : CustomerTmp? = nil
 
     var reasons = [
@@ -41,15 +41,15 @@ class NewWorksheetTableViewController: UITableViewController {
         CheckItem(title: "Lezárt", done: false)
     ]
     
-    //Personal Datas
+    //Personal Data
     @IBOutlet weak var customerNameLabel: UILabel!
     @IBOutlet weak var cusomterCityLabel: UILabel!
     
-    // Product Datas
+    // Product Data
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productVarriancyLabel: UILabel!
     
-    // Worksheet Datas
+    // Worksheet Data
     @IBOutlet weak var warriantySwitch: UISwitch!
     @IBOutlet weak var reasonLabel: UILabel!
     @IBOutlet weak var errorDescriptionLabel: UILabel!
