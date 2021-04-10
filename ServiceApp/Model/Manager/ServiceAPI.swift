@@ -14,17 +14,13 @@ protocol ServiceAPIDelegate {
     func didCustomersWorksheetsRetrieved(worksheet: [Worksheet])
 }
 
-protocol PrivateServiceAPIDelegate {
-    func didCustomerRetrieved(customer: Customer)
-}
-
 struct ServiceAPI {
     
     private let db = Firestore.firestore()
     var delegate: ServiceAPIDelegate?
     
     //MARK: Customers
-    func getFirstTenCustomers() {
+    func getFirstTenCustomers(callback: @escaping ([Customer])->()) {
         db.collection("customers").order(by: "lastActivity", descending: true).limit(to: 10)
             .addSnapshotListener { querySnapshot, error in
                 guard (querySnapshot?.documents) != nil else {
@@ -40,7 +36,7 @@ struct ServiceAPI {
                     }
                 }
                 DispatchQueue.main.async {
-                    delegate?.didCustomersRetrieved(customers: models)
+                    callback(models)
                 }
         }
     }
@@ -52,7 +48,7 @@ struct ServiceAPI {
                     model.id = document.documentID
                     callback(model)
                 } else {
-                      preconditionFailure("Unable to initialize type \(Product.self) with dictionary \(document.data())")
+                    preconditionFailure("Unable to initialize type \(Product.self) with dictionary \(document.data() ?? [:])")
                 }
             } else {
                 print("Document does not exist")
@@ -97,7 +93,7 @@ struct ServiceAPI {
         }
     }
     
-    //MARK: Worksheets
+    //MARK: Get Worksheets
     func getWorksheets(callback: @escaping ([Worksheet]) -> ()) {
         db.collectionGroup("worksheets").getDocuments { (snapshot, err) in
             if let err = err {
@@ -132,6 +128,7 @@ struct ServiceAPI {
         }
     }
     
+    //MARK: Get Customers Worksheets
     func getCustomersWorksheetsWith(id: String, callback: @escaping ([Worksheet]) -> ()) {
         db.collection("customers/\(id)/worksheets").getDocuments { (snapshot, err) in
             if let err = err {
@@ -166,6 +163,17 @@ struct ServiceAPI {
                 group.notify(queue: .main, execute: {
                     callback(models)
                 })
+            }
+        }
+    }
+    
+    //MARK: Create Worksheet
+    func createWorksheet(worksheet: Worksheet) {
+        db.collection("customers/\(worksheet.customerId)/worksheets").addDocument(data: worksheet.dictionary) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
             }
         }
     }

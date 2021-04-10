@@ -19,15 +19,17 @@ class CustomersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        serviceAPI.delegate = self
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addClicked))
         
         tableView.register(UINib(nibName: "CustomerCell", bundle: nil), forCellReuseIdentifier: "ReusableCustomerCell")
         
         tableView.dataSource = self
         tableView.delegate = self
-        serviceAPI.getFirstTenCustomers()
+        
+        serviceAPI.getFirstTenCustomers { (customers) in
+            self.customers = customers
+            self.tableView.reloadData()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -70,17 +72,4 @@ extension CustomersViewController: UITableViewDataSource, UITableViewDelegate {
         self.performSegue(withIdentifier: "CustomerSegue", sender: self)
     }
 
-}
-
-extension CustomersViewController: ServiceAPIDelegate {
-    func didCustomersRetrieved(customers: [Customer]) {
-        self.customers = customers
-        tableView.reloadData()
-    }
-    func didCustomersProductsRetrieved(products: [Product]) {
-        return
-    }
-    func didCustomersWorksheetsRetrieved(worksheet: [Worksheet]) {
-        return
-    }
 }

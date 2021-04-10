@@ -9,16 +9,16 @@ import UIKit
 import Firebase
 
 protocol CustomerSelectorDelegate {
-    func customerSelected(customer: CustomerTmp)
+    func customerSelected(customer: Customer)
 }
 
 class CustomerSelectorTableViewController: UITableViewController {
     
-    var customers: [CustomerTmp] = []
+    var customers: [Customer] = []
     var selectedCustomer = 0
     
     var delegate : CustomerSelectorDelegate?
-    var manager = CustomerManager()
+    var api = ServiceAPI()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +27,11 @@ class CustomerSelectorTableViewController: UITableViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-        manager.delegate = self
-        manager.fetchCustomers()
+        api.getFirstTenCustomers() { customers in
+            self.customers = customers
+            self.tableView.reloadData()
+        }
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -38,7 +41,8 @@ class CustomerSelectorTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCustomerCell", for: indexPath) as! CustomerTableViewCell
         cell.nameLabel.text = customers[indexPath.row].personalData.name
-        //cell.cityLabel.text = customers[indexPath.row].personalData.address.city
+        cell.cityLabel.text = customers[indexPath.row].personalData.address?.city
+        cell.lastActvityLabel.text = customers[indexPath.row].lastActivityString
         return cell
     }
     
@@ -48,15 +52,4 @@ class CustomerSelectorTableViewController: UITableViewController {
     }
     
     
-}
-
-extension CustomerSelectorTableViewController : CustomerManagerDelegate {
-    func updateCustomers(customers: [CustomerTmp]) {
-        self.customers = customers
-        tableView.reloadData()
-    }
-    
-    func customerCreated(with: String) {
-        return
-    }
 }

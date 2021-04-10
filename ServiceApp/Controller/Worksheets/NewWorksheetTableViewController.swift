@@ -14,7 +14,6 @@ protocol NewWorksheetDelegate {
 class NewWorksheetTableViewController: UITableViewController {
     
     var delegate : NewWorksheetDelegate? = nil
-    var worksheetManager = WorksheetManager()
     
     var isModify = false
     var worksheet : Worksheet!
@@ -67,7 +66,7 @@ class NewWorksheetTableViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Mentés", style: .done, target: self, action: #selector(doneClicked))
         
-        worksheetManager.delegate = self
+        worksheet = Worksheet(customerId: "-1", productId: "-1", date: Date(), status: "Nyitott")
         /*
         if isModify {
             print(worksheet)
@@ -308,12 +307,11 @@ extension NewWorksheetTableViewController : LongTextDelegate, CheckBoxDelegate, 
 }
 
 extension NewWorksheetTableViewController : CustomerSelectorDelegate {
-    func customerSelected(customer: CustomerTmp) {
+    func customerSelected(customer: Customer) {
         self.customerNameLabel.text = customer.personalData.name
-        //self.cusomterCityLabel.text = customer.personalData.address.city
+        self.cusomterCityLabel.text = customer.personalData.address?.city
         self.worksheet.customerId = customer.id!
-        //self.worksheet.customerName = customer.personalData.name
-        //self.worksheet.customerCity = customer.personalData.address.city
+        self.worksheet.customer = customer
     }
 }
 
