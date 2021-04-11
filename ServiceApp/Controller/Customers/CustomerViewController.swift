@@ -11,7 +11,7 @@ import Firebase
 class CustomerViewController: UIViewController {
     
     var customer : Customer!
-    var selectedProductIndex : Int = 0
+    var selectedProductIndex : IndexPath?
     var modify = false
     
     var serviceAPI = ServiceAPI()
@@ -115,7 +115,6 @@ class CustomerViewController: UIViewController {
         // Pass the selected object to the new view controller.
         if segue.identifier == "ModifyCustomer" {
             if let destination = segue.destination as? NewCustomerTableViewController {
-                print("Modify customer")
                 destination.customer = customer
                 destination.delegate = self
                 destination.modify = true
@@ -123,9 +122,11 @@ class CustomerViewController: UIViewController {
         } else if segue.identifier == "NewProduct" {
             if let destination = segue.destination as? NewProductTableViewController {
                 if modify {
-                    //destination.product = products[selectedProductIndex]
-                    destination.modify = true
-                    modify = false
+                    if let index = selectedProductIndex?.row, let product = customer?.products[index] {
+                        destination.product = product
+                        destination.modify = true
+                        modify = false
+                    }
                 }
                 destination.delegate = self
                 destination.customerId = customer?.id
@@ -186,7 +187,7 @@ extension CustomerViewController : UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.selectedProductIndex = indexPath.row
+        self.selectedProductIndex = indexPath
         modify = true
         performSegue(withIdentifier: "NewProduct", sender: self)
     }

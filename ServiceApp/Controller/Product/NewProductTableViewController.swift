@@ -26,11 +26,11 @@ class NewProductTableViewController: UITableViewController {
     
     let db = Firestore.firestore()
     var delegate : ProductDelegate? = nil
-    var productManager = ProductManager()
+    var api = ServiceAPI()
     
     var modify = false
     var customerId : String?
-    var product : ProductTmp? = nil
+    var product : Product? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,25 +70,37 @@ class NewProductTableViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         } else {
             if modify {
-                product?.productName = nameLabel.text!
+                product?.name = nameLabel.text!
                 product?.productNumber = productNoLabel.text!
                 product?.serialNumber = serialLabel.text!
                 product?.pin = Int(pinLabel.text!)
                 product?.purchaseDate = purchaseDateTextField.text!
                 product?.productType = productType
-                productManager.updateProduct(customerId: customerId!, productId: product!.productId!, productData: product!.toDictionary())
+                
+                api.updateProduct(product: product!) { (result) in
+                    if result {
+                        let alert = UIAlertController(title: "Sikeres módosítás", message: "A termék mentésre került", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        let alert = UIAlertController(title: "Hiba", message: "A termék mentése során hiba keletkezett", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+                navigationController?.popViewController(animated: true)
             }else {
-                self.product = ProductTmp(
+                self.product = Product(
+                    customerId: customerId!,
                     pin: Int(pinLabel.text!) ?? nil,
-                    productName: nameLabel.text!,
+                    name: nameLabel.text!,
                     productNumber: productNoLabel.text ?? nil,
                     productType: productType,
                     serialNumber: serialLabel.text ?? nil,
                     purchaseDate: purchaseDateTextField.text ?? "-"
                 )
                 //createProduct(product: product)
-                let productDictionary : [String:Any] = product!.toDictionary()
-                productManager.createProduct(customerId: customerId!, product: productDictionary)
+                //productManager.createProduct(customerId: customerId!, product: productDictionary)
             }
         }
         
@@ -96,7 +108,7 @@ class NewProductTableViewController: UITableViewController {
     }
     
     func loadProduct() {
-        nameLabel.text = product?.productName
+        nameLabel.text = product?.name
         serialLabel.text = product?.serialNumber
         productNoLabel.text = product?.productNumber
         if let pin = product?.pin {
@@ -115,14 +127,4 @@ class NewProductTableViewController: UITableViewController {
         }
     }
     
-}
-
-extension NewProductTableViewController : ProductManagerDelegate {
-    func productsUpdated(products: [ProductTmp]) {
-        return
-    }
-    
-    func productCreated(with: String) {
-        navigationController?.popViewController(animated: true)
-    }
 }

@@ -189,9 +189,9 @@
 				8EC24AE125FE922300DEF151 /* Customer.swift */,
 				3AE366B625461AE300D1C218 /* ProductTmp.swift */,
 				3AE366CD2548361500D1C218 /* Worksheet.swift */,
+				8EC24AE925FF50EF00DEF151 /* Product.swift */,
 				3AA8E3D52551C2E8001B3886 /* CheckRow.swift */,
 				3A7A2C2225A662E30049AE36 /* Manager */,
-				8EC24AE925FF50EF00DEF151 /* Product.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

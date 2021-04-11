@@ -85,6 +85,7 @@ struct ServiceAPI {
                     return
                 }
                 let models = querySnapshot!.documents.map { (document) -> Product in
+                    print(document.data())
                     if var model = Product(initDictionary: document.data()) {
                         model.id = document.documentID
                         return model
@@ -110,6 +111,32 @@ struct ServiceAPI {
                 }
             } else {
                 print("Document does not exist")
+            }
+        }
+    }
+    
+    //MARK: Create Product
+    func createProduct(product: Product, callback: @escaping (Bool) -> ()) {
+        db.collection("customers/\(product.customerId)/products").addDocument(data: product.dictionary) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+                callback(false)
+            } else {
+                print("Document successfully written!")
+                callback(true)
+            }
+        }
+    }
+    
+    //MARK: Update Product
+    func updateProduct(product: Product, callback: @escaping (Bool) -> ()) {
+        db.collection("customers/\(product.customerId)/products").document(product.id!).updateData(product.dictionary) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+                callback(false)
+            } else {
+                print("Document successfully written!")
+                callback(true)
             }
         }
     }
