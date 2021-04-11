@@ -8,16 +8,9 @@
 import Foundation
 import Firebase
 
-protocol ServiceAPIDelegate {
-    func didCustomersRetrieved(customers: [Customer])
-    func didCustomersProductsRetrieved(products: [Product])
-    func didCustomersWorksheetsRetrieved(worksheet: [Worksheet])
-}
-
 struct ServiceAPI {
     
     private let db = Firestore.firestore()
-    var delegate: ServiceAPIDelegate?
     
     //MARK: Create Customer
     func createCustomer(customer: Customer, callback: @escaping (Bool) -> ()) {
@@ -45,7 +38,7 @@ struct ServiceAPI {
         }
     }
     
-    //MARK: Get Customers
+    //MARK: Get First Ten Customers
     func getFirstTenCustomers(callback: @escaping ([Customer])->()) {
         db.collection("customers").order(by: "lastActivity", descending: true).limit(to: 10)
             .addSnapshotListener { querySnapshot, error in
@@ -67,6 +60,7 @@ struct ServiceAPI {
         }
     }
     
+    //MARK: Get Customer With Id
     func getCustomerWith(id: String, callback: @escaping (Customer)->()) {
         db.collection("customers").document(id).getDocument { (document, error) in
             if let document = document, document.exists {
@@ -82,7 +76,7 @@ struct ServiceAPI {
         }
     }
     
-    //MARK: Products
+    //MARK: Get Products With Customer Id
     func getCustomersProductsWith(id: String, callback: @escaping ([Product])->()) {
         db.collection("customers/\(id)/products")
             .addSnapshotListener { querySnapshot, error in
@@ -104,6 +98,7 @@ struct ServiceAPI {
         }
     }
     
+    //MARK: Get Product With Product Id
     func getCustomersProductWith(customerId: String, productId: String, callback: @escaping (Product)->()) {
         db.collection("customers/\(customerId)/products").document(productId).getDocument { (document, error) in
             if let document = document, document.exists {
