@@ -114,9 +114,7 @@ class NewWorksheetTableViewController: UITableViewController {
                 break
             }
             break
-        case 1: // Billing datas
-            break
-        case 2: // Product
+        case 1: // Product
             switch indexPath.row {
             case 0: // Product selector
                 if customerNameLabel.text == "Nincs kiválasztva" {
@@ -131,7 +129,7 @@ class NewWorksheetTableViewController: UITableViewController {
                 break
             }
             break
-        case 3: // Worksheet datas
+        case 2: // Worksheet datas
             switch indexPath.row {
             case 0:
                 titleName = "reasonLabel"
@@ -157,7 +155,7 @@ class NewWorksheetTableViewController: UITableViewController {
             default:
                 break
             }
-        case 4: // Status
+        case 3: // Status
             switch indexPath.row {
             case 0:
                 titleName = "status"
@@ -168,7 +166,7 @@ class NewWorksheetTableViewController: UITableViewController {
             default:
                 break
             }
-        case 5: // UserDatas
+        case 4: // UserDatas
             break
         default:
             break
