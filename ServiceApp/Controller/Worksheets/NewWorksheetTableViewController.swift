@@ -13,11 +13,11 @@ protocol NewWorksheetDelegate {
 
 class NewWorksheetTableViewController: UITableViewController {
     
+    let api = ServiceAPI()
     var delegate : NewWorksheetDelegate? = nil
     
     var isModify = false
     var worksheet : Worksheet!
-    var selectedCustomer : CustomerTmp? = nil
 
     var reasons = [
         CheckItem(title: "Szerviz", done: true),
@@ -177,9 +177,9 @@ class NewWorksheetTableViewController: UITableViewController {
         worksheet.isWarrianty = !worksheet.isWarrianty
     }
     
-    // MARK - Objc
+    // MARK - Done button
     @objc func doneClicked() {
-        // Save data to database
+        // Check validation
         if productNameLabel.text == "Nincs kiválasztva" {
             let alert = UIAlertController(title: "Hiba", message: "Termék mező nem maradhat üresen", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -191,11 +191,20 @@ class NewWorksheetTableViewController: UITableViewController {
             } else {
                 //saveWorksheet()
                 //worksheetManager.createWorksheet(customerId: worksheet.customerId, worksheet: worksheet.toDictionary())
+                api.createWorksheet(worksheet: worksheet) { result in
+                    if result {
+                        let alert = UIAlertController(title: "Sikeres létrehozás", message: "A munkalap metésre került", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        let alert = UIAlertController(title: "Hiba", message: "A munkalap mentése során hiba keletkezett", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
             }
-        
+            self.navigationController?.popViewController(animated: true)        
         }
-        
-        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Navigation
@@ -322,17 +331,4 @@ extension NewWorksheetTableViewController : ProductSelectorDelegate {
         self.productVarriancyLabel.text = selectedProduct.purchaseDate
     }
     
-}
-
-extension NewWorksheetTableViewController : WorksheetManagerDelegate {
-    func worksheetsUpdated(worksheets: [Worksheet]) {
-        return
-    }
-    
-    func worksheetCreated() {
-        // TODO: Send email to customer
-        DispatchQueue.main.async {
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
 }
