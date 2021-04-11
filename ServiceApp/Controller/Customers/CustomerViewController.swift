@@ -58,7 +58,7 @@ class CustomerViewController: UIViewController {
         
         nameLabel.text = customer?.personalData.name
         taxLabel.text = "Magánszemély"
-        //addressLabel.text = "\(customer?.personalData.address.postcode ?? "Default") \(customer?.personalData.address.city ?? "Default") \(customer?.personalData.address.street ?? "Default")"
+        addressLabel.text = "\(customer?.personalData.address?.postcode ?? "Default") \(customer?.personalData.address?.city ?? "Default") \(customer?.personalData.address?.street ?? "Default")"
         emailLabel.text = customer?.personalData.email
         phoneLabel.text = customer?.personalData.phone
         
@@ -72,7 +72,7 @@ class CustomerViewController: UIViewController {
         self.productCollectionView.reloadData()
         
         nameLabel.text = customer?.personalData.name
-        //addressLabel.text = "\(customer?.personalData.address.postcode ?? "Default") \(customer?.personalData.address.city ?? "Default") \(customer?.personalData.address.street ?? "Default")"
+        addressLabel.text = "\(customer?.personalData.address?.postcode ?? "Default") \(customer?.personalData.address?.city ?? "Default") \(customer?.personalData.address?.street ?? "Default")"
         emailLabel.text = customer?.personalData.email
         phoneLabel.text = customer?.personalData.phone
     }
@@ -116,7 +116,7 @@ class CustomerViewController: UIViewController {
         if segue.identifier == "ModifyCustomer" {
             if let destination = segue.destination as? NewCustomerTableViewController {
                 print("Modify customer")
-                //destination.customer = customer
+                destination.customer = customer
                 destination.delegate = self
                 destination.modify = true
             }

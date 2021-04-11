@@ -48,6 +48,11 @@ class NewCustomerTableViewController: UITableViewController {
             streetTextField.text = customer?.personalData.address?.street
             emailTextField.text = customer?.personalData.email
             phoneTextField.text = customer?.personalData.phone
+            if let tax = customer?.personalData.tax {
+                customerTaxTextField.text = tax
+                customerTaxCell.isHidden = false
+                customerTypeSelector.selectedSegmentIndex = 1
+            }
         }
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Mentés", style: .plain, target: self, action: #selector(doneClicked))
