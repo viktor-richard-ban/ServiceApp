@@ -136,13 +136,17 @@ class CustomerViewController: UIViewController {
 }
 
 extension CustomerViewController : CustomerDelegate {
-    func customerUpdated(customer: CustomerTmp) {
-        //self.customer = customer
+    func customerUpdated(customer: Customer) {
+        self.customer = customer
         self.nameLabel.text = self.customer?.personalData.name
-        self.taxLabel.text = "Magánszemély"
-        //self.addressLabel.text = "\(self.customer?.personalData.address.postcode ?? "Default") \(self.customer?.personalData.address.city ?? "Default") \(self.customer?.personalData.address.street ?? "Default")"
+        self.addressLabel.text = "\(self.customer?.personalData.address?.postcode ?? "Default") \(self.customer?.personalData.address?.city ?? "Default") \(self.customer?.personalData.address?.street ?? "Default")"
         self.emailLabel.text = self.customer?.personalData.email
         self.phoneLabel.text = self.customer?.personalData.phone
+        if let tax = customer.personalData.tax {
+            taxLabel.text = tax
+        } else {
+            taxLabel.text = "Magánszemély"
+        }
     }
 }
 
