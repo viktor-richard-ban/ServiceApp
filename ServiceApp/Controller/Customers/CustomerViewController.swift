@@ -31,12 +31,12 @@ class CustomerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        serviceAPI.delegate = self
-        serviceAPI.getCustomersProductsWith(id: customer.id!)
+        serviceAPI.getCustomersProductsWith(id: customer.id!) { products in
+            self.customer.products = products
+            self.productCollectionView.reloadData()
+        }
         serviceAPI.getCustomersWorksheetsWith(id: customer.id!, callback: { worksheets in
             self.customer.worksheets = worksheets
-            // TODO: Update collection
-            print(worksheets)
             self.worksheetCollectionView.reloadData()
         })
 
@@ -187,20 +187,4 @@ extension CustomerViewController : UICollectionViewDataSource, UICollectionViewD
         performSegue(withIdentifier: "NewProduct", sender: self)
     }
     
-}
-
-extension CustomerViewController: ServiceAPIDelegate {
-    func didCustomersRetrieved(customers: [Customer]) {
-        return
-    }
-    
-    func didCustomersProductsRetrieved(products: [Product]) {
-        self.customer.products = products
-        productCollectionView.reloadData()
-    }
-    
-    func didCustomersWorksheetsRetrieved(worksheet: [Worksheet]) {
-        self.customer.worksheets = worksheet
-        
-    }
 }

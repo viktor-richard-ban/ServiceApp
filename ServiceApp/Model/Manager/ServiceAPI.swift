@@ -57,7 +57,7 @@ struct ServiceAPI {
     }
     
     //MARK: Products
-    func getCustomersProductsWith(id: String) {
+    func getCustomersProductsWith(id: String, callback: @escaping ([Product])->()) {
         db.collection("customers/\(id)/products")
             .addSnapshotListener { querySnapshot, error in
                 guard (querySnapshot?.documents) != nil else {
@@ -73,7 +73,7 @@ struct ServiceAPI {
                     }
                 }
                 DispatchQueue.main.async {
-                    delegate?.didCustomersProductsRetrieved(products: models)
+                    callback(models)
                 }
         }
     }

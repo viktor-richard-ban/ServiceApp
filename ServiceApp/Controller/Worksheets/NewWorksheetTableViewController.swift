@@ -315,11 +315,10 @@ extension NewWorksheetTableViewController : CustomerSelectorDelegate {
 
 extension NewWorksheetTableViewController : ProductSelectorDelegate {
     
-    func didProductSelected(selectedProduct: ProductTmp) {
-        self.worksheet.productId = selectedProduct.productId!
-        //self.worksheet.serialNumber = selectedProduct.serialNumber
-        //self.worksheet.productName = selectedProduct.productName
-        self.productNameLabel.text = selectedProduct.productName
+    func didProductSelected(selectedProduct: Product) {
+        self.worksheet.productId = selectedProduct.id!
+        self.worksheet.product = selectedProduct
+        self.productNameLabel.text = selectedProduct.name
         self.productVarriancyLabel.text = selectedProduct.purchaseDate
     }
     
