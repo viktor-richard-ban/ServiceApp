@@ -88,7 +88,6 @@ class NewProductTableViewController: UITableViewController {
                         self.present(alert, animated: true, completion: nil)
                     }
                 }
-                navigationController?.popViewController(animated: true)
             }else {
                 self.product = Product(
                     customerId: customerId!,
@@ -99,8 +98,17 @@ class NewProductTableViewController: UITableViewController {
                     serialNumber: serialLabel.text ?? nil,
                     purchaseDate: purchaseDateTextField.text ?? "-"
                 )
-                //createProduct(product: product)
-                //productManager.createProduct(customerId: customerId!, product: productDictionary)
+                api.createProduct(product: product!) { (result) in
+                    if result {
+                        let alert = UIAlertController(title: "Sikeres mentés", message: "A termék mentésre került", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        let alert = UIAlertController(title: "Hiba", message: "A termék mentése során hiba keletkezett", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
             }
         }
         
