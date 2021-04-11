@@ -31,9 +31,9 @@ struct Customer: Codable {
     
     var dictionary: [String: Any] {
         return [
-            "personalData": personalData,
+            "personalData": personalData.dictionary,
             "lastActivity": lastActivity,
-            "joinDate": Timestamp(date: joinDate)
+            "joinDate": joinDate
         ]
     }
 }
@@ -44,14 +44,36 @@ struct PersonalData : Codable {
     var name : String?
     var phone : String?
     var tax : String?
+    
+    var dictionary: [String: Any] {
+        var dict: [String: Any] = [
+            "address": address!.dictionary,
+            "email": email!,
+            "name": name!,
+            "phone": phone!
+        ]
+        if let tax = tax {
+            dict["tax"] = tax
+        }
+        return dict
+    }
 }
 
 struct Address : Codable {
     var city : String?
     var street : String?
     var postcode : String?
+    
+    var dictionary: [String: Any] {
+        return [
+            "city": city!,
+            "street": street!,
+            "postcode": postcode!
+        ]
+    }
 }
 
+//MARK: Initializations
 extension Customer {
     init?(initDictionary: [String : Any]) {
         let personalDataLevel = initDictionary["personalData"] as! [String:Any]

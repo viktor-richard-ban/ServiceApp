@@ -19,7 +19,20 @@ struct ServiceAPI {
     private let db = Firestore.firestore()
     var delegate: ServiceAPIDelegate?
     
-    //MARK: Customers
+    //MARK: Create Customer
+    func createCustomer(customer: Customer, callback: @escaping (Bool) -> ()) {
+        db.collection("customers").addDocument(data: customer.dictionary) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+                callback(false)
+            } else {
+                print("Document successfully written!")
+                callback(true)
+            }
+        }
+    }
+    
+    //MARK: Get Customers
     func getFirstTenCustomers(callback: @escaping ([Customer])->()) {
         db.collection("customers").order(by: "lastActivity", descending: true).limit(to: 10)
             .addSnapshotListener { querySnapshot, error in

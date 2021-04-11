@@ -15,14 +15,6 @@ protocol CustomerDelegate {
 
 class NewCustomerTableViewController: UITableViewController {
     
-    let db = Firestore.firestore()
-
-    var customer : CustomerTmp? = nil
-    var delegate : CustomerDelegate? = nil
-    var manager = CustomerManager()
-    
-    var modify : Bool = false
-    
     // Customer type
     @IBOutlet weak var customerTypeSelector: UISegmentedControl!
     
@@ -34,21 +26,26 @@ class NewCustomerTableViewController: UITableViewController {
     @IBOutlet weak var streetTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var phoneTextField: UITextField!
-    
-    // Cells
+
     @IBOutlet weak var customerTaxCell: UIStackView!
+    
+    let db = Firestore.firestore()
+
+    var api = ServiceAPI()
+    var delegate: CustomerDelegate? = nil
+    var customer : Customer? = nil
+    var modify : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        manager.delegate = self
         customerTaxCell.isHidden = true
         
         if modify {
             customerNameTextField.text = customer?.personalData.name
-            //postCodeTextField.text = customer?.personalData.address.postcode
-            //ityTextField.text = customer?.personalData.address.city
-            //streetTextField.text = customer?.personalData.address.street
+            postCodeTextField.text = customer?.personalData.address?.postcode
+            cityTextField.text = customer?.personalData.address?.city
+            streetTextField.text = customer?.personalData.address?.street
             emailTextField.text = customer?.personalData.email
             phoneTextField.text = customer?.personalData.phone
         }
@@ -69,7 +66,7 @@ class NewCustomerTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GoToCustomer" {
             if let destination = segue.destination as? CustomerViewController {
-                //destination.customer = self.customer
+                destination.customer = self.customer
             }
         }
     }
@@ -87,63 +84,40 @@ class NewCustomerTableViewController: UITableViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
         }else {
-            let customerName = customerNameTextField.text!
-            let email = emailTextField.text!
-            let phone = phoneTextField.text!
+            let customerName = customerNameTextField.text
+            let email = emailTextField.text
+            let phone = phoneTextField.text
             
-            let city = cityTextField.text!
-            let street = streetTextField.text!
-            let postCode = postCodeTextField.text!
+            let tax: String?
+            if customerTaxCell.isHidden {
+                tax = nil
+            } else {
+                tax = customerTaxTextField.text
+            }
+            
+            let city = cityTextField.text
+            let street = streetTextField.text
+            let postCode = postCodeTextField.text
             
             if modify {
-                customer?.personalData.name = customerNameTextField.text!
+                print(customer!)
             } else {
-                customer = CustomerTmp(id: nil, personalData: PersonalData(address: Address(city: city, street: street, postcode: postCode), email: email, name: customerName, phone: phone, tax: nil), products: [], worksheets: [])
-            }
+                customer = Customer(id: nil, personalData: PersonalData(address: Address(city: city, street: street, postcode: postCode), email: email, name: customerName, phone: phone, tax: tax), lastActivity: Date(), joinDate: Date(), products: [], worksheets: [])
                 
-            if customerTaxTextField.text != "" {
-                customer!.personalData.tax = customerTaxTextField.text!
-            }
-            
-            if let dict = customer?.toDictionary() {
-                var customerDict = dict
-                
-                //customerDict["joinDate"] = Date()
-                // TODO: Pass actual date
-                if modify {
-                    if let id = customer?.id {
-                        manager.updateCustomer(id: id, customerData: customerDict)
-                        print("Update customer with id")
+                api.createCustomer(customer: customer!) { result in
+                    if result {
+                        let alert = UIAlertController(title: "Sikeres létrehozás", message: "Az ügyfél metésre került", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        let alert = UIAlertController(title: "Hiba", message: "Az ügyfél mentése során hiba keletkezett", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
                     }
-                    DispatchQueue.main.async {
-                        self.delegate?.customerUpdated(customer: self.customer!)
-                        self.navigationController?.popViewController(animated: true)
-                    }
-                } else {
-                    customerDict["joinDate"] = Int((Date().timeIntervalSince1970 * 1000).rounded())
-                    manager.createCustomer(customer: customerDict)
                 }
-                
             }
             
         }
     }
     
-}
-
-extension NewCustomerTableViewController : CustomerManagerDelegate {
-    func updateCustomers(customers: [CustomerTmp]) {
-        return
-    }
-    
-    func customerCreated(with: String) {
-        customer?.id = with
-        
-        self.performSegue(withIdentifier: "GoToCustomer", sender: self)
-        // Remove last item from navigation stack
-        guard let navigationController = self.navigationController else { return }
-        var navigationArray = navigationController.viewControllers
-        navigationArray.remove(at: navigationArray.count - 2)
-        self.navigationController?.viewControllers = navigationArray
-    }
 }
