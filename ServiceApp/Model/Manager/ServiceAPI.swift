@@ -180,4 +180,17 @@ struct ServiceAPI {
         }
     }
     
+    //MARK: Update Worksheet
+    func updateWorksheet(worksheet: Worksheet, callback: @escaping (Bool) -> ()) {
+        db.collection("customers/\(worksheet.customerId)/worksheets").document(worksheet.id!).updateData(worksheet.dictionary) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+                callback(false)
+            } else {
+                print("Document successfully written!")
+                callback(true)
+            }
+        }
+    }
+    
 }

@@ -1393,6 +1393,8 @@
                         <outlet property="productVarriancyLabel" destination="2fH-1l-kgX" id="cDM-yE-cdq"/>
                         <outlet property="reasonLabel" destination="pTB-VF-fbR" id="R2v-6r-Rc3"/>
                         <outlet property="statusLabel" destination="lge-hq-lKg" id="ypV-Xj-jWw"/>
+                        <outlet property="userIdLabel" destination="FAE-cb-2VL" id="dzN-ER-dnu"/>
+                        <outlet property="userNameLabel" destination="MMe-DL-7kl" id="Y3b-N0-QUL"/>
                         <outlet property="warriantySwitch" destination="Qzu-Dz-wsf" id="3dG-Hh-AEd"/>
                         <segue destination="cyh-qh-1FU" kind="show" identifier="LongTextEdit" id="7WZ-Cc-7wp"/>
                         <segue destination="JEs-eb-rwU" kind="show" identifier="EditCheck" id="rbm-EG-MGv"/>

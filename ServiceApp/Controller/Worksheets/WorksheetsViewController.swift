@@ -15,7 +15,7 @@ class WorksheetsViewController: UIViewController {
     
     var worksheets : [Worksheet] = []
     
-    var selectedIndex : Int?
+    var selectedIndex : IndexPath?
     
     var serviceAPI = ServiceAPI()
 
@@ -32,7 +32,6 @@ class WorksheetsViewController: UIViewController {
         
         serviceAPI.getWorksheets(callback: { worksheets in
             self.worksheets = worksheets
-            // TODO: Update collection
             self.tableView.reloadData()
         })
     }
@@ -50,7 +49,7 @@ class WorksheetsViewController: UIViewController {
         if segue.identifier == "AddWorksheet" {
             if let destination = segue.destination as? NewWorksheetTableViewController {
                 destination.delegate = self
-                if let index = selectedIndex {
+                if let index = selectedIndex?.row {
                     destination.isModify = true
                     destination.worksheet = worksheets[index]
                     selectedIndex = nil
@@ -92,7 +91,7 @@ extension WorksheetsViewController : UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedIndex = indexPath.row
+        selectedIndex = indexPath
         performSegue(withIdentifier: "AddWorksheet", sender: self)
     }
     
@@ -103,7 +102,7 @@ extension WorksheetsViewController : UITableViewDelegate, UITableViewDataSource 
 extension WorksheetsViewController : NewWorksheetDelegate {
     
     func didUpdateWorksheets() {
-        tableView.reloadData()
+        tableView.reloadRows(at: [selectedIndex!], with: .automatic)
         selectedIndex = nil
     }
     

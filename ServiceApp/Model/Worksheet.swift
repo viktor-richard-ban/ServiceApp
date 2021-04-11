@@ -29,6 +29,7 @@ struct Worksheet : Codable {
     
     var status : String
     var userId : String = "123abc"
+    var userName: String = "UserName"
     //var price : Int = 0
     //var closedId : String?
     //var closedDate : Int?
@@ -80,7 +81,9 @@ extension Worksheet {
         let date = timestamp.dateValue()
         
         let status = initDictionary["status"] as! String
+        let userId = initDictionary["userId"] as! String
+        let userName = initDictionary["userName"] as! String
         
-        self.init(id: nil, customerId: customerId, productId: productId, customer: nil, product: nil, reason: reason, errorDescription: errorDescription, isWarrianty: isWarrianty, acceptanceMode: acceptanceMode, accessories: accessories, date: date, status: status, userId: "")
+        self.init(id: nil, customerId: customerId, productId: productId, customer: nil, product: nil, reason: reason, errorDescription: errorDescription, isWarrianty: isWarrianty, acceptanceMode: acceptanceMode, accessories: accessories, date: date, status: status, userId: userId, userName: userName)
     }
 }

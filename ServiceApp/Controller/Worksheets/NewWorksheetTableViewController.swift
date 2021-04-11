@@ -55,54 +55,97 @@ class NewWorksheetTableViewController: UITableViewController {
     @IBOutlet weak var acceptanceModeLabel: UILabel!
     @IBOutlet weak var accessoriesLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
+    
+    @IBOutlet weak var userIdLabel: UILabel!
+    @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var currentDateLabel: UILabel!
     
     var sectionName : String?
     var rowsTitle : [CheckItem]?
     var titleName : String?
     
+    let formatter = DateFormatter()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        formatter.dateFormat = "yyyy.MM.dd"
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Mentés", style: .done, target: self, action: #selector(doneClicked))
         
-        worksheet = Worksheet(customerId: "-1", productId: "-1", date: Date(), status: "Nyitott")
-        /*
         if isModify {
-            print(worksheet)
+            customerNameLabel.text = worksheet.customer?.personalData.name
+            cusomterCityLabel.text = worksheet.customer?.personalData.address?.city
+            productNameLabel.text = worksheet.product?.name
+            productVarriancyLabel.text = worksheet.product?.purchaseDate
+            warriantySwitch.isSelected = worksheet.isWarrianty
+            reasonLabel.text = worksheet.reason ?? "Szerviz"
+            errorDescriptionLabel.text = worksheet.errorDescription ?? "Nincs"
+            acceptanceModeLabel.text = worksheet.acceptanceMode ?? "Személyes"
             
-            customerNameLabel.text = worksheet.customerName
-            cusomterCityLabel.text = worksheet.customerCity
-            productNameLabel.text = worksheet.productName
-            productVarriancyLabel.text = worksheet.purchaseDateString
-            
-            if worksheet.customerId != "" {
-                warriantySwitch.isSelected = worksheet.isWarrianty
-                if let reason = worksheet.reason {
-                    reasonLabel.text = reason
+            accessoriesLabel.text = ""
+            if let accessories = worksheet.accessories {
+                for i in 0 ..< accessories.count {
+                    accessoriesLabel.text?.append("\(accessories[i])  |  ")
                 }
-                errorDescriptionLabel.text = worksheet.errorDescription
-                acceptanceModeLabel.text = worksheet.acceptanceMode
-                accessoriesLabel.text = ""
-                if let accessories = worksheet.accessories {
-                    for i in 0 ..< accessories.count {
-                        accessoriesLabel.text?.append("\(accessories[i])  |  ")
-                    }
-                    accessoriesLabel.text?.removeLast(5)
-                }
-                statusLabel.text = worksheet.status
-                currentDateLabel.text = worksheet.dateString
+                accessoriesLabel.text?.removeLast(5)
             }
-        } else {
-            worksheet.date = Int(Date().timeIntervalSince1970*1000)
             
-            productVarriancyLabel?.text = "-"
-            cusomterCityLabel?.text = "-"
+            statusLabel.text = worksheet.status
+            userIdLabel.text = worksheet.userId
+            userNameLabel.text = worksheet.userName
+            currentDateLabel.text = formatter.string(from: worksheet.date)
+        } else {
+            worksheet = Worksheet(id: nil, customerId: "", productId: "", customer: nil, product: nil, reason: "Szerviz", errorDescription: nil, isWarrianty: false, acceptanceMode: "Személyes", accessories: ["Gép"], date: Date(), status: "Nyitott", userId: "123456asd123")
+            
+            currentDateLabel.text = formatter.string(from: Date())
         }
-        */
+        
+        createChecItems()
         
     }
     
+    func createChecItems() {
+        for i in 0..<reasons.count {
+            if worksheet.reason == reasons[i].title {
+                reasons[i].done = true
+                break
+            } else {
+                reasons[i].done = false
+            }
+        }
+        
+        for i in 0..<acceptanceModes.count {
+            if worksheet.reason == acceptanceModes[i].title {
+                acceptanceModes[i].done = true
+                break
+            } else {
+                acceptanceModes[i].done = false
+            }
+        }
+        
+        if let worksheetAccessories = worksheet.accessories {
+            for i in 0..<accessories.count {
+                for j in 0..<worksheetAccessories.count {
+                    if worksheetAccessories[j] == accessories[i].title {
+                        accessories[i].done = true
+                        break
+                    } else {
+                        accessories[i].done = false
+                    }
+                }
+            }
+        }
+        
+        for i in 0..<statuses.count {
+            if worksheet.reason == statuses[i].title {
+                statuses[i].done = true
+                break
+            } else {
+                statuses[i].done = false
+            }
+        }
+    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
@@ -188,7 +231,19 @@ class NewWorksheetTableViewController: UITableViewController {
             // Save to database
             if isModify {
                 //updateWorksheet()
+                api.updateWorksheet(worksheet: worksheet) { result in
+                    if result {
+                        let alert = UIAlertController(title: "Sikeres módosítás", message: "A munkalap metésre került", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        let alert = UIAlertController(title: "Hiba", message: "A munkalap mentése során hiba keletkezett", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
             } else {
+                print(worksheet!)
                 //saveWorksheet()
                 //worksheetManager.createWorksheet(customerId: worksheet.customerId, worksheet: worksheet.toDictionary())
                 api.createWorksheet(worksheet: worksheet) { result in
@@ -203,7 +258,7 @@ class NewWorksheetTableViewController: UITableViewController {
                     }
                 }
             }
-            self.navigationController?.popViewController(animated: true)        
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
