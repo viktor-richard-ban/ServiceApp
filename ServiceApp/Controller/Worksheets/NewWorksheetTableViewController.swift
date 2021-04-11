@@ -245,7 +245,6 @@ class NewWorksheetTableViewController: UITableViewController {
             } else {
                 print(worksheet!)
                 //saveWorksheet()
-                //worksheetManager.createWorksheet(customerId: worksheet.customerId, worksheet: worksheet.toDictionary())
                 api.createWorksheet(worksheet: worksheet) { result in
                     if result {
                         let alert = UIAlertController(title: "Sikeres létrehozás", message: "A munkalap metésre került", preferredStyle: UIAlertController.Style.alert)

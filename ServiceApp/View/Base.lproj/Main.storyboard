@@ -1518,7 +1518,8 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Gb1-WU-hxf">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.97251744923857864" green="0.97251744923857864" blue="0.97251744923857864" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="BgColorA"/>
+                        <color key="sectionIndexBackgroundColor" name="BgColorA"/>
                         <connections>
                             <outlet property="dataSource" destination="eci-4O-1he" id="rKc-oy-KZy"/>
                             <outlet property="delegate" destination="eci-4O-1he" id="bfe-Fw-X8g"/>
