@@ -32,6 +32,19 @@ struct ServiceAPI {
         }
     }
     
+    //MARK: Update Customer
+    func updateCustomer(customer: Customer, callback: @escaping (Bool) -> ()) {
+        db.collection("customers").document(customer.id!).updateData(customer.dictionary) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+                callback(false)
+            } else {
+                print("Document successfully written!")
+                callback(true)
+            }
+        }
+    }
+    
     //MARK: Get Customers
     func getFirstTenCustomers(callback: @escaping ([Customer])->()) {
         db.collection("customers").order(by: "lastActivity", descending: true).limit(to: 10)

@@ -105,7 +105,19 @@ class NewCustomerTableViewController: UITableViewController {
             let postCode = postCodeTextField.text
             
             if modify {
-                print(customer!)
+                customer = Customer(id: customer!.id, personalData: PersonalData(address: Address(city: city, street: street, postcode: postCode), email: email, name: customerName, phone: phone, tax: tax), lastActivity: Date(), joinDate: customer!.joinDate, products: customer!.products, worksheets: customer!.worksheets)
+                
+                api.updateCustomer(customer: customer!) { result in
+                    if result {
+                        let alert = UIAlertController(title: "Sikeres módosítás", message: "Az ügyfél metésre került", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        let alert = UIAlertController(title: "Hiba", message: "Az ügyfél mentése során hiba keletkezett", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
             } else {
                 customer = Customer(id: nil, personalData: PersonalData(address: Address(city: city, street: street, postcode: postCode), email: email, name: customerName, phone: phone, tax: tax), lastActivity: Date(), joinDate: Date(), products: [], worksheets: [])
                 
