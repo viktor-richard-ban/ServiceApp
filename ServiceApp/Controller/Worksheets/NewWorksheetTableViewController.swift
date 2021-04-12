@@ -99,7 +99,7 @@ class NewWorksheetTableViewController: UITableViewController {
             
             statusLabel.text = worksheet.status
             userIdLabel.text = worksheet.userId
-            userNameLabel.text = worksheet.userName
+            userNameLabel.text = "Minta Béla"
             currentDateLabel.text = formatter.string(from: worksheet.date)
             
             createChecItems()
