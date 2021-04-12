@@ -217,7 +217,12 @@ extension CustomerViewController : UICollectionViewDataSource, UICollectionViewD
             performSegue(withIdentifier: "NewProduct", sender: self)
         } else if collectionView == worksheetCollectionView {
             
-            //TODO:
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "NewWorksheet") as! NewWorksheetTableViewController
+            vc.isModify = true
+            customer.worksheets[indexPath.row].customer = customer
+            vc.worksheet = customer.worksheets[indexPath.row]
+            navigationController?.pushViewController(vc, animated: true)
             
         }
     }

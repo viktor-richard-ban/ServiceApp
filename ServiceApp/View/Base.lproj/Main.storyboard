@@ -1057,7 +1057,7 @@
         <!--Új munkalap-->
         <scene sceneID="aEX-h3-kRN">
             <objects>
-                <tableViewController id="qtc-KN-4ac" customClass="NewWorksheetTableViewController" customModule="ServiceApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController restorationIdentifier="NewWorksheet" storyboardIdentifier="NewWorksheet" id="qtc-KN-4ac" customClass="NewWorksheetTableViewController" customModule="ServiceApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="35n-PA-lPy">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
