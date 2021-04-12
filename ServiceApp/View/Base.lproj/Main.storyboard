@@ -639,9 +639,9 @@
                                                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zv1-0u-UMk">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="141.33333333333334" height="26.666666666666668"/>
                                                                                             <subviews>
-                                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gardena smart Sileno Life" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="UOj-QH-lXK">
+                                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nyitott" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="UOj-QH-lXK">
                                                                                                     <rect key="frame" x="0.0" y="0.0" width="65.666666666666671" height="26.666666666666668"/>
-                                                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                                                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="12"/>
                                                                                                     <nil key="textColor"/>
                                                                                                     <nil key="highlightedColor"/>
                                                                                                 </label>

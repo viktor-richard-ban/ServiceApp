@@ -30,15 +30,6 @@ class CustomerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        serviceAPI.getCustomersProductsWith(id: customer.id!) { products in
-            self.customer.products = products
-            self.productCollectionView.reloadData()
-        }
-        serviceAPI.getCustomersWorksheetsWith(id: customer.id!, callback: { worksheets in
-            self.customer.worksheets = worksheets
-            self.worksheetCollectionView.reloadData()
-        })
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Szerkesztés", style: .plain, target: self, action: #selector(editButtonClicked))
         
@@ -70,6 +61,15 @@ class CustomerViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.productCollectionView.reloadData()
+        
+        serviceAPI.getCustomersProductsWith(id: customer.id!) { products in
+            self.customer.products = products
+            self.productCollectionView.reloadData()
+        }
+        serviceAPI.getCustomersWorksheetsWith(id: customer.id!, callback: { worksheets in
+            self.customer.worksheets = worksheets
+            self.worksheetCollectionView.reloadData()
+        })
         
         nameLabel.text = customer?.personalData.name
         addressLabel.text = "\(customer?.personalData.address?.postcode ?? "Default") \(customer?.personalData.address?.city ?? "Default") \(customer?.personalData.address?.street ?? "Default")"
@@ -187,6 +187,12 @@ extension CustomerViewController : UICollectionViewDataSource, UICollectionViewD
             return cell
         } else if collectionView == worksheetCollectionView {
             let cell = worksheetCollectionView.dequeueReusableCell(withReuseIdentifier: "worksheetCell", for: indexPath) as! WorksheetCollectionViewCell
+            
+            for index in 0..<customer.products.count {
+                if customer.worksheets[indexPath.row].productId == customer.products[index].id {
+                    customer.worksheets[indexPath.row].product = customer.products[index]
+                }
+            }
             let worksheet = customer.worksheets[indexPath.row]
             
             cell.productNameLabel.text = worksheet.status
