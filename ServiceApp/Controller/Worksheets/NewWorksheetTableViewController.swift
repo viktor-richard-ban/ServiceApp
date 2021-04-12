@@ -101,13 +101,13 @@ class NewWorksheetTableViewController: UITableViewController {
             userIdLabel.text = worksheet.userId
             userNameLabel.text = worksheet.userName
             currentDateLabel.text = formatter.string(from: worksheet.date)
+            
+            createChecItems()
         } else {
             worksheet = Worksheet(id: nil, customerId: "", productId: "", customer: nil, product: nil, reason: "Szerviz", errorDescription: nil, isWarrianty: false, acceptanceMode: "Személyes", accessories: ["Gép"], date: Date(), status: "Nyitott", userId: "123456asd123")
             
             currentDateLabel.text = formatter.string(from: Date())
         }
-        
-        createChecItems()
         
     }
     
@@ -144,7 +144,7 @@ class NewWorksheetTableViewController: UITableViewController {
         }
         
         for i in 0..<statuses.count {
-            if worksheet.reason == statuses[i].title {
+            if worksheet.status == statuses[i].title {
                 statuses[i].done = true
                 break
             } else {
