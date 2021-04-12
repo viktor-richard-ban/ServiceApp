@@ -41,6 +41,8 @@
 		3AE3670A254F166E00D1C218 /* EditLongTextTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE36709254F166D00D1C218 /* EditLongTextTableViewController.swift */; };
 		3AE3670D254F1B0B00D1C218 /* NewWorksheetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE3670C254F1B0B00D1C218 /* NewWorksheetTableViewController.swift */; };
 		78EC54A45B06E3700FF046E9 /* Pods_ServiceApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67823097FBC857508A1537DA /* Pods_ServiceApp.framework */; };
+		8E787C812623B63A007E8158 /* WorksheetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E787C802623B638007E8158 /* WorksheetCollectionViewCell.swift */; };
+		8E82112B2624D8550092F6B5 /* SwiftExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E82112A2624D8550092F6B5 /* SwiftExtensions.swift */; };
 		8EC24ADE25FE7FFA00DEF151 /* ServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC24ADD25FE7FFA00DEF151 /* ServiceAPI.swift */; };
 		8EC24AE225FE922300DEF151 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC24AE125FE922300DEF151 /* Customer.swift */; };
 		8EC24AE625FE9BC800DEF151 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EC24AE525FE9BC800DEF151 /* Colors.xcassets */; };
@@ -103,6 +105,8 @@
 		3AE36709254F166D00D1C218 /* EditLongTextTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLongTextTableViewController.swift; sourceTree = "<group>"; };
 		3AE3670C254F1B0B00D1C218 /* NewWorksheetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorksheetTableViewController.swift; sourceTree = "<group>"; };
 		67823097FBC857508A1537DA /* Pods_ServiceApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ServiceApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E787C802623B638007E8158 /* WorksheetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksheetCollectionViewCell.swift; sourceTree = "<group>"; };
+		8E82112A2624D8550092F6B5 /* SwiftExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftExtensions.swift; sourceTree = "<group>"; };
 		8EC24ADD25FE7FFA00DEF151 /* ServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
 		8EC24AE125FE922300DEF151 /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		8EC24AE525FE9BC800DEF151 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -168,6 +172,7 @@
 		3A370FFC254215C9003BD01E /* ServiceApp */ = {
 			isa = PBXGroup;
 			children = (
+				8E8211292624D82D0092F6B5 /* Extensions */,
 				3A370FFD254215C9003BD01E /* AppDelegate.swift */,
 				3A370FFF254215C9003BD01E /* SceneDelegate.swift */,
 				3A371020254225E9003BD01E /* Model */,
@@ -273,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				3AE3668F2544B32100D1C218 /* ProductCollectionViewCell.swift */,
+				8E787C802623B638007E8158 /* WorksheetCollectionViewCell.swift */,
 			);
 			path = CollectionViewCell;
 			sourceTree = "<group>";
@@ -321,6 +327,14 @@
 				C0B1F008EE17B08A90E27E52 /* Pods-ServiceApp.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		8E8211292624D82D0092F6B5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8E82112A2624D8550092F6B5 /* SwiftExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		8ECE661D260898FB007CECF7 /* ServiceAppUITests */ = {
@@ -532,6 +546,7 @@
 				3AA8E3C325509704001B3886 /* EditCheckTableViewController.swift in Sources */,
 				3AE36707254ED24D00D1C218 /* WorksheetsViewController.swift in Sources */,
 				3AE3670A254F166E00D1C218 /* EditLongTextTableViewController.swift in Sources */,
+				8E82112B2624D8550092F6B5 /* SwiftExtensions.swift in Sources */,
 				3AA3EA3F25A0998300128371 /* CustomerManager.swift in Sources */,
 				3AE366CE2548361500D1C218 /* Worksheet.swift in Sources */,
 				8EC24ADE25FE7FFA00DEF151 /* ServiceAPI.swift in Sources */,
@@ -549,6 +564,7 @@
 				3A83D98B2571A13200F51F8A /* DocumentScanningViewController.swift in Sources */,
 				3AA8E3D62551C2E8001B3886 /* CheckRow.swift in Sources */,
 				3A3710602542EE60003BD01E /* CustomerTmp.swift in Sources */,
+				8E787C812623B63A007E8158 /* WorksheetCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

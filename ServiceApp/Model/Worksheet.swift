@@ -24,6 +24,18 @@ struct Worksheet : Codable {
     
     var acceptanceMode : String?
     var accessories : [String]?
+    var accessoriesString: String {
+        var result = ""
+        if let accessories = accessories {
+            for i in accessories {
+                result.append("\(i) |")
+            }
+            if result != "" {
+                result.removeLast(2)
+            }
+        }
+        return result
+    }
     
     var date : Date
     

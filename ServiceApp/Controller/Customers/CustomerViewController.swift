@@ -167,29 +167,53 @@ extension CustomerViewController : UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = productCollectionView.dequeueReusableCell(withReuseIdentifier: "productCell", for: indexPath) as! ProductCollectionViewCell
-        
-        // Add datas
-        cell.productNameLabel.text = customer.products[indexPath.row].name
-        if let pin = customer.products[indexPath.row].pin {
-            cell.pinLabel.text = String(pin)
-        } else {
-            cell.pinLabel.text = "-"
+        if collectionView == productCollectionView {
+            let cell = productCollectionView.dequeueReusableCell(withReuseIdentifier: "productCell", for: indexPath) as! ProductCollectionViewCell
+            
+            // Add datas
+            cell.productNameLabel.text = customer.products[indexPath.row].name
+            if let pin = customer.products[indexPath.row].pin {
+                cell.pinLabel.text = String(pin)
+            } else {
+                cell.pinLabel.text = "-"
+            }
+            cell.serialNumberLabel.text = customer.products[indexPath.row].serialNumber
+            cell.productNumberLabel.text = customer.products[indexPath.row].productNumber
+            cell.purchaseDate.text = customer.products[indexPath.row].purchaseDate
+            
+            // Cell style
+            cell.layer.cornerRadius = cell.frame.size.height/5
+            
+            return cell
+        } else if collectionView == worksheetCollectionView {
+            let cell = worksheetCollectionView.dequeueReusableCell(withReuseIdentifier: "worksheetCell", for: indexPath) as! WorksheetCollectionViewCell
+            let worksheet = customer.worksheets[indexPath.row]
+            
+            cell.productNameLabel.text = worksheet.status
+            cell.typeLabel.text = worksheet.reason
+            cell.serialNumberLabel.text = worksheet.product?.serialNumber
+            cell.accessoriesLabel.text = worksheet.accessoriesString
+            cell.purchaseDateLabel.text = worksheet.date.dateStringWith(format: "yyyy.MM.dd")
+            
+            // Cell style
+            cell.layer.cornerRadius = cell.frame.size.height/5
+            
+            return cell
         }
-        cell.serialNumberLabel.text = customer.products[indexPath.row].serialNumber
-        cell.productNumberLabel.text = customer.products[indexPath.row].productNumber
-        cell.purchaseDate.text = customer.products[indexPath.row].purchaseDate
         
-        // Cell style
-        cell.layer.cornerRadius = cell.frame.size.height/5
-        
-        return cell
+        return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.selectedProductIndex = indexPath
-        modify = true
-        performSegue(withIdentifier: "NewProduct", sender: self)
+        if collectionView == productCollectionView {
+            self.selectedProductIndex = indexPath
+            modify = true
+            performSegue(withIdentifier: "NewProduct", sender: self)
+        } else if collectionView == worksheetCollectionView {
+            
+            //TODO:
+            
+        }
     }
     
 }
