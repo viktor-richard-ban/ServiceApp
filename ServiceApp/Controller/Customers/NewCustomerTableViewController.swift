@@ -39,6 +39,12 @@ class NewCustomerTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if modify {
+            title = "Ügyfél szerkesztése"
+        } else {
+            title = "Ügyfél hozzáadása"
+        }
+        
         customerTaxCell.isHidden = true
         
         if modify {

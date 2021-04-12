@@ -69,6 +69,12 @@ class NewWorksheetTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if isModify {
+            title = "Munkalap szerkesztése"
+        } else {
+            title = "Munkalap hozzáadása"
+        }
+        
         formatter.dateFormat = "yyyy.MM.dd"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Mentés", style: .done, target: self, action: #selector(doneClicked))
