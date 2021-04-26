@@ -87,6 +87,22 @@ extension CustomersViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension CustomersViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print(searchBar.text)
+        if let searchedText = searchBar.text {
+            if searchedText != "" {
+                serviceAPI.getCustomerWith(name: searchedText) { [weak self] (customers) in
+                    self?.customers = customers
+                    self?.tableView.reloadData()
+                }
+            } else {
+                serviceAPI.getFirstTenCustomers { [weak self] (customers) in
+                    self?.customers = customers
+                    self?.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.enablesReturnKeyAutomatically = false
     }
 }

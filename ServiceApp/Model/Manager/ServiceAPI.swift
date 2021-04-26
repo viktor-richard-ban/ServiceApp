@@ -70,10 +70,29 @@ struct ServiceAPI {
                 } else {
                     preconditionFailure("Unable to initialize type \(Product.self) with dictionary \(document.data() ?? [:])")
                 }
-            } else {
-                print("Document does not exist")
             }
         }
+    }
+    
+    //MARK Get Customers By name
+    func getCustomerWith(name: String, callback: @escaping ([Customer])->()) {
+        db.collection("customers").whereField("personalData.name", isGreaterThanOrEqualTo: name).whereField("personalData.name", isLessThan: name+"z").getDocuments { querySnapshot, error in
+            guard (querySnapshot?.documents) != nil else {
+                print("Error fetching documents: \(error!)")
+                return
+            }
+            let models = querySnapshot!.documents.map { (document) -> Customer in
+                if var model = Customer(initDictionary: document.data()) {
+                    model.id = document.documentID
+                    return model
+                } else {
+                      preconditionFailure("Unable to initialize type \(Customer.self) with dictionary \(document.data())")
+                }
+            }
+            DispatchQueue.main.async {
+                callback(models)
+            }
+    }
     }
     
     //MARK: Get Products With Customer Id
