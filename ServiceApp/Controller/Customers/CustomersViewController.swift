@@ -71,5 +71,22 @@ extension CustomersViewController: UITableViewDataSource, UITableViewDelegate {
         selectedCustomer = indexPath.row
         self.performSegue(withIdentifier: "CustomerSegue", sender: self)
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let searchBar = UISearchBar()
+        searchBar.backgroundColor = UIColor.darkGray
+        searchBar.delegate = self
+        return searchBar
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat(65)
+    }
 
+}
+
+extension CustomersViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print(searchBar.text)
+    }
 }
