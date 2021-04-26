@@ -32,6 +32,13 @@ class WorksheetsViewController: UIViewController {
         
         serviceAPI.getWorksheets(callback: { worksheets in
             self.worksheets = worksheets
+            self.worksheets.sort {
+                if $0.status == $1.status {
+                    return $0.date.timeIntervalSince1970 > $1.date.timeIntervalSince1970
+                } else {
+                    return $0.status > $1.status
+                }
+            }
             self.tableView.reloadData()
         })
     }
