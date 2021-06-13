@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eL1-XW-EdV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gyL-sL-3bX">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -390,24 +390,24 @@
                                                         <rect key="frame" x="0.0" y="25" width="280" height="165"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="BxM-Cj-A3X">
-                                                                <rect key="frame" x="80.333333333333343" y="0.0" width="119.66666666666666" height="48"/>
+                                                                <rect key="frame" x="81.333333333333343" y="0.0" width="117.66666666666666" height="48"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Károly Cintia" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2vA-7L-YkX">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="119.66666666666667" height="24"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Minta Zoltán" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2vA-7L-YkX">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="117.66666666666667" height="24"/>
                                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Magánszemély" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ubi-TG-j0c">
-                                                                        <rect key="frame" x="0.0" y="24" width="119.66666666666667" height="24"/>
+                                                                        <rect key="frame" x="0.0" y="24" width="117.66666666666667" height="24"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2213 Monorierdő Csillag utca 46" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="PTO-Mp-wjf">
-                                                                <rect key="frame" x="35" y="79.666666666666657" width="210" height="17"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000 Budapest Minta utca 1" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="PTO-Mp-wjf">
+                                                                <rect key="frame" x="50.333333333333329" y="79.666666666666657" width="179.33333333333337" height="17"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -1413,15 +1413,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Név" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cpr-9g-6l6">
-                                                    <rect key="frame" x="20" y="6.0000000000000009" width="22.333333333333332" height="14.333333333333334"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cpr-9g-6l6">
+                                                    <rect key="frame" x="20" y="6.0000000000000009" width="30.333333333333332" height="14.333333333333334"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Minta János" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MMe-DL-7kl">
-                                                    <rect key="frame" x="20" y="22.333333333333336" width="68.333333333333329" height="14.333333333333334"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="minta@minta.hu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MMe-DL-7kl">
+                                                    <rect key="frame" x="20.000000000000007" y="22.333333333333336" width="91.666666666666671" height="14.333333333333334"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
                                                     <nil key="textColor"/>
@@ -1531,7 +1531,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kIg-kx-Ccf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1335" y="636"/>
+            <point key="canvasLocation" x="2263.0769230769229" y="635.54502369668239"/>
         </scene>
         <!--Multiple Edit Check Table View Controller-->
         <scene sceneID="oNv-jp-WQO">
@@ -1560,7 +1560,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R6d-VU-bL8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2162" y="636"/>
+            <point key="canvasLocation" x="3090.7692307692305" y="635.54502369668239"/>
         </scene>
         <!--Edit Check Table View Controller-->
         <scene sceneID="PUt-mS-gXG">
@@ -1705,6 +1705,26 @@
             </objects>
             <point key="canvasLocation" x="-614" y="1585"/>
         </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="Rsy-pI-ToH">
+            <objects>
+                <viewController id="RPl-Kl-x9E" customClass="SplashViewController" customModule="ServiceApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uny-l5-MSE">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="EoX-0b-50E"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="N03-Yp-GfW"/>
+                    <connections>
+                        <segue destination="S3C-jE-6ez" kind="presentation" identifier="login" modalPresentationStyle="fullScreen" id="bXU-hu-d5K"/>
+                        <segue destination="XQp-dd-lcZ" kind="presentation" identifier="loggedIn" modalPresentationStyle="fullScreen" id="8jb-p2-l9W"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZX2-pB-MRe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-134" y="114"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="aiX-K8-jzW">
             <objects>
@@ -1713,18 +1733,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" semanticContentAttribute="playback" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gardenstock" translatesAutoresizingMaskIntoConstraints="NO" id="uHn-Aj-KDD">
+                                <rect key="frame" x="0.0" y="-6" width="390" height="866"/>
+                                <color key="backgroundColor" red="0.76862745099999996" green="0.76862745099999996" blue="0.17357879309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ajo-sQ-WLn">
                                 <rect key="frame" x="80" y="308" width="230" height="228"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DPd-Wv-And">
                                         <rect key="frame" x="0.0" y="0.0" width="230" height="34"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Jelszó" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wgq-1L-JFu">
                                         <rect key="frame" x="0.0" y="44" width="230" height="34"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ngi-Zl-LfA">
                                         <rect key="frame" x="0.0" y="178" width="230" height="50"/>
@@ -1736,6 +1764,14 @@
                                         <state key="normal" title="BEJELENTKEZÉS">
                                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                <integer key="value" value="0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="loginButtonPressed:" destination="S3C-jE-6ez" eventType="touchUpInside" id="gtc-k7-TyE"/>
                                         </connections>
@@ -1763,18 +1799,25 @@
                         <constraints>
                             <constraint firstItem="ajo-sQ-WLn" firstAttribute="centerY" secondItem="XnI-IA-jES" secondAttribute="centerY" id="7LV-os-B4P"/>
                             <constraint firstItem="ajo-sQ-WLn" firstAttribute="leading" secondItem="hTb-TD-H0z" secondAttribute="leading" constant="80" id="D3m-s4-JBY"/>
+                            <constraint firstItem="uHn-Aj-KDD" firstAttribute="leading" secondItem="hTb-TD-H0z" secondAttribute="leading" id="GK2-Nh-bWf"/>
                             <constraint firstItem="hTb-TD-H0z" firstAttribute="trailing" secondItem="ajo-sQ-WLn" secondAttribute="trailing" constant="80" id="P4C-We-bCi"/>
                             <constraint firstItem="ajo-sQ-WLn" firstAttribute="centerX" secondItem="XnI-IA-jES" secondAttribute="centerX" id="WVo-jx-T3a"/>
+                            <constraint firstItem="uHn-Aj-KDD" firstAttribute="top" secondItem="XnI-IA-jES" secondAttribute="topMargin" constant="-50" id="YnS-QK-wgm"/>
+                            <constraint firstItem="hTb-TD-H0z" firstAttribute="trailing" secondItem="uHn-Aj-KDD" secondAttribute="trailing" id="nlm-bI-403"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="uHn-Aj-KDD" secondAttribute="bottom" constant="-50" id="pVT-kf-Hzk"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="CAO-iL-i5q"/>
                     <connections>
+                        <outlet property="emailTextField" destination="DPd-Wv-And" id="2CQ-JM-jxb"/>
+                        <outlet property="passwordTextField" destination="Wgq-1L-JFu" id="oya-bY-ytD"/>
+                        <outlet property="submitButton" destination="Ngi-Zl-LfA" id="dAM-u0-al1"/>
                         <segue destination="XQp-dd-lcZ" kind="presentation" identifier="loggedIn" modalPresentationStyle="fullScreen" id="CWF-1Q-Aag"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HHb-aL-rnb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="67.692307692307693" y="-168.48341232227489"/>
+            <point key="canvasLocation" x="813.84615384615381" y="-397.39336492890993"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="52A-58-T8E">
@@ -1795,9 +1838,9 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="njd-n8-Qx6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1121.5384615384614" y="-168.48341232227489"/>
+            <point key="canvasLocation" x="2050.7692307692305" y="-168.48341232227489"/>
         </scene>
-        <!--Business Companion-->
+        <!--Adattábla beolvasása-->
         <scene sceneID="lJY-1K-tvV">
             <objects>
                 <viewController id="tUS-qJ-0RT" customClass="DocumentScanningViewController" customModule="ServiceApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -1806,10 +1849,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sZ6-0i-MBG">
-                                <rect key="frame" x="155.66666666666666" y="407" width="79" height="30"/>
-                                <state key="normal" title="Scan Cards"/>
+                                <rect key="frame" x="160" y="407" width="70" height="30"/>
+                                <state key="normal" title="Beolvasás"/>
                                 <connections>
-                                    <action selector="scan:" destination="tUS-qJ-0RT" eventType="touchUpInside" id="WCz-wR-suj"/>
+                                    <action selector="scanButtonAction:" destination="tUS-qJ-0RT" eventType="touchUpInside" id="HQe-8D-ReE"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1821,12 +1864,12 @@
                             <constraint firstItem="sZ6-0i-MBG" firstAttribute="centerY" secondItem="DgI-mh-9Tl" secondAttribute="centerY" id="Xop-QZ-iOM"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Business Companion" id="BzR-9b-WPI"/>
+                    <navigationItem key="navigationItem" title="Adattábla beolvasása" id="BzR-9b-WPI"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="936-4l-qwI" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3084.6153846153843" y="-168.48341232227489"/>
+            <point key="canvasLocation" x="4012.3076923076924" y="-168.48341232227489"/>
         </scene>
         <!--Business Card Contents View Controller-->
         <scene sceneID="zQc-uc-uRT">
@@ -1870,7 +1913,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HJM-G4-dEt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4047.6923076923076" y="-168.48341232227489"/>
+            <point key="canvasLocation" x="4976.9230769230771" y="-168.48341232227489"/>
         </scene>
         <!--Scan-->
         <scene sceneID="alE-4E-OtH">
@@ -1891,33 +1934,35 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KTL-zf-gHL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2170.7692307692305" y="-168.48341232227489"/>
+            <point key="canvasLocation" x="3098.4615384615386" y="-168.48341232227489"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="5M3-kA-jkv">
+        <scene sceneID="pht-wb-2wm">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eL1-XW-EdV" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gyL-sL-3bX" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3DZ-9C-Ffw">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Cd1-EQ-Fzv">
                         <rect key="frame" x="0.0" y="44" width="390" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="S3C-jE-6ez" kind="relationship" relationship="rootViewController" id="pfP-qk-nFl"/>
+                        <segue destination="RPl-Kl-x9E" kind="relationship" relationship="rootViewController" id="wza-pE-WuP"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5tl-5P-YAu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lN3-3t-xrF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-861.53846153846155" y="-168.48341232227489"/>
+            <point key="canvasLocation" x="-1063.0769230769231" y="113.74407582938387"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="CWF-1Q-Aag"/>
         <segue reference="yGH-Fe-bhU"/>
-        <segue reference="L6u-3R-56D"/>
+        <segue reference="o7D-0B-bSl"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="doc.text" catalog="system" width="115" height="128"/>
+        <image name="gardenstock" width="800" height="600"/>
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="plus.circle" catalog="system" width="128" height="121"/>
         <namedColor name="BgColorA">

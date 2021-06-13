@@ -79,6 +79,15 @@ class NewWorksheetTableViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Mentés", style: .done, target: self, action: #selector(doneClicked))
         
+        if let userDictionary = UserDefaults.standard.dictionary(forKey: "user") {
+            if let id = userDictionary["id"] as? String {
+                userIdLabel.text = id
+            }
+            if let email = userDictionary["email"] as? String {
+                userNameLabel.text = email
+            }
+        }
+        
         if isModify {
             customerNameLabel.text = worksheet.customer?.personalData.name
             cusomterCityLabel.text = worksheet.customer?.personalData.address?.city

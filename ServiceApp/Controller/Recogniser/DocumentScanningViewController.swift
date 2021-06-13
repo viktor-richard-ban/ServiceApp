@@ -43,10 +43,12 @@ class DocumentScanningViewController: UIViewController {
         // This doesn't require OCR on a live camera feed, select accurate for more accurate results.
         textRecognitionRequest.recognitionLevel = .accurate
         textRecognitionRequest.usesLanguageCorrection = true
+        
+        scan()
     }
 
-    @IBAction func scan(_ sender: UIControl) {
-        guard let scanMode = ScanMode(rawValue: sender.tag) else { return }
+    func scan() {
+        guard let scanMode = ScanMode(rawValue: 1) else { return }
         self.scanMode = scanMode
         let documentCameraViewController = VNDocumentCameraViewController()
         documentCameraViewController.delegate = self
@@ -65,6 +67,10 @@ class DocumentScanningViewController: UIViewController {
         } catch {
             print(error)
         }
+    }
+    
+    @IBAction func scanButtonAction(_ sender: Any) {
+        scan()
     }
 }
 

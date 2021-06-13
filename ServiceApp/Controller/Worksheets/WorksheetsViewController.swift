@@ -51,8 +51,6 @@ class WorksheetsViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
         if segue.identifier == "AddWorksheet" {
             if let destination = segue.destination as? NewWorksheetTableViewController {
                 destination.delegate = self

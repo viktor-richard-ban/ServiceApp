@@ -24,11 +24,20 @@ struct Product: Codable {
         var dict: [String: Any] = [
             "customerId": customerId,
             "productName": name,
-            "productNumber": productNumber as Any,
-            "productType": productType,
-            "serialNumber": serialNumber as Any,
-            "purchaseDate": purchaseDate as Any
+            "productType": productType
         ]
+        
+        if let productNumber = productNumber {
+            dict["productNumber"] = productNumber
+        }
+        
+        if let serialNumber = serialNumber {
+            dict["serialNumber"] = serialNumber
+        }
+        
+        if let purchaseDate = purchaseDate {
+            dict["purchaseDate"] = purchaseDate
+        }
         
         if let pin = pin {
             dict["pin"] = pin
