@@ -1,15 +1,13 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-View controller for identified business cards.
-*/
-
 import UIKit
 import Vision
 
 class BusinessCardContentsViewController: UITableViewController {
     static let tableCellIdentifier = "businessCardContentCell"
+    
+    var serviceAPI = ServiceAPI()
+    
+    var serialNumber = ""
+    var searchedCustomer: Customer?
 
     typealias CardContentField = (name: String, value: String)
     
@@ -36,6 +34,32 @@ class BusinessCardContentsViewController: UITableViewController {
     }
     
     var contents = BusinessCardContents()
+    
+    func searchCustomerWith(serialNumber: String) {
+        serviceAPI.getProductWithSerialNumber(serialNumber, callback: { [weak self] (product:Product) in
+            print(product.customerId)
+            print(product.name)
+            
+            self?.serviceAPI.getCustomerWith(id: product.customerId, callback: { (customer:Customer) in
+                print(customer.personalData.name ?? "Default")
+                self?.searchedCustomer = customer
+                self?.performSegue(withIdentifier: "customerDetails", sender: self)
+            })
+        })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "customerDetails" {
+            if let destination = segue.destination as? CustomerViewController, let customer = searchedCustomer {
+                destination.customer = customer
+            }
+        }
+    }
+    
+    @IBAction func searchButtonAction(_ sender: Any) {
+        print("Searching for product with S/N: \(serialNumber)")
+        searchCustomerWith(serialNumber: serialNumber)
+    }
 }
 
 // MARK: UITableViewDataSource
@@ -51,15 +75,34 @@ extension BusinessCardContentsViewController {
         cell.textLabel?.text = field.name
         cell.detailTextLabel?.text = field.value
         
-        print("\(field.name) - \(field.value)")
         if field.value.count > 8 {
+            var isSerial = true
             for i in field.value {
                 if i == "-" {
+                    cell.textLabel?.text = "P/N"
+                    isSerial = false
                     print("Product number: \(field.value)")
+                    return cell
+                }
+            }
+            if isSerial {
+                cell.textLabel?.text = "S/N"
+                print("S/N: \(field.value)")
+                serialNumber = field.value
+                return cell
+            }
+        } else {
+            for i in field.value {
+                if i == "-" {
+                    cell.textLabel?.text = "Cikkszám"
+                    print("Cikkszám: \(field.value)")
+                    return cell
                 }
             }
         }
         
+        
+        print("\(field.name) - \(field.value)")
         return cell
     }
 }
@@ -76,7 +119,7 @@ extension BusinessCardContentsViewController: RecognizedTextDataSource {
         }
         parseTextContents(text: fullText)
         tableView.reloadData()
-        navigationItem.title = contents.name != nil ? contents.name : "Scanned Card"
+        navigationItem.title = "Beolvasott adatok"
     }
     
     // MARK: Helper functions

@@ -1866,12 +1866,15 @@
                     </view>
                     <navigationItem key="navigationItem" title="Adattábla beolvasása" id="BzR-9b-WPI"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="mjR-t1-3eZ" kind="show" id="EGK-we-vSs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="936-4l-qwI" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4012.3076923076924" y="-168.48341232227489"/>
         </scene>
-        <!--Business Card Contents View Controller-->
+        <!--Beolvasott adatok-->
         <scene sceneID="zQc-uc-uRT">
             <objects>
                 <tableViewController storyboardIdentifier="businessCardContentsVC" id="mjR-t1-3eZ" customClass="BusinessCardContentsViewController" customModule="ServiceApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -1910,6 +1913,17 @@
                             <outlet property="delegate" destination="mjR-t1-3eZ" id="Meo-C0-iGG"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Beolvasott adatok" id="p8z-Al-QQL">
+                        <barButtonItem key="backBarButtonItem" title="Újra" id="hxv-SO-bGg"/>
+                        <barButtonItem key="rightBarButtonItem" title="Keresés" id="f9V-Ij-ZdI">
+                            <connections>
+                                <action selector="searchButtonAction:" destination="mjR-t1-3eZ" id="vbw-50-huc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="kwi-Bt-uZA" kind="show" identifier="customerDetails" id="uTd-K9-TkC"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HJM-G4-dEt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1957,7 +1971,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="CWF-1Q-Aag"/>
-        <segue reference="yGH-Fe-bhU"/>
+        <segue reference="uTd-K9-TkC"/>
         <segue reference="o7D-0B-bSl"/>
     </inferredMetricsTieBreakers>
     <resources>

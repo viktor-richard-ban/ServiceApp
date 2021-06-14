@@ -134,6 +134,29 @@ struct ServiceAPI {
         }
     }
     
+    //MARK: Get Product With Serial Number
+    func getProductWithSerialNumber(_ serialNumber: String, callback: @escaping (Product) -> ()) {
+        db.collectionGroup("products").whereField("serialNumber", isEqualTo: serialNumber).getDocuments { (snapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                let models = snapshot!.documents.map { (document) -> Product in
+                    if var model = Product(initDictionary: document.data()) {
+                        model.id = document.documentID
+                        return model
+                    } else {
+                          preconditionFailure("Unable to initialize type \(Product.self) with dictionary \(document.data())")
+                    }
+                }
+                
+                if models.count > 0 {
+                    callback(models[0])
+                }
+                
+            }
+        }
+    }
+    
     //MARK: Create Product
     func createProduct(product: Product, callback: @escaping (Bool) -> ()) {
         db.collection("customers/\(product.customerId)/products").addDocument(data: product.dictionary) { err in
